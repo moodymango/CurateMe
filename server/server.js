@@ -9,7 +9,7 @@ const artistRouter = require('../server/routes/artists');
 const app = express();
 //establish a port
 const port = process.env.PORT || 3000;
-
+//want to check if i ignored files
 //parse all req body info
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
