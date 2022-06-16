@@ -2,19 +2,20 @@ const express = require('express');
 //REQUIRE IN ANY NECESSARY NATIVE MODULES
 const path = require('path');
 
+//require in all my routers
+const artistRouter = require('../server/routes/artists');
+
 //start our express server
 const app = express();
 //establish a port
 const port = process.env.PORT || 3000;
+
 //parse all req body info
 app.use(express.json());
-//tbh still not sure why this is necessary, but stack overflow says I need it
-express.urlencoded({ extended: true });
+app.use(express.urlencoded({ extended: true }));
 
 //remember to define all route handlers from most specific to least
-app.use('/', (req, res) => {
-  res.status(200).send('CONGRATS ON SETTING UP YOUR BAREBONES BACKEND BABE')
-})
+app.use('/blackArt', artistRouter);
 
 
 
