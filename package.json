@@ -1,0 +1,29 @@
+{
+  "name": "QueerMet",
+  "version": "1.0.0",
+  "description": "Highlighting LGBT Artists and Themes at the MET",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "nodemon server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moodymango/solo-project.git"
+  },
+  "keywords": [],
+  "author": "Imma Duverger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/moodymango/solo-project/issues"
+  },
+  "homepage": "https://github.com/moodymango/solo-project#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "express": "^4.18.1",
+    "node-fetch": "^3.2.6"
+  }
+}
