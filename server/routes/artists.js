@@ -4,10 +4,15 @@ const artChicagoApiController = require('../controllers/artChicagoApi')
 //router instance is a complete middleware and routing system
 const router = express.Router();
 
-router.get('/', artChicagoApiController.getBlackArtworks, (req, res) =>{
-  //what do I want to serve to the front-end? ultimately json data containing the artwork images
-  //when users clic 
-  return res.status(200).send('Just logging my artists')
+//search by general terms
+router.post('/', artChicagoApiController.getArtworks, artChicagoApiController.getArtworkInfo, (req, res) =>{
+  //what do I want to serve to the front-end? ultimately json array of objects!
+  return res.status(200).json(res.locals.artworkInfo);
 })
+//search by artist
+router.post('/artist', artChicagoApiController.getArtist, artChicagoApiController.getArtworkInfo, (req, res) =>{
+  return res.status(200).json(res.locals.artworkInfo); 
+})
+
 
 module.exports = router;

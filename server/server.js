@@ -15,22 +15,23 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //sign-up router
-app.get('/signup', (req, res) => {
-  //need to serve static html file to client
-  // res.status(200).sendFile(path.resolve(__dirname, 'filepath'))
-})
-app.post('/signup', (req, res) => {
-  //need to add middleware to create user, maybe set up cookies if we have time to authenticate?
-})
-//sign-in router
-app.post('/login', (req, res) => {
-  //add middleware to verify if the user exists in the database, maybe set a unique cookie, etc
-})
+// app.get('/signup', (req, res) => {
+//   //need to serve static html file to client
+//   // res.status(200).sendFile(path.resolve(__dirname, 'filepath'))
+// })
+// app.post('/signup', (req, res) => {
+//   //need to add middleware to create user, maybe set up cookies if we have time to authenticate?
+// })
+// //sign-in router
+// app.post('/login', (req, res) => {
+//   //add middleware to verify if the user exists in the database, maybe set a unique cookie, etc
+// })
 
 
 //remember to define all route handlers from most specific to least
+
 //this is to serve to the homepage, need to add some functionality where if the user loads more and clicks a button, more artworks will populate
-app.use('/blackArt', artistRouter);
+app.use('/search', artistRouter);
 
 
 
