@@ -1,11 +1,12 @@
 const express = require('express');
-const artChicagoApiController = require('../controllers/MetApi')
+const artChicagoApiController = require('../controllers/artChicagoApi')
 //remember, routers help modularize code,
 //router instance is a complete middleware and routing system
 const router = express.Router();
 
-router.get('/', artChicagoApiController.getBlackArtists, (req, res) =>{
-  //want to send info as json data tho
+router.get('/', artChicagoApiController.getBlackArtworks, (req, res) =>{
+  //what do I want to serve to the front-end? ultimately json data containing the artwork images
+  //when users clic 
   return res.status(200).send('Just logging my artists')
 })
 
