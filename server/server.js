@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //remember to define all route handlers from most specific to least
 
-//this is to serve to the homepage, need to add some functionality where if the user loads more and clicks a button, more artworks will populate
+//route to serve homepage
 
 //route to handle user sign-up/login
 app.get('/signup', (req, res) => {
@@ -31,18 +31,22 @@ app.get('/login', (req, res) => {
 })
 app.post('/signup', userController.createUser, (req, res) => {
   // what should happen here on successful sign up?
+  res.status(200).send('checking userSignup')
   // res.redirect(200, 'HTML FOR CONGRATS, NOW LOG IN')
-
 });
 
+//need routes to favorites
+
+//need routes to collections
 
 /**
 * login
 */
 app.post('/login', userController.verifyUser, (req, res) => {
   // what should happen here on successful log in?
+  res.status(200).send('checking user login')
   //redirect to the user's personal dashboard
-  res.redirect(200, 'DASHBOARD');
+  // res.redirect(200, 'DASHBOARD');
 });
 
 //route for any searches for specific artworks
@@ -54,6 +58,7 @@ app.use('/search', artRouter);
 
 //catch all route handler for any requests made to unknown routes
 app.all('*', (req, res) => res.sendStatus(404));
+
 //global error handler
 app.use((err, req, res, next) => {
   const defaultErr = {
@@ -64,6 +69,7 @@ app.use((err, req, res, next) => {
   const errObj = Object.assign(defaultErr, err);
   res.status(errObj.status).send(errObj.message)
 });
+
 //make sure app is listening on some type of port
 app.listen(port, () =>{
   console.log(`Server is listening on port ${port}`)

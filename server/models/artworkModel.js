@@ -37,7 +37,7 @@ const collectionSchema = new Schema({
   //https://alexanderzeitler.com/articles/mongoose-tojson-toobject-transform-with-subdocuments/
 })
 //create a model of the collection schema
-const Collection = mongoose.model('Collection', collectionSchema);
+const Collections = mongoose.model('Collections', collectionSchema);
 
 //in order to save individual artworks in user collections
 const artworkSchema = new Schema({
@@ -62,7 +62,7 @@ const favoritesSchema = new Schema({
 const Favorites = mongoose.model('Favorites', favoritesSchema);
 
 module.exports = {
-  Collection,
+  Collections,
   Artwork,
   Favorites
 }
