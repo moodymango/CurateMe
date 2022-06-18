@@ -24,7 +24,10 @@ const Schema = mongoose.Schema;
 //         }
 //     ]
 // }
+
+//for user curated collections
 const collectionSchema = new Schema({
+  //title, description, and 
   title: {type: String, required: true},
   description: String,
   likes: Number,
@@ -34,9 +37,32 @@ const collectionSchema = new Schema({
   //https://alexanderzeitler.com/articles/mongoose-tojson-toobject-transform-with-subdocuments/
 })
 //create a model of the collection schema
+const Collection = mongoose.model('Collection', collectionSchema);
 
+//in order to save individual artworks in user collections
+const artworkSchema = new Schema({
+  //all data comes from returned json of api call
+  title: {type: String, required: true},
+  artist: {type: String, required: true},
+  date: {type: Number, required: true},
+  imageUrl: {type: String, required: true},
+  //impession is not required, but user will write their impression themselves
+  impression: String,
+})
 
+//create model for artworkSchema
+const Artwork = mongoose.model('Artwork', artworkSchema);
 
+//in order for user to make a favorite list
+const favoritesSchema = new Schema({
+  //favorites will just be a collection of the user's favorite works!
+  artworks: [{type: Schema.Types.ObjectId, ref: 'Artwork'}]
+})
 
+const Favorites = mongoose.model('Favorites', favoritesSchema);
 
-// module.exports = 
+module.exports = {
+  Collection,
+  Artwork,
+  Favorites
+}
