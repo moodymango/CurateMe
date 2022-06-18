@@ -1,7 +1,9 @@
+//requiring in "dotenv" in order to save my connection 
+require('dotenv').config();
 const express = require('express');
 //REQUIRE IN ANY NECESSARY NATIVE MODULES
 const path = require('path');
-
+const mongoose = require('mongoose');
 //require in all my routers
 const artRouter = require('./routes/searchArtworks');
 const userController = require('./controllers/userController');
@@ -10,6 +12,13 @@ const userController = require('./controllers/userController');
 const app = express();
 //establish a port
 const port = process.env.PORT || 3000;
+//connection to database
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+// { useNewUrlParser: true, useUnifiedTopology: true }
+//this connects to our database
+mongoose.connection.once('open', () => {
+  console.log('Connected to Database');
+});
 
 //parse all req body info
 app.use(express.json());

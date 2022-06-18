@@ -1,5 +1,5 @@
 {
-  "name": "QueerMet",
+  "name": "ArtsyFarty",
   "version": "1.0.0",
   "description": "Highlighting LGBT Artists and Themes at the MET",
   "main": "server/server.js",
