@@ -66,7 +66,7 @@ artChicagoApiController.getArtworks = async (req, res, next) => {
 }
 //middleware to get artist, ideally returns all the artworks from that individual artist
 artChicagoApiController.getArtist = async (req, res, next) => {
-  const {searchReq, page} = req.body;
+  const {searchReq} = req.body;
   //what do I want to serve to the front-end? ultimately json data containing the artwork image, title, 
   await fetch(`https://api.artic.edu/api/v1/artists/search?q=${searchReq}[is_artist]=true&fields=artwork_ids,title`)
     .then(data => data.json())

@@ -3,7 +3,8 @@ const express = require('express');
 const path = require('path');
 
 //require in all my routers
-const artistRouter = require('../server/routes/artists');
+const artRouter = require('./routes/searchArtworks');
+const userController = require('./controllers/userController');
 
 //start our express server
 const app = express();
@@ -14,24 +15,38 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//sign-up router
-// app.get('/signup', (req, res) => {
-//   //need to serve static html file to client
-//   // res.status(200).sendFile(path.resolve(__dirname, 'filepath'))
-// })
-// app.post('/signup', (req, res) => {
-//   //need to add middleware to create user, maybe set up cookies if we have time to authenticate?
-// })
-// //sign-in router
-// app.post('/login', (req, res) => {
-//   //add middleware to verify if the user exists in the database, maybe set a unique cookie, etc
-// })
+
 
 
 //remember to define all route handlers from most specific to least
 
 //this is to serve to the homepage, need to add some functionality where if the user loads more and clicks a button, more artworks will populate
-app.use('/search', artistRouter);
+
+//route to handle user sign-up/login
+app.get('/signup', (req, res) => {
+  // res.sendFile(path.resolve(__dirname, HTML FOR SIGN UP));
+});
+app.get('/login', (req, res) => {
+  // res.sendFile(path.resolve(__dirname, HTML FOR LOGIN));
+})
+app.post('/signup', userController.createUser, (req, res) => {
+  // what should happen here on successful sign up?
+  // res.redirect(200, 'HTML FOR CONGRATS, NOW LOG IN')
+
+});
+
+
+/**
+* login
+*/
+app.post('/login', userController.verifyUser, (req, res) => {
+  // what should happen here on successful log in?
+  //redirect to the user's personal dashboard
+  res.redirect(200, 'DASHBOARD');
+});
+
+//route for any searches for specific artworks
+app.use('/search', artRouter);
 
 
 
