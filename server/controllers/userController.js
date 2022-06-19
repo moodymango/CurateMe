@@ -11,8 +11,8 @@ const bcrypt = require('bcrypt');
 //SIGNUP
 // {
 //   "username": "GodsFav",
-//    "email": "test@gmail.com"
-//   "password": "test"
+//    "email": "test@gmail.com",
+//   "password": "test",
 //    "firstName": "Cutie",
 //    "lastName": "Thiccums"
 // }
@@ -23,6 +23,7 @@ const userController = {};
 const saltRounds = 10;
 userController.createUser = async (req, res, next) => {
   // write code here
+  console.log('creating user...')
   //will get user, pass, and users email from the req body
   const { username, password, email, firstName, lastName} = req.body;
   //hash password before storing in the database

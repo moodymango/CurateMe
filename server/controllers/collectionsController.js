@@ -27,7 +27,7 @@ collectionsController.createCollection = async (req, res, next) =>{
   //look for the existing user first
   await User.findOne({username})
     .then( async user => {
-      console.log('user is => ', user.username)
+      console.log('just finding the user, no creation yet => ', user.username)
       next();
     })
     .catch(err => {
