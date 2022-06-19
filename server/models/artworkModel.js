@@ -28,7 +28,7 @@ const Schema = mongoose.Schema;
 //for user curated collections
 const collectionSchema = new Schema({
   //title, description, and 
-  title: {type: String, required: true},
+  title: {type: String, required: true, unique:true},
   description: String,
   likes: Number,
   //syntax to reference multiple schemas of artworks

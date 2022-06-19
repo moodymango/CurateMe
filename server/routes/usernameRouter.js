@@ -8,15 +8,20 @@ const collectionsController = require('../controllers/collectionsController');
 
 //need routes to favorites
 // router.get('/favorites')
-// //need routes to collections
-// router.get('/collections')
+
 //create new collection for user
 router.post('/collections', collectionsController.createCollection, (req, res) => {
-  res.status(200).send('checking if we created collection');
+  return res.status(200).send('checking if we created collection');
+})
+//read user's collections
+router.get('/collections', collectionsController.readCollection, (req, res) =>{
+  //sending back an array of collections of users
+  // return res.status(200).send('reading collections');
+  return res.status(200).json(res.locals.allCollections);
 })
 //update new collection for user
 router.patch('/collections', collectionsController.updateCollection, (req, res) => {
-  res.status(200).send('checking if we updated collection');
+  return res.status(200).send('checking if we updated collection');
 })
 // //delete new collection for user
 // router.delete('/collections')
