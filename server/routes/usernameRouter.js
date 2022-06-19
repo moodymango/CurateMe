@@ -11,7 +11,8 @@ const collectionsController = require('../controllers/collectionsController');
 
 //create new collection for user
 router.post('/collections', collectionsController.createCollection, (req, res) => {
-  return res.status(200).send('checking if we created collection');
+  //sending new collection title to the frontend to verify creation!
+  return res.status(200).json(res.locals.newestCollection);
 })
 //read user's collections
 router.get('/collections', collectionsController.readCollection, (req, res) =>{
@@ -21,8 +22,10 @@ router.get('/collections', collectionsController.readCollection, (req, res) =>{
 })
 //update new collection for user
 router.patch('/collections', collectionsController.updateCollection, (req, res) => {
-  return res.status(200).send('checking if we updated collection');
-})
+  //send the frontend the updated collection
+  // return res.status(200).send('updated collection')
+  return res.status(200).json(res.locals.updated);
+});
 // //delete new collection for user
 // router.delete('/collections')
 
