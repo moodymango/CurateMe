@@ -1,7 +1,7 @@
 {
   "name": "ArtsyFarty",
   "version": "1.0.0",
-  "description": "Highlighting LGBT Artists and Themes at the MET",
+  "description": "Making art more accessible to all apsiring curators",
   "main": "server/server.js",
   "scripts": {
     "start": "nodemon server/server.js",
