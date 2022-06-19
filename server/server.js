@@ -4,6 +4,8 @@ const express = require('express');
 //REQUIRE IN ANY NECESSARY NATIVE MODULES
 const path = require('path');
 const mongoose = require('mongoose');
+//in order to read properties off the cookie obj in req.cookies?
+const cookieParser = require('cookie-parser');
 //require in all my routers
 const artRouter = require('./routes/searchArtworks');
 const usernamerRouter = require('./routes/usernameRouter');
@@ -24,6 +26,8 @@ mongoose.connection.once('open', () => {
 //parse all req body info
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+//able to read cookies as object
+app.use(cookieParser());
 
 
 
@@ -40,17 +44,15 @@ app.use(express.urlencoded({ extended: true }));
 //   // res.sendFile(path.resolve(__dirname, HTML FOR LOGIN));
 // })
 app.post('/signup', userController.createUser);
-
-//need to have a redirect for user dashboard (will just be the username) 
-//here we will have router to handle favorites 
-app.get('/:username', usernamerRouter)
-
-
-
 /**
 * login
 */
 app.post('/login', userController.verifyUser);
+
+//need to have a redirect for user dashboard (will just be the username) 
+//here we will have router to handle favorites and collections
+app.get('/:username', usernamerRouter)
+
 
 //route for any searches for specific artworks
 app.use('/search', artRouter);
