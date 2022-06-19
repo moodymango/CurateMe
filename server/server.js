@@ -6,6 +6,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 //require in all my routers
 const artRouter = require('./routes/searchArtworks');
+const usernamerRouter = require('./routes/usernameRouter');
 const userController = require('./controllers/userController');
 
 //start our express server
@@ -32,31 +33,24 @@ app.use(express.urlencoded({ extended: true }));
 //route to serve homepage
 
 //route to handle user sign-up/login
-app.get('/signup', (req, res) => {
-  // res.sendFile(path.resolve(__dirname, HTML FOR SIGN UP));
-});
-app.get('/login', (req, res) => {
-  // res.sendFile(path.resolve(__dirname, HTML FOR LOGIN));
-})
-app.post('/signup', userController.createUser, (req, res) => {
-  // what should happen here on successful sign up?
-  res.status(200).send('checking userSignup')
-  // res.redirect(200, 'HTML FOR CONGRATS, NOW LOG IN')
-});
+// app.get('/signup',  (req, res) => {
+//   // res.sendFile(path.resolve(__dirname, HTML FOR SIGN UP));
+// });
+// app.get('/login', (req, res) => {
+//   // res.sendFile(path.resolve(__dirname, HTML FOR LOGIN));
+// })
+app.post('/signup', userController.createUser);
 
-//need routes to favorites
+//need to have a redirect for user dashboard (will just be the username) 
+//here we will have router to handle favorites 
+app.get('/:username', usernamerRouter)
 
-//need routes to collections
+
 
 /**
 * login
 */
-app.post('/login', userController.verifyUser, (req, res) => {
-  // what should happen here on successful log in?
-  res.status(200).send('checking user login')
-  //redirect to the user's personal dashboard
-  // res.redirect(200, 'DASHBOARD');
-});
+app.post('/login', userController.verifyUser);
 
 //route for any searches for specific artworks
 app.use('/search', artRouter);
