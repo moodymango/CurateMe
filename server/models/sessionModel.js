@@ -8,7 +8,7 @@ const Schema = mongoose.Schema;
 * (actually, Mongo's cleanup service only runs once per minute so the session
 * could last up to 90 seconds before it's deleted, but still pretty cool!)
 */
-
+//session validate user, sees if they need to be redirected to their dashboard, or the login page if they're not logged in
 const sessionSchema = new Schema({
   cookieId: { type: String, required: true, unique: true },
   createdAt: { type: Date, expires: 90, default: Date.now }

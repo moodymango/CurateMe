@@ -18,6 +18,10 @@ userController.createUser = async (req, res, next) => {
   const hashedPass =  await bcrypt.hash(password, saltRounds);
   await User.create({username, password: hashedPass, email, firstName, lastName})
     .then(newUser => {
+      //persist userID to setSSID cookie middleware
+      res.locals.userId = newUser._id;
+      console.log('user id is =>', res.locals.userId)
+      // next();
       //redirect user to their dashboard
       return res.redirect(`/:${username}`);
     })
@@ -44,16 +48,16 @@ userController.verifyUser = async (req, res, next) => {
       //result doc should have a password property
       const compared = await bcrypt.compare(password, result.password);
       if(compared){
+        //saveUser id onto res.locals for set SSID middleware
+        res.locals.userId = result._id;
+        console.log('userId is =>', res.locals.userId);
         //will most likely redirect user to their own dashboard
-        console.log('logged in')
+        // next();
         return res.redirect(`/:${username}`);
       } else {
         console.log('incorrect pass')
-        next({
-          message: {err: 'Incorrect password'}
-        })
+        return res.status(400).redirect('/login')
       }
-      next()
     })
     .catch(err => next({log: 'error when logging in user', message: {err:err}}));
 }

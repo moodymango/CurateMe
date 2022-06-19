@@ -10,6 +10,9 @@ const cookieParser = require('cookie-parser');
 const artRouter = require('./routes/searchArtworks');
 const usernamerRouter = require('./routes/usernameRouter');
 const userController = require('./controllers/userController');
+//cookie controllers
+// const cookieController = require('./controllers/cookieController');
+// const sessionController = require('./controllers/sessionController');
 
 //start our express server
 const app = express();
@@ -43,11 +46,20 @@ app.use(cookieParser());
 // app.get('/login', (req, res) => {
 //   // res.sendFile(path.resolve(__dirname, HTML FOR LOGIN));
 // })
-app.post('/signup', userController.createUser);
-/**
-* login
-*/
-app.post('/login', userController.verifyUser);
+
+app.post('/signup', userController.createUser)
+app.post('/login', userController.verifyUser)
+
+//LOGIN WITH COOKIES, go back and work on if we have some time!
+// app.post('/signup', userController.createUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
+//   return res.redirect('/dashboard');
+// });
+// // /**
+// // * login
+// // */
+// app.post('/login', userController.verifyUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
+//   return res.redirect('/dashboard');
+// });
 
 //need to have a redirect for user dashboard (will just be the username) 
 //here we will have router to handle favorites and collections
