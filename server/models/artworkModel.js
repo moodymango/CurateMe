@@ -64,5 +64,6 @@ const Favorites = mongoose.model('Favorites', favoritesSchema);
 module.exports = {
   Collections,
   Artwork,
-  Favorites
+  Favorites,
+  collectionSchema
 }

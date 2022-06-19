@@ -23,11 +23,15 @@ collectionsController.createCollection = async (req, res, next) =>{
   //collection name, description coming from user body
   console.log('creating collection');
   const {title, description} = req.body;
+  const newCollection = {
+    title,
+    description
+  }
   const { username } = req.params;
-  //look for the existing user first
-  await User.findOne({username})
+  //look for the existing user first and push the new collection into the 
+  await User.findOneAndUpdate({username}, {$push: {collectionArr: newCollection}}, {new:true, upsert: true})
     .then( async user => {
-      console.log('just finding the user, no creation yet => ', user.username)
+      console.log('See if we have a new collection for user => ', user.collectionArr)
       next();
     })
     .catch(err => {

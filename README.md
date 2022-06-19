@@ -7,3 +7,5 @@ Progress check
 1. managed to git ignore the node_modules folder and stop tracking on git
 2. managed to get specific data from my api (artist, title, image url, etc)
 3. pseudocode additional routes for sign-up, login
+//ARTICLE ON RESTORING TO PREVIOUS COMMITS:
+https://medium.com/swlh/using-git-how-to-go-back-to-a-previous-commit-8579ccc8180f
