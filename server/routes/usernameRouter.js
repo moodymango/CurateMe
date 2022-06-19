@@ -16,17 +16,18 @@ router.post('/collections', collectionsController.createCollection, (req, res) =
 })
 //read user's collections
 router.get('/collections', collectionsController.readCollection, (req, res) =>{
-  //sending back an array of collections of users
-  // return res.status(200).send('reading collections');
+  //send client current collections by user
   return res.status(200).json(res.locals.allCollections);
 })
 //update new collection for user
 router.patch('/collections', collectionsController.updateCollection, (req, res) => {
   //send the frontend the updated collection
-  // return res.status(200).send('updated collection')
   return res.status(200).json(res.locals.updated);
 });
 // //delete new collection for user
-// router.delete('/collections')
+router.delete('/collections', collectionsController.deleteCollection, (req, res) => {
+  //sends user updated view of total collections
+  return res.status(200).json(res.locals.deletedCollection);
+})
 
 module.exports = router;

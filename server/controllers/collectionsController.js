@@ -124,6 +124,24 @@ collectionsController.updateCollection = async (req, res, next) =>{
       })
     })
 }
-//LOL COLLECTION WAS NOT ADDED TO USER ACC NEED TO FIX THIS!!
+//delete a user's collection
+collectionsController.deleteCollection = async (req, res, next) => {
+  //will be receiving collection title from the req body
+  const {title} = req.body;
+  const {username} = req.params
+  //need to find user and update
+  //https://stackoverflow.com/questions/26252569/mongoose-delete-subdocument-array-item
+  await User.findOneAndUpdate({username},{$pull: {'collectionArr': {title}} }, {new:true, upsert: true})
+    .then(async user => {
+      res.locals.deletedCollection = user.collectionArr
+      console.log('new arr is =>', res.locals.deletedCollection)
+      next();
+    })
+    .catch(err => {
+      next({
+        message: {err: 'error in error in finding user'}
+      })
+    })
+}
 
 module.exports = collectionsController;
