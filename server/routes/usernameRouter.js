@@ -1,6 +1,6 @@
 const express = require('express');
 //will need to have another controller to handle pulling up favorites, collections, and artwork additions
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 const collectionsController = require('../controllers/collectionsController');
 // const { route } = require('./searchArtworks');
 

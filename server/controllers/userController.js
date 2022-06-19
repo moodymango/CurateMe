@@ -2,7 +2,20 @@
 const User = require('../models/userModel');
 //must require bcrypt in order to hash password
 const bcrypt = require('bcrypt');
-
+//POSTMAN TESTING:
+//LOGIN
+// {
+//   "username": "moodymango",
+//   "password": "test"
+// }
+//SIGNUP
+// {
+//   "username": "GodsFav",
+//    "email": "test@gmail.com"
+//   "password": "test"
+//    "firstName": "Cutie",
+//    "lastName": "Thiccums"
+// }
 const userController = {};
 //middleware to create user
 
@@ -10,11 +23,9 @@ const userController = {};
 const saltRounds = 10;
 userController.createUser = async (req, res, next) => {
   // write code here
-  console.log('req.body --> ', req.body);
   //will get user, pass, and users email from the req body
   const { username, password, email, firstName, lastName} = req.body;
   //hash password before storing in the database
-
   const hashedPass =  await bcrypt.hash(password, saltRounds);
   await User.create({username, password: hashedPass, email, firstName, lastName})
     .then(newUser => {
