@@ -12,25 +12,27 @@ const artworkController = require('../controllers/artworksController')
 //for http://localhost:5050/:username/collections/artworks
 router.post('/collections/:title', artworkController.artworkInfo, artworkController.addToCollection, (req, res) => {
   //sending new artwork title to the frontend to verify creation!
-  return res.status(200).send('updating collection')
+  return res.status(200).json(res.locals.updatedCollection);
 })
 //read all the artworks in the user's collection
 //need to get :title param from uri
 router.get('/collections/:title', artworkController.getArtworks, (req, res) =>{
   //send client current collections arr by user
-  return res.status(200).send(res.locals.artworks)
+  return res.status(200).json(res.locals.artworks);
 })
-//MIGHT BE A STRETCH FEATURE
+
+//deletes the unwanted artwork from user's collection
+router.delete('/collections/:title', artworkController.deleteArtwork, (req, res) => {
+  //sends user updated view of total collections
+  return res.status(200).json(res.locals.updatedCollection);
+})
+
+//MIGHT BE A STRETCH FEATURE - NOT SUITABLE FOR MVP
 ////allows user to add impression of the piece, so the ONLY prop of artwork object changing is impression
 router.patch('/collections/:artwork',  (req, res) => {
   //send the frontend the updated collection
   return res.status(200).json(res.locals.updated);
 });
-//deletes the unwanted artwork from user's collection
-router.delete('/collections/:title', artworkController.deleteArtwork, (req, res) => {
-  //sends user updated view of total collections
-  return res.status(200).send('deleting artworks');
-})
 
 //for http://localhost:5050/:username/collections
 //create new collection for user

@@ -70,16 +70,18 @@ artworkController.addToCollection = async (req, res, next) => {
       const collectionDoc = user.collectionArr.filter((doc) =>{
         return doc.title === collection
       }).pop();
-      console.log('collection is =>', collectionDoc)
       //collection doc represents collection
       //now need to access collectionDoc.artworks
-      console.log('image url is =>', newArtwork.image)
       collectionDoc.artworks.push(newArtwork);
       //save user
       await user.save()
         .then(savedUser => {
-          const artworkArr = savedUser.collectionArr.artworks;
-          console.log('collection arr is =>', artworkArr);
+          const artworkArr = savedUser.collectionArr
+          //now must filter AGAIN
+          const newCollection = artworkArr.filter((doc) =>{
+            return doc.title === collection
+          }).pop();
+          res.locals.updatedCollection = newCollection;
         })
         .catch(err => {
           next ({
@@ -165,7 +167,12 @@ artworkController.deleteArtwork = async (req, res, next) =>{
       //now save user
       await user.save()
         .then(savedUser => {
-          res.locals.updatedCollection = savedUser.collectionArr.artworks
+          const artworkArr = savedUser.collectionArr
+          const newCollection = artworkArr.filter((doc) =>{
+            return doc.title === title
+          }).pop();
+
+          res.locals.updatedCollection = newCollection
           console.log('pieces have been deleted from collection',res.locals.updatedCollection)
         })
       next();
