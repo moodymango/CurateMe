@@ -10,15 +10,15 @@ const artworkController = require('../controllers/artworksController')
 //title of the collection for queries will come from req.params
 
 //for http://localhost:5050/:username/collections/artworks
-router.post('/collections/artworks', artworkController.artworkInfo, artworkController.addToCollection, (req, res) => {
+router.post('/collections/:title', artworkController.artworkInfo, artworkController.addToCollection, (req, res) => {
   //sending new artwork title to the frontend to verify creation!
   return res.status(200).send('updating collection')
 })
 //read all the artworks in the user's collection
 //need to get :title param from uri
-router.get('/collections/artworks',  (req, res) =>{
+router.get('/collections/:title', artworkController.getArtworks, (req, res) =>{
   //send client current collections by user
-  return res.status(200).send('path works')
+  return res.status(200).send(res.locals.urlParams)
 })
 //MIGHT BE A STRETCH FEATURE
 ////allows user to add impression of the piece, so the ONLY prop of artwork object changing is impression

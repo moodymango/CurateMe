@@ -9,7 +9,7 @@ const artworkController = {};
 //GET INDIVIDUAL ARTWORK INFO
 
 //POSTMAN TESTING:
-//URL : http://localhost:5050/:username/collections/:title
+//URL : http://localhost:5050/:username/collections/artworks
 //title: Be Who You Areeeeee, For Your Priiiiiide, Don't Hiiiiide
 // SAMPLE ARTOWRK ID => 193320
 artworkController.artworkInfo = async (req, res, next) => {
@@ -25,7 +25,7 @@ artworkController.artworkInfo = async (req, res, next) => {
       // //save url as a new prop on my response obj
       artworkData.data.imageURL = imageURLApi
       //save returned data onto res.locals to persist to next middleware
-      res.locals.artInfo = artworkData;
+      res.locals.artInfo = artworkData.data;
       next()
     })
     .catch(err => {
@@ -35,6 +35,10 @@ artworkController.artworkInfo = async (req, res, next) => {
       })
     })
 }
+
+// {
+//   "artworkId" : "193320"
+//  }
 
 //FOR POST
 artworkController.addToCollection = async (req, res, next) => {
@@ -75,7 +79,10 @@ artworkController.addToCollection = async (req, res, next) => {
 
 //FOR GET
 artworkController.getArtworks = async (req, res, next) => {
-
+  const {username, title} = req.params;
+  res.locals.urlParams = title
+  console.log(res.locals.urlParams);
+  next();
 }
 
 //FOR PATCH
