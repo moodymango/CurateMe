@@ -25,20 +25,6 @@ const Schema = mongoose.Schema;
 //     ]
 // }
 
-//for user curated collections
-const collectionSchema = new Schema({
-  //title, description, and 
-  title: {type: String, required: true, unique:true},
-  description: String,
-  likes: Number,
-  //syntax to reference multiple schemas of artworks
-  artworks: [{type: Schema.Types.ObjectId, ref: 'Artwork'}]
-  //consider using toJSON to transfrom the returned object to a json document?
-  //https://alexanderzeitler.com/articles/mongoose-tojson-toobject-transform-with-subdocuments/
-})
-//create a model of the collection schema
-const Collections = mongoose.model('Collections', collectionSchema);
-
 //in order to save individual artworks in user collections
 const artworkSchema = new Schema({
   //all data comes from returned json of api call
@@ -52,6 +38,21 @@ const artworkSchema = new Schema({
 
 //create model for artworkSchema
 const Artwork = mongoose.model('Artwork', artworkSchema);
+
+//for user curated collections
+const collectionSchema = new Schema({
+  //title, description, and 
+  title: {type: String, required: true, unique:true},
+  description: String,
+  likes: Number,
+  //syntax to reference multiple schemas of artworks
+  artworks: [artworkSchema]
+  //consider using toJSON to transfrom the returned object to a json document?
+  //https://alexanderzeitler.com/articles/mongoose-tojson-toobject-transform-with-subdocuments/
+})
+//create a model of the collection schema
+const Collections = mongoose.model('Collections', collectionSchema);
+
 
 //in order for user to make a favorite list
 const favoritesSchema = new Schema({

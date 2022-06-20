@@ -8,18 +8,6 @@ const collectionsController = {};
 //   "description" : "A celebration of Black and Brown queer pride"
 // }
 
-const findCollection = (next, title, description) =>{
-  Collections.Collections.findOne({title})
-    .then(collection => {
-    //collection is collections
-      console.log('found collection')
-    })
-    .catch(err => {
-      next({
-        message: {err: 'error in pushing collection to user'}
-      })
-    })
-}
 
 collectionsController.createCollection = async (req, res, next) =>{
   //collection name, description coming from user body

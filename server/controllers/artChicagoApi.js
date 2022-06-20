@@ -11,6 +11,7 @@ artChicagoApiController.getArtworkInfo =  (req, res, next) => {
 //this middleware iterates through the artwork ids received from the previous middleware to request specific information about the pieces.
   console.log('getting info on artworks')
   res.locals.artworkInfo = [];
+  // console.log('sample id is =>', res.locals.artworks[0])
   res.locals.artworks.forEach(async (artworkId, idx) =>{
     await fetch(`https://api.artic.edu/api/v1/artworks/${artworkId}?fields=image_id,title,artist_title,medium_display,theme_titles,date_display,classification_titles,artwork_type_title`)
       .then(data => data.json())
@@ -22,7 +23,6 @@ artChicagoApiController.getArtworkInfo =  (req, res, next) => {
         // //push each response onto res.locals
         //if we've reached the end of our artworks id array, send populated res.locals.artworkInfo array to final middleware else, keep pushing
         if(idx === res.locals.artworks.length - 1){
-          console.log('info array is', res.locals.artworkInfo)
           return next()
         } else{
           res.locals.artworkInfo.push(artworkData.data)
