@@ -32,9 +32,6 @@ app.use(express.urlencoded({ extended: true }));
 //able to read cookies as object
 app.use(cookieParser());
 
-
-
-
 //remember to define all route handlers from most specific to least
 
 //route to serve homepage
@@ -70,8 +67,6 @@ app.use('/:username', usernamerRouter);
 
 //route for any searches for specific artworks
 app.use('/search', artRouter);
-
-
 
 
 

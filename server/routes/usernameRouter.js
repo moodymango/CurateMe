@@ -29,7 +29,7 @@ router.delete('/collections/:title', artworkController.deleteArtwork, (req, res)
 
 //MIGHT BE A STRETCH FEATURE - NOT SUITABLE FOR MVP
 ////allows user to add impression of the piece, so the ONLY prop of artwork object changing is impression
-router.patch('/collections/:artwork',  (req, res) => {
+router.patch('/collections/:title',  (req, res) => {
   //send the frontend the updated collection
   return res.status(200).json(res.locals.updated);
 });

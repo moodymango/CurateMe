@@ -7,8 +7,6 @@ const collectionsController = {};
 //{
 //   "description" : "A celebration of Black and Brown queer pride"
 // }
-
-
 collectionsController.createCollection = async (req, res, next) =>{
   //collection name, description coming from user body
   console.log('creating collection');
@@ -80,7 +78,6 @@ collectionsController.updateCollection = async (req, res, next) =>{
     likes, 
     title
   }
-
 
   await User.findOne({username})
     .then( async user => {
