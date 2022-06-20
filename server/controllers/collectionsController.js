@@ -71,12 +71,16 @@ collectionsController.updateCollection = async (req, res, next) =>{
   //will need the old title of the piece from front-end
   //get description and title of the collection when the user clicks update
   const {description, newTitle, oldTitle, likes} = req.body;
-
+  let title;
+  //ensures we won't break middleware if user doesn't want to update their title
+  if (!newTitle) {title = oldTitle}
+  else {title = newTitle}
   const updatedCollection = {
-    description,
-    title: newTitle,
-    likes
+    description, 
+    likes, 
+    title
   }
+
 
   await User.findOne({username})
     .then( async user => {
@@ -93,7 +97,7 @@ collectionsController.updateCollection = async (req, res, next) =>{
       await user.save()
         .then(savedUser => {
           const newCollection = savedUser.collectionArr.filter((doc) =>{
-            return doc.title === `${newTitle}`
+            return doc.title === `${title}`
           }).pop();
           //return newly saved collection to frontend
           res.locals.updated = newCollection;
