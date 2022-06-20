@@ -141,5 +141,40 @@ artworkController.updateImpression = async (req, res, next) =>{
     })
 }
 
+//FOR DELETE
+artworkController.deleteArtwork = async (req, res, next) =>{
+  console.log('deleting from collection');
+  const {username, title} = req.params;
+  //need to have artwork label to identify which piece to remove
+  const {artworkLabel} = req.body;
+  //find user 
+  await User.findOne({username})
+    .then(async user => {
+      //find collection to delete from
+      const collectionDoc = user.collectionArr.filter((doc) =>{
+        return doc.title === title
+      }).pop();
+      //now iterate filter through collectionDoc.artworks, receiving all works BUT the artwork title matching the label
+      const artworks = collectionDoc.artworks;
+      const remained = artworks.filter((doc) =>{
+        return doc.title !== artworkLabel
+      })
+      console.log('updated artworks arr is', remained)
+      //reassign updated array as new artworks array
+      collectionDoc.artworks = remained;
+      //now save user
+      await user.save()
+        .then(savedUser => {
+          res.locals.updatedCollection = savedUser.collectionArr.artworks
+          console.log('pieces have been deleted from collection',res.locals.updatedCollection)
+        })
+      next();
+    })
+    .catch(err => {
+      next({
+        message: {err: 'error in error in finding user'}
+      })
+    })
+}
 
 module.exports = artworkController;

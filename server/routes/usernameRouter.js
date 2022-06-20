@@ -27,9 +27,9 @@ router.patch('/collections/:artwork',  (req, res) => {
   return res.status(200).json(res.locals.updated);
 });
 //deletes the unwanted artwork from user's collection
-router.delete('collections/:artwork', (req, res) => {
+router.delete('/collections/:title', artworkController.deleteArtwork, (req, res) => {
   //sends user updated view of total collections
-  return res.status(200).json(res.locals.deletedCollection);
+  return res.status(200).send('deleting artworks');
 })
 
 //for http://localhost:5050/:username/collections
