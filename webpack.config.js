@@ -1,26 +1,92 @@
-//NEED TO INSTALL THE FOLLOWING VIA NPM
-//WEBPACK
-// "webpack": "^5.64.0",
-// "webpack-cli": "^4.9.1",
-// "webpack-dev-server": "^4.5.0",
-// "webpack-hot-middleware": "^2.24.3"
-// //LOADERS
-// "@babel/core": "^7.1.2",
-// "@babel/preset-env": "^7.1.0",
-// "@babel/preset-react": "^7.0.0",
-// "babel-loader": "^8.0.4",
-// "css-loader": "^6.5.1",
-// "file-loader": "^6.2.0",
-// "html-webpack-plugin": "^5.5.0",
-// "style-loader": "^3.3.1",
-// "url-loader": "^4.1.1",
-// //SCRIPT STUFF
-// "concurrently": "^6.4.0",
-// "cross-env": "^7.0.3",
-// //SERVER STUFF
-// "html-webpack-plugin": "^5.5.0",
-
-
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+//must require in dotenv in order for this to work
+require('dotenv').config()
+//module.exports to export 
+module.exports = {
+  //the js entrypoint - references the top most level component
+  entry: './client/index.js',
+  //this is only really relevant to our production mode since we need to direct where the created bundle.js file will go
+  output: {
+    //where to emit bundle
+    path: path.resolve(__dirname, 'build'),
+    //tells webpack the name of our bundle
+    filename: 'bundle.js',
+    // //serves everything in this static directory to this route,
+    // //not necessary in output
+    // publicPath: '/'
+  } ,
+  //production -  webpack creates  a minified(stripes all whitespace), and uglified(shortening variable names) file.
+  //development - forgoes minify/uglify process and makes bundling faster
+  mode: process.env.NODE_ENV,
+  //module tells webpack what kind of files to expect
+  module: {
+    rules: [
+      {
+        //regex does .js and jsx files
+        test: /\.jsx?/,
+        use: {
+          //loader is run on the test jsx files
+          loader: 'babel-loader',
+          options: {
+            //   https://webpack.js.org/loaders/babel-loader/
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+          },
+        },
+        //node_modules is ridiculously huge so always make sure to git ignore it
+        exclude: /node_modules/
+      },
+      {
+        //all files with sass, scss and css file extentions
+        test: /\.s[ac]ss$/i,
+        //use with an array to use mutiple loaders with no presets
+        use: [
+          // Creates `style` nodes from JS strings
+          'style-loader',
+          // Translates CSS into CommonJS
+          'css-loader',
+          // Compiles Sass to CSS
+          'sass-loader',
+        ],
+        exclude: /node_modules/
+      },
+    ],
+  },
+  plugins: [
+    //serves the html file to client in lieu of our express server
+    //https://webpack.js.org/concepts/#plugins
+    //"generates an HTML file for your application and automatically injects all your generated bundles into this file."
+    new HtmlWebpackPlugin({
+      template: './index.html'
+    })
+  ],
+  devServer: {
+    //Specify a port number to listen for requests on:
+    port: 8080,
+    //enables hot module replacement (exchanges, adds, or removes modules while an app is running w/out full reload)
+    hot: true,
+    //serve static files from the directory
+    //STILL NOT SURE OF HOW TO CONFIGURE STATIC
+    // static: {
+    //   //tell server at which URL to serve the static directory content
+    //   publicPath: '/build/bundle.js',
+    //   //tell server where to serve the content from?
+    //   //tbh not really sure what files to 
+    //   directory: path.resolve(__dirname, 'client')
+    // },
+    //make it so that the fetch calls from the front end get to our actual backend
+    proxy: {
+      //must proxy ANY route in which we are making an api call 
+      //whenever we get a fetch request to signup, send it to the actual server on localhost:5050
+      '/signup': 'http://localhost:5050',
+      '/login': 'http://localhost:5050',
+      '/search': 'http://localhost:5050',
+      '/:username': 'http://localhost:5050',
+      '/:username//collections': 'http://localhost:5050',
+      '/:username//collections/:title': 'http://localhost:5050',
+    }
+  }
+};
 //I guess the following makes code cleaner, but isnnt related to webpack
 // "eslint": "^7.12.1",
 // "eslint-plugin-react": "^7.21.5",
