@@ -2,6 +2,7 @@
 //require in artworkModel schemas
 const Artwork = require('../models/artworkModel');
 const User = require('../models/userModel');
+const fetch = require('node-fetch');
 //WILL COME BACK TO THIS AFTER I FINISH FAVORITES AND COLLECTION
 const artworkController = {};
 //artworks are saved and updated in the database in order to be referenced in collections and favorites
@@ -23,9 +24,10 @@ artworkController.artworkInfo = async (req, res, next) => {
     //need to construct image url so I can save in DB and display on client side later on.
       const imageURLApi = `${artworkData.config.iiif_url}/${artworkData.data.image_id}/full/843,/0/default.jpg`
       // //save url as a new prop on my response obj
-      artworkData.data.imageURL = imageURLApi
+      artworkData.data.image = imageURLApi
       //save returned data onto res.locals to persist to next middleware
       res.locals.artInfo = artworkData.data;
+      // console.log('art info is =>', res.locals.artInfo)
       next()
     })
     .catch(err => {
@@ -51,22 +53,40 @@ artworkController.addToCollection = async (req, res, next) => {
   console.log('adding artwork to collection');
   const {username} = req.params
   const collection = req.params.title;
-
-  console.log('user is and collection is  =>', {username, collection})
-  const {title, artist_title, date_display, imageUrl, impression } = res.locals.artInfo
+  const {title, artist_title, date_display, image} = res.locals.artInfo
+  
   const newArtwork = {
     title,
     artist: artist_title,
     date: date_display,
-    imageUrl,
-    impression
+    image: String(image)
   }
   //like collection, must find user and collection docs 
   //find matching user with matching collection title in collection array, and push artwork into the array
-  await User.findOneAndUpdate({username, 'collectionArr.title' : collection}, {$push: {'collectionArr.$.artworks': newArtwork}}, {new:true, upsert: true})
-    .then(user => {
+  await User.findOne({username})
+    .then(async user => {
       //send 'added to fav/collection' back to client
-      console.log('sucessfully created an artwork =>', user.collectionArr.artworks)
+      //should give me the collection we want to alter
+      const collectionDoc = user.collectionArr.filter((doc) =>{
+        return doc.title === collection
+      }).pop();
+      console.log('collection is =>', collectionDoc)
+      //collection doc represents collection
+      //now need to access collectionDoc.artworks
+      console.log('image url is =>', newArtwork.image)
+      collectionDoc.artworks.push(newArtwork);
+      //save user
+      await user.save()
+        .then(savedUser => {
+          const artworkArr = savedUser.collectionArr.artworks;
+          console.log('collection arr is =>', artworkArr);
+        })
+        .catch(err => {
+          next ({
+            log: 'error in saving the updated collection',
+            message: {err}
+          })
+        })
       next();
     })
     .catch(err => {
@@ -80,9 +100,25 @@ artworkController.addToCollection = async (req, res, next) => {
 //FOR GET
 artworkController.getArtworks = async (req, res, next) => {
   const {username, title} = req.params;
-  res.locals.urlParams = title
-  console.log(res.locals.urlParams);
-  next();
+  await User.findOne({username})
+    .then(async user => {
+      //send 'added to fav/collection' back to client
+      //should give me the collection we want to alter
+      const collectionDoc = user.collectionArr.filter((doc) =>{
+        return doc.title === title
+      }).pop();
+      console.log('collection is =>', collectionDoc)
+      //collection doc represents collection
+      //now need to access collectionDoc.artworks
+      res.locals.artworks = collectionDoc.artworks;
+      next();
+    })
+    .catch(err => {
+      next({
+        log: 'error in creating reference of this artwork',
+        message: {err: err}
+      })
+    })
 }
 
 //FOR PATCH

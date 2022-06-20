@@ -17,8 +17,8 @@ router.post('/collections/:title', artworkController.artworkInfo, artworkControl
 //read all the artworks in the user's collection
 //need to get :title param from uri
 router.get('/collections/:title', artworkController.getArtworks, (req, res) =>{
-  //send client current collections by user
-  return res.status(200).send(res.locals.urlParams)
+  //send client current collections arr by user
+  return res.status(200).send(res.locals.artworks)
 })
 //MIGHT BE A STRETCH FEATURE
 ////allows user to add impression of the piece, so the ONLY prop of artwork object changing is impression

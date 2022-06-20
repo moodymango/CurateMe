@@ -31,9 +31,9 @@ const artworkSchema = new Schema({
   title: {type: String, required: true},
   artist: {type: String, required: true},
   date: {type: Number, required: true},
-  imageUrl: {type: String, required: true},
+  image: {type: String, required: true},
   //impession is not required, but user will write their impression themselves
-  impression: String,
+  impression: {type: String}
 })
 
 //create model for artworkSchema
