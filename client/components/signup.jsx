@@ -8,6 +8,9 @@ import React, { useRef, useState, useEffect } from 'react';
 //React state keeps track of two things, whether there is an error because user forgot to fill out a field
 //or user successfully submitted their information
 
+//INSTRUCTIONAL VIDEO FOR CREATING SIGN-UP/LOGIN COMPONENTS!
+//https://www.youtube.com/watch?v=X3qyxo_UTR4 : left off at 13:18
+
 //FUNCTIONAL COMPONENT
 const SignUp = () => {
     const userRef = useRef();

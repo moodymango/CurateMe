@@ -10,7 +10,7 @@ class MainContainer extends Component {
       return(
         <div className="container">
           <div className="outerBox">
-            <Navbar />
+            {/* <Navbar /> */}
             <SignUp />
                 <p>Curate Your Own Collection</p>
           </div>

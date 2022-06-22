@@ -9,3 +9,15 @@ Progress check
 3. pseudocode additional routes for sign-up, login
 //ARTICLE ON RESTORING TO PREVIOUS COMMITS:
 https://medium.com/swlh/using-git-how-to-go-back-to-a-previous-commit-8579ccc8180f
+
+Hierarchy of the Client Side:
+The application should have the following hierarchical structure:
+
+````   
+|-- App
+  |-- MainContainer - With Nav bar?
+      |-- TotalsDisplay
+      |-- MarketsContainer
+          |-- MarketCreator
+          |—- MarketsDisplay
+              |—- Market

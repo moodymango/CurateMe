@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 //will import a seach bar in order for the user to search
+//import login and signup components!
 //link to help make nav bar
 //https://cssdeck.com/blog/super-simple-horizontal-navigation-bar/#.Wuu9XNMvz9A
 
