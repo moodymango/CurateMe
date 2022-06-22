@@ -1,3 +1,4 @@
+//webpack creates a static js file that is ready to be attached to my html
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 //must require in dotenv in order for this to work
@@ -9,12 +10,12 @@ module.exports = {
   //this is only really relevant to our production mode since we need to direct where the created bundle.js file will go
   output: {
     //where to emit bundle
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, 'dist'),
     //tells webpack the name of our bundle
     filename: 'bundle.js',
     // //serves everything in this static directory to this route,
     // //not necessary in output
-    // publicPath: '/'
+    publicPath: '/dist/',
   } ,
   //production -  webpack creates  a minified(stripes all whitespace), and uglified(shortening variable names) file.
   //development - forgoes minify/uglify process and makes bundling faster
@@ -67,13 +68,13 @@ module.exports = {
     hot: true,
     //serve static files from the directory
     //STILL NOT SURE OF HOW TO CONFIGURE STATIC
-    // static: {
-    //   //tell server at which URL to serve the static directory content
-    //   publicPath: '/build/bundle.js',
-    //   //tell server where to serve the content from?
-    //   //tbh not really sure what files to 
-    //   directory: path.resolve(__dirname, 'client')
-    // },
+    static: {
+      //tell server at which URL to serve the static directory content
+      publicPath: '/',
+      //tell server where to serve the content from?
+      //tbh not really sure what files to 
+      directory: path.resolve(__dirname)
+    },
     //make it so that the fetch calls from the front end get to our actual backend
     proxy: {
       //must proxy ANY route in which we are making an api call 

@@ -68,7 +68,11 @@ app.use('/:username', usernamerRouter);
 //route for any searches for specific artworks
 app.use('/search', artRouter);
 
-
+app.use('/dist', express.static(path.join(__dirname, '../dist')));
+// serve index.html on the route '/'
+app.get('/', (req, res) => {
+  return res.status(200).sendFile(path.join(__dirname, '../index.html'));
+});
 
 //catch all route handler for any requests made to unknown routes
 app.all('*', (req, res) => res.sendStatus(404));
