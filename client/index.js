@@ -15,7 +15,7 @@
  import App from './App.jsx';
  
  //import any styling for the app here
-//  import styles from './scss/application.scss';
+ import './css/app.css';
 
  render(
      <App />,

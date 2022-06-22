@@ -1,0 +1,29 @@
+/* NAV BAR STYLING */
+#nav {
+    width: 100%;
+    float: left;
+    margin: 0 0 3em 0;
+    padding: 0;
+    list-style: none; 
+    display: flex;
+}
+#nav li {
+    float: left;
+ }
+ #nav li a {
+    display: block;
+    padding: 8px 15px;
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+    border-right: 1px solid none }
+
+
+body {
+    box-sizing: border-box;
+    font-family: 'Ubuntu Light', 'Century Gothic', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: black;
+    background-color: #b50938;
+}

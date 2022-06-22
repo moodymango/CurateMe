@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Navbar from '../components/navBar.jsx';
 
 class MainContainer extends Component {
     constructor(props) {
@@ -8,8 +9,8 @@ class MainContainer extends Component {
       return(
         <div className="container">
           <div className="outerBox">
-            <h1 id="header"> Artsy Fartsy </h1>
-                <p>Are we still working?</p>
+            <Navbar />
+                <p>Curate Your Own Collection</p>
             {/* <TotalsDisplay />
             <MarketsContainer /> */}
           </div>

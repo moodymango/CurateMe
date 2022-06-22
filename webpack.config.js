@@ -39,7 +39,7 @@ module.exports = {
       },
       {
         //all files with sass, scss and css file extentions
-        test: /\.s[ac]ss$/i,
+        test: /\.css$/i,
         //use with an array to use mutiple loaders with no presets
         use: [
           // Creates `style` nodes from JS strings
