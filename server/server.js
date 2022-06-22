@@ -32,17 +32,19 @@ app.use(express.urlencoded({ extended: true }));
 //able to read cookies as object
 app.use(cookieParser());
 
-//remember to define all route handlers from most specific to least
 
-//route to serve homepage
+
+
 
 //route to handle user sign-up/login
-// app.get('/signup',  (req, res) => {
-//   // res.sendFile(path.resolve(__dirname, HTML FOR SIGN UP));
-// });
-// app.get('/login', (req, res) => {
-//   // res.sendFile(path.resolve(__dirname, HTML FOR LOGIN));
-// })
+app.get('/signup', (req, res) => {
+  console.log('path is=>', path.resolve(__dirname, '../client/signup.html'))
+  res.sendFile(path.resolve(__dirname, '../client/users/signup.html'));
+});
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../client/users/login.html'));
+})
 
 app.post('/signup', userController.createUser)
 app.post('/login', userController.verifyUser)
@@ -58,6 +60,7 @@ app.post('/login', userController.verifyUser)
 //   return res.redirect('/dashboard');
 // });
 
+//ONCE USER HAS LOGGED IN/SIGNUP
 //need to have a redirect for user dashboard (will just be the username) 
 //here we will have router to handle favorites and collections
 //source for postman testing
@@ -68,6 +71,7 @@ app.use('/:username', usernamerRouter);
 //route for any searches for specific artworks
 app.use('/search', artRouter);
 
+//ROUTE TO SERVE HOMEPAGE
 app.use('/dist', express.static(path.join(__dirname, '../dist')));
 // serve index.html on the route '/'
 app.get('/', (req, res) => {
