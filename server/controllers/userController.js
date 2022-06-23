@@ -65,11 +65,11 @@ userController.verifyUser = async (req, res, next) => {
         res.locals.userId = result._id;
         console.log('userId is =>', res.locals.userId);
         //CAN I DO THIS ON THE FRONTEND? - /will most likely redirect user to their own dashboard
-        // return res.status(200).json(res.locals.userId)
-        return res.redirect(`/:${username}`);
+        return res.status(200).send(res.locals.userId)
+        // return res.redirect(`/:${username}`);
       } else {
         console.log('incorrect pass')
-        return res.status(400).redirect('/login')
+        return res.status(401).send('Incorrct password')
       }
     })
     .catch(err => next({log: 'error when logging in user', message: {err:err}}));

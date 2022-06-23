@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Navbar from '../components/navBar.jsx';
 import SignUp from '../components/signup.jsx'
+import Login from '../components/login.jsx';
 
 class MainContainer extends Component {
     constructor(props) {
@@ -11,7 +12,8 @@ class MainContainer extends Component {
         <div className="container">
           <div className="outerBox">
             {/* <Navbar /> */}
-            <SignUp />
+            {/* <SignUp /> */}
+            <Login />
                 <p>Curate Your Own Collection</p>
           </div>
         </div>
