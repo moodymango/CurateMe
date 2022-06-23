@@ -47,9 +47,12 @@ const Login = () => {
     catch (err) {
       if(!err.response){
         setErrMsg('No server response')
+      } else if(err.reponse?.status === 400) {
+        setErrMsg('Incorrect username or password')
       } else {
         setErrMsg('Login Failed')
       }
+      errRef.current.focus();
     }
   }
 

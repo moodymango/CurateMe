@@ -75,11 +75,11 @@ const SignUp = () => {
        {/* shows either account has been created OR the form which user submits the information */}
        {success? (
         <section>
-            <h1>Your account has been created!</h1>
+            <h1>Welcome {user}. Your account has been created!</h1>
             <br/ >
             <p>
                 {/* put redirect router here */}
-                <a href= "#"> Go to dashboard</a>
+                <a href= "#"> Go to your dashboard</a>
             </p>
         </section>
         ) : (

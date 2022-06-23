@@ -35,7 +35,7 @@ userController.createUser = async (req, res, next) => {
       // console.log('user id is =>', res.locals.userId)
       console.log('new user is =>', newUser)
 //CAN I DO THIS ON THE FRONTEND? - /will most likely redirect user to their own dashboard
-      return res.status(200).json(res.locals.userId);
+      return res.status(200).send(res.locals.userId);
       // return res.redirect(`/:${username}`);
     })
     .catch(err => {
