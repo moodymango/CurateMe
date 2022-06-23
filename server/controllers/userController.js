@@ -32,10 +32,11 @@ userController.createUser = async (req, res, next) => {
     .then(newUser => {
       //persist userID to setSSID cookie middleware
       res.locals.userId = newUser._id;
-      console.log('user id is =>', res.locals.userId)
-      // next();
-      //redirect user to their dashboard
-      return res.redirect(`/:${username}`);
+      // console.log('user id is =>', res.locals.userId)
+      console.log('new user is =>', newUser)
+//CAN I DO THIS ON THE FRONTEND? - /will most likely redirect user to their own dashboard
+      return res.status(200).json(res.locals.userId);
+      // return res.redirect(`/:${username}`);
     })
     .catch(err => {
       next({
@@ -63,8 +64,8 @@ userController.verifyUser = async (req, res, next) => {
         //saveUser id onto res.locals for set SSID middleware
         res.locals.userId = result._id;
         console.log('userId is =>', res.locals.userId);
-        //will most likely redirect user to their own dashboard
-        // next();
+        //CAN I DO THIS ON THE FRONTEND? - /will most likely redirect user to their own dashboard
+        // return res.status(200).json(res.locals.userId)
         return res.redirect(`/:${username}`);
       } else {
         console.log('incorrect pass')

@@ -1,5 +1,7 @@
 //maybe try following along and using react hooks?
 import React, { useRef, useState, useEffect } from 'react';
+//importing axios from my api folder
+import axios from './api/axios';
 //useRef - persist values between renders
     //used to store mutable values that does not cause a re-render when changed
     //useState  automatically rerenders our page
@@ -8,8 +10,10 @@ import React, { useRef, useState, useEffect } from 'react';
 //React state keeps track of two things, whether there is an error because user forgot to fill out a field
 //or user successfully submitted their information
 
-//INSTRUCTIONAL VIDEO FOR CREATING SIGN-UP/LOGIN COMPONENTS!
+//INSTRUCTIONAL VIDEO FOR CREATING LOGIN COMPONENTS!
 //https://www.youtube.com/watch?v=X3qyxo_UTR4 : left off at 13:18
+//VIDEO FOR REGISTER COMPONENT
+//https://www.youtube.com/watch?v=brcHK3P6ChQ&list=PL0Zuz27SZ-6PRCpm9clX0WiBEMB70FWwd
 
 //FUNCTIONAL COMPONENT
 const SignUp = () => {
@@ -33,6 +37,7 @@ const SignUp = () => {
 
     useEffect(() => {
         userRef.current.focus();
+        //happens when the componet loads and will focus on the user area
     }, [])
 //empty out any error msg if user changes any of the following states (the required inputs)
     useEffect(() => {
@@ -41,8 +46,28 @@ const SignUp = () => {
     //for form submission, prevents automatic reload of page after submission
     const handleSubmit = async(e) =>{
         e.preventDefault();
-        console.log(user, pwd)
-        setSuccess(true);
+        try{
+            //within axios.post, need to define registration url
+            const response = await axios.post('/signup',
+            //need to provide payload(data we're sending to backend)
+            //need to make sure the properties match the properties i've defined in my backend
+            JSON.stringify({username: user, password: pwd, email, firstName, lastName}),
+            {
+                headers: {'Content-Type': 'application/json'},
+                withCredentials: true
+            });
+            //this is represents the response from the server
+            console.log('response is =>', response)
+            //reassign so user knows they've successfully made an account
+            setSuccess(true);
+        }
+        catch (err) {
+            if(!err.response){
+                setErrMsg('No server response')
+            } else {
+                setErrMsg('Sign up Failed')
+            }
+        }
     }
     return (
        <> 
@@ -124,7 +149,8 @@ const SignUp = () => {
             {/* don't need an onlick to the button because it's the only button in the form. will trigger a submit event! */}
                 </div>
                 <div className="button-container">
-                    <button>Sign Up</button>
+                    {/* if we don't have these fields, button will be disabled */}
+                    <button disabled ={!user || !pwd || !email || !firstName || !lastName? true: false}>Sign Up</button>
                 </div>
             </form>
             <p>
