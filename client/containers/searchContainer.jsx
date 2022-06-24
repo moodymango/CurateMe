@@ -48,14 +48,14 @@ const SearchContainer= (props) => {
     fetchData()
   }
     return (
-
+      // <h1>Hello World </h1>
       //SEARCH BAR, since for some reason we cannot find the search component??
       <form role = "search" onSubmit = {handleSubmit}>
       <label htmlFor='search'>
       <input title ="search for art" type = 'search' id = "search" onChange={(e) => setSearch(e.target.value)} value={searchReq}  > </input>
       </label>
       <button type = 'submit'>Search</button>
-    </form>
+      </form>
     )
 }
 export default SearchContainer;

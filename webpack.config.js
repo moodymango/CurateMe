@@ -67,13 +67,15 @@ module.exports = {
     //enables hot module replacement (exchanges, adds, or removes modules while an app is running w/out full reload)
     hot: true,
     //serve static files from the directory
-    //STILL NOT SURE OF HOW TO CONFIGURE STATIC
+    //STILL NOT SURE OF HOW TO CONFIGURE STATIC,
+    historyApiFallback: true,
+    
     static: {
       //tell server at which URL to serve the static directory content
       publicPath: '/',
       //tell server where to serve the content from?
       //tbh not really sure what files to 
-      directory: path.resolve(__dirname)
+      directory: path.resolve(__dirname),
     },
     //make it so that the fetch calls from the front end get to our actual backend
     proxy: {

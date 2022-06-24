@@ -79,7 +79,13 @@ app.get('/', (req, res) => {
 });
 
 //catch all route handler for any requests made to unknown routes
-app.all('*', (req, res) => res.sendStatus(404));
+// app.all('*', (req, res) => res.sendStatus(404));
+
+//FOLLOWING LINK EXPLAINS WHY I MUST SET UP CATCH ALL THIS WAY
+//https://ui.dev/react-router-cannot-get-url-refresh
+app.all('*', (req, res) => {
+  return res.status(200).sendFile(path.join(__dirname, '../index.html'));
+});
 
 //global error handler
 app.use((err, req, res, next) => {

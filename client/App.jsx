@@ -28,9 +28,9 @@ const App = (props) => {
     <main>
       <Router>
         <Switch>
-          <Route path = '/search' component={withRouter(SearchContainer)} /> 
-          <Route path = '/:username' component={UserPage} />
           <Route exact path = '/' component={Homepage} />
+          <Route exact path = '/search' component={SearchContainer} /> 
+          <Route exact path = '/:username' component={UserPage} />
           {/* //this route will go to different collections */}
           {/* <Route path="/username/:title" element={<UserCollections/>} /> */}
         </Switch> 
