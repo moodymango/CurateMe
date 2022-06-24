@@ -23,6 +23,7 @@ artChicagoApiController.getArtworkInfo =  (req, res, next) => {
         // //push each response onto res.locals
         //if we've reached the end of our artworks id array, send populated res.locals.artworkInfo array to final middleware else, keep pushing
         if(idx === res.locals.artworks.length - 1){
+          console.log('finished grabbing')
           return next()
         } else{
           res.locals.artworkInfo.push(artworkData.data)
@@ -55,6 +56,10 @@ artChicagoApiController.getArtworks = async (req, res, next) => {
         //push each object id into res.locals.artworks
         res.locals.artworks.push(record.id)
       })
+      //if the artworks array is empty, need to send back an error message
+      if(res.locals.artworks.length === 0){
+        res.send(400).send('Sorry, could not find any artworks pertaining to that search')
+      }
       next()
     })
     .catch(err => {

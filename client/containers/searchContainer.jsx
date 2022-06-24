@@ -29,7 +29,7 @@ const SearchContainer= (props) => {
                 setResults([...searchResults, el])
               })
             //will trigger a rendering of search results 
-            console.log('results are =>', searchResults);
+            console.log('results are =>', searchReq);
           }
           catch (err) {
             if(!err.response){
@@ -52,7 +52,7 @@ const SearchContainer= (props) => {
       //SEARCH BAR, since for some reason we cannot find the search component??
       <form role = "search" onSubmit = {handleSubmit}>
       <label htmlFor='search'>
-      <input title ="search for art" type = 'search' id = "search" onChange={(e) => setSearch(e.target.value)} value={searchReq}  > </input>
+      <input title ="search for art" type = 'search' id = "search" onChange={(e) => setSearch(e.target.value)} value={searchReq}  />
       </label>
       <button type = 'submit'>Search</button>
       </form>
