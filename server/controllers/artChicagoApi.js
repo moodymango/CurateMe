@@ -17,9 +17,11 @@ artChicagoApiController.getArtworkInfo =  (req, res, next) => {
       .then(data => data.json())
       .then(artworkData => {
         //need to construct image url so I can save in DB and display on client side later on.
-        const imageURLApi = `${artworkData.config.iiif_url}/${artworkData.data.image_id}/full/400,/0/default.jpg`
+        const imageURLApi = `${artworkData.config.iiif_url}/${artworkData.data.image_id}/full/200,/0/default.jpg`
+        const largeImage = `${artworkData.config.iiif_url}/${artworkData.data.image_id}/full/600,/0/default.jpg`
         // //save url as a new prop on my response obj
         artworkData.data.imageURL = imageURLApi
+        artworkData.data.largeImageURL = largeImage
         //add artworkId to the response object as well - this is so we can make another fetch request in case user chooses to add it collection
         artworkData.data.artworkId = artworkId;
         // //push each response onto res.locals

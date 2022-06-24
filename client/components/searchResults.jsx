@@ -17,7 +17,8 @@ const SearchResults = (props) => {
                 imageURL,
                 title,
                 medium_display,
-                artworkId
+                artworkId,
+                largeImageURL
             } = artObj;
 
             artworkCards.push(
@@ -30,6 +31,7 @@ const SearchResults = (props) => {
                 title = {title}
                 medium = {medium_display}
                 artworkId = {artworkId}
+                largeImageURL = {largeImageURL}
             />)
         })
     return (

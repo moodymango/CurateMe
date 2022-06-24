@@ -14,7 +14,8 @@ const ArtworkCard = (props) => {
     imageURL,
     title,
     medium,
-    artworkId 
+    artworkId,
+    largeImageURL
     } = props;
     //create state for image api calls
     //assuming I will be getting a url returned from my api call
@@ -27,6 +28,7 @@ const ArtworkCard = (props) => {
     return (
         <div className='search-results'>
             {/* seperate div in order to show artwork image */}
+            {/* when user clicks on image, will be able to see a larger version */}
             <div id = "art-image">
                 <img src ={imageURL} alt={title}/>
             </div>
