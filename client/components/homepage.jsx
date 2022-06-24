@@ -5,8 +5,11 @@ const Homepage = () => {
     return (
         <section className='homepage'>
             {/* //maybe link to my own personal github? */}
-             <h2>Curate Your Own Collection</h2>
-             <p></p>
+            {/* this is where I want to put my image */}
+            <div id ='homepage-content'>
+                <h1>Curate Your Own Collection</h1>
+                <h3>Data and images sourced from the Art Institute of Chicago API. </h3>
+            </div>
         </section>
     )
 }
