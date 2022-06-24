@@ -58,8 +58,9 @@ artChicagoApiController.getArtworks = async (req, res, next) => {
       })
       //if the artworks array is empty, need to send back an error message
       if(res.locals.artworks.length === 0){
-        res.send(400).send('Sorry, could not find any artworks pertaining to that search')
+        res.send(400).send('Sorry, could not find any artworks with this term')
       }
+      console.log('artworks are =>', res.locals.artworks)
       next()
     })
     .catch(err => {

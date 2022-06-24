@@ -24,21 +24,15 @@ const SearchContainer= (props) => {
                 headers: {'Content-Type': 'application/json'},
                 withCredentials: true
               })
-              //receiving an array of artworks, iterate through response and push to state
-              searchResults.forEach((el) =>{
-                setResults([...searchResults, el])
-              })
-            //will trigger a rendering of search results 
-            console.log('results are =>', searchReq);
+              //save response data to searchResults state array
+              setResults(searchResults.data);
           }
           catch (err) {
-            if(!err.response){
-              setErrMsg('No server response')
+            if(err.response){
+              setErrMsg('Search failed');
             } else if(err.reponse?.status === 400) {
               setErrMsg('Try a different term')
-            } else {
-              setErrMsg('Search failed')
-            }
+            } 
           }
     }
   //allows user to make calls via the api!
@@ -52,7 +46,7 @@ const SearchContainer= (props) => {
       //SEARCH BAR, since for some reason we cannot find the search component??
       <form role = "search" onSubmit = {handleSubmit}>
       <label htmlFor='search'>
-      <input title ="search for art" type = 'search' id = "search" onChange={(e) => setSearch(e.target.value)} value={searchReq}  />
+      <input title ="search for art" type = 'search' id = "search" onChange={(e) => setSearch(e.target.value)} value={searchReq} placeholder ="Degas" />
       </label>
       <button type = 'submit'>Search</button>
       </form>
