@@ -20,6 +20,8 @@ artChicagoApiController.getArtworkInfo =  (req, res, next) => {
         const imageURLApi = `${artworkData.config.iiif_url}/${artworkData.data.image_id}/full/843,/0/default.jpg`
         // //save url as a new prop on my response obj
         artworkData.data.imageURL = imageURLApi
+        //add artworkId to the response object as well - this is so we can make another fetch request in case user chooses to add it collection
+        artworkData.data.artworkId = artworkId;
         // //push each response onto res.locals
         //if we've reached the end of our artworks id array, send populated res.locals.artworkInfo array to final middleware else, keep pushing
         if(idx === res.locals.artworks.length - 1){
