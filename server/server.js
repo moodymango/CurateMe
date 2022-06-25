@@ -6,6 +6,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 //in order to read properties off the cookie obj in req.cookies?
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 //require in all my routers
 const artRouter = require('./routes/searchArtworks');
 const usernamerRouter = require('./routes/usernameRouter');
@@ -31,6 +32,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //able to read cookies as object
 app.use(cookieParser());
+app.use(cors())
 
 
 

@@ -13,7 +13,7 @@ artChicagoApiController.getArtworkInfo =  (req, res, next) => {
   res.locals.artworkInfo = [];
   // console.log('sample id is =>', res.locals.artworks[0])
   res.locals.artworks.forEach(async (artworkId, idx) =>{
-    await fetch(`https://api.artic.edu/api/v1/artworks/${artworkId}?fields=image_id,title,artist_title,medium_display,theme_titles,date_display,classification_titles,artwork_type_title`)
+   await fetch(`https://api.artic.edu/api/v1/artworks/${artworkId}?fields=image_id,title,artist_title,medium_display,theme_titles,date_display,classification_titles,artwork_type_title`)
       .then(data => data.json())
       .then(artworkData => {
         //need to construct image url so I can save in DB and display on client side later on.

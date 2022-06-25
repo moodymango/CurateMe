@@ -36,7 +36,6 @@ const SearchResults = (props) => {
         })
     return (
         <div className='search-results'>
-            <h1>represents artwork results</h1>
             {artworkCards}
         </div>
     )

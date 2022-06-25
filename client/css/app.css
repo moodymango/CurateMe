@@ -57,6 +57,6 @@ body {
     font-family: 'Ubuntu Light', 'Century Gothic', sans-serif;
     margin: 0;
     padding: 0;
-    color: rgb(237, 232, 232);
-    /* color: black; */
+    /* color: rgb(237, 232, 232); */
+    color: black;
 }

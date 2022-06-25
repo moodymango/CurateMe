@@ -85,8 +85,8 @@ module.exports = {
       '/login': 'http://localhost:5050',
       '/search': 'http://localhost:5050',
       '/:username': 'http://localhost:5050',
-      '/:username//collections': 'http://localhost:5050',
-      '/:username//collections/:title': 'http://localhost:5050',
+      '/:username/collections': 'http://localhost:5050',
+      '/:username/collections/:title': 'http://localhost:5050',
     }
   }
 };
