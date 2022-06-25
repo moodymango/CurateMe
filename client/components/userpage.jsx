@@ -73,7 +73,7 @@ const UserPage = (props) => {
                 </section>
             ) : (
                 <section >
-                    <h1>Lets get started!</h1>
+                    <h1>Lets get started:</h1>
                     <button>Create your first collection</button>
                 </section>
             )}
