@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import axios from '../components/api/axios';
 
 //import children components
@@ -10,6 +10,7 @@ const SearchContainer= (props) => {
     const [searchReqArtist, setArtistSearch] = useState('');
     //set initial state of results (which should be an array of objs)
     const [searchResults, setResults] = useState([]);
+    const resultsArr = useRef([])
     //set error messaging 
     const [errMsg, setErrMsg] = useState('');
     //make async function to fetch data
@@ -29,9 +30,9 @@ const SearchContainer= (props) => {
               setResults(apiResults.data);
               // let dataArr = apiResults.data
               // dataArr.forEach((el) => {
-              //   console.log(el)
-              //   setResults(...searchResults, el)
+              //   resultsArr.current.push(el);
               // })
+              // console.log('array is =>', resultsArr.current)
           }
           catch (err) {
             if(err.response){
@@ -55,7 +56,7 @@ const SearchContainer= (props) => {
             <form id = "search-form" role = "search" onSubmit = {handleSubmit}>
               <label htmlFor='search'>
                 <div id='search-bar'>
-                    <input title ="search for art" type = 'search' id = "search" onChange={(e) => setSearch(e.target.value)} value={searchReq} placeholder ="Degas" />
+                    <input title ="search for art" type = 'search' id = "search" onChange={(e) => setSearch(e.target.value)} value={searchReq} placeholder ="Artist name?" />
                     <button type = 'submit'>Search</button>
                 </div>
               </label>

@@ -1,6 +1,7 @@
-import React, {useState, useEffect }from 'react';
+import React, {useState, useEffect, useRef}from 'react';
 import {Link, useParams} from 'react-router-dom'
-import axios from './api/axios';
+import CollectionsCard from './collections.jsx';
+import axios from './api/axios.js';
 //user page will contain cards for both collections and individual artworks based on collections
 //import collections card here
 const UserPage = (props) => {
@@ -8,9 +9,11 @@ const UserPage = (props) => {
   const noColon = username.substring(1)
   //if user has collections available, will render, if not, prompt user to create a collection
   const [userCollections, setCollections] = useState([])
+  const prevCollection = useRef([])
   //if user does not have any collections, will render call to action
   //else display user collections
   const [userHasCollections, setBoolean] = useState(false)
+
   const getCollections = async () =>{
     //make get request if user has collections
     try{
@@ -23,6 +26,8 @@ const UserPage = (props) => {
       collections.data.forEach((el) => {
         console.log(el)
         setCollections(...userCollections, el)
+        prevCollection.current.push(el);
+        console.log('updated state array is=>', prevCollection.current)
       })
 
     }
@@ -32,16 +37,29 @@ const UserPage = (props) => {
   }
   //will have to use useEffect to check if user has collections
   useEffect(() =>{
-    //run get collections, and if user has collections, change boolean to true
     getCollections()
-    if (userCollections.length){
-      setBoolean(true)
-    }
   }, [])
-  useEffect(() =>{
-    //run get collections, and if user has collections, change boolean to true
-  }, [userCollections])
 
+  // useEffect(() =>{
+  //     const collectionDisplay = []
+  //     prevCollection.forEach((elObj) =>{
+  //       collectionDisplay.push(
+  //         <CollectionsCard title ={elObj.title} 
+  //           description= {eleObj.description}
+  //         />
+  //       )
+  //     })
+  // }, [prevCollection.current])
+  const collectionDisplay = []
+  prevCollection.current.forEach((elObj) =>{
+    collectionDisplay.push(
+      <CollectionsCard title ={elObj.title} 
+        description= {elObj.description}
+      />
+    )
+    })
+    console.log('display of collections is=>', collectionDisplay)
+//checking length of collections array to see if user has collections
   return (
       <>
       <div className='user-page'>
@@ -49,9 +67,9 @@ const UserPage = (props) => {
               <h1>{noColon}</h1>
         </section>
         <section id='conditional'>
-            {userHasCollections? (
+            {prevCollection.current.length? (
                 <section>
-                    <p>It Worked!</p>
+                    {collectionDisplay}
                 </section>
             ) : (
                 <section >
