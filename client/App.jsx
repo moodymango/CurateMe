@@ -21,6 +21,8 @@ import UserPage from './components/userpage.jsx';
 //need to make search bar and search collections from 
 import SearchContainer from './containers/searchContainer.jsx';
 import Navbar from './components/navBar.jsx';
+import SignUp from './components/signup.jsx'
+import Login from './components/login.jsx'
 //  import MainContainer from './containers/MainContainer.jsx';
 
 const App = (props) => {
@@ -31,6 +33,8 @@ const App = (props) => {
         <Switch>
           <Route exact path = '/' component={Homepage} />
           <Route exact path = '/search' component={SearchContainer} /> 
+          <Route path = "/signup" component = {SignUp} />
+          <Route path = "/login" component = {Login} />
           {/* <Route exact path = '/:username/collections/:title' component={} />
           <Route exact path = '/:username/collections' component={} />  */}
           {/* <Route  path = '/:username' component={UserPage} />
