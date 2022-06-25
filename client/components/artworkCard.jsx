@@ -26,21 +26,29 @@ const ArtworkCard = (props) => {
     //only need to display title, artist, date created, and medium,
     //artworkID will be used to save the results from search, which will be done on searchContainer
     return (
-        <div className='search-results'>
+        <div className='artwork-cards'>
             {/* seperate div in order to show artwork image */}
             {/* when user clicks on image, will be able to see a larger version */}
             <div id = "art-image">
                 <img src ={imageURL} alt={title}/>
             </div>
-            <div className="artworkCard" style = {{display: 'flex', flexDirection: 'column'}}>
-                <label htmlFor="title">Title: </label>
-                <span id="title">{title}</span>
-                <label htmlFor="artist">Artist: </label>
-                <span id="artist">{artist}</span>
-                <label htmlFor="date">Date Created:</label>
-                <span id="date">{date}</span>
-                <label htmlFor="medium">Medium:</label>
-                <span id="medium">{medium}</span>
+            <div style = {{display: 'flex', flexDirection: 'column'}}>
+                <div id="artworkInfo" >
+                    <label htmlFor="title">Title: </label> 
+                    <span id="title">{title}</span>
+                </div>
+                <div id="artworkInfo" >
+                    <label htmlFor="artist">Artist: </label>
+                    <span id="artist">{artist}</span>
+                </div>
+                <div id="artworkInfo" >
+                    <label htmlFor="date">Date Created: </label>
+                    <span id="date">{date}</span>
+                </div>
+                <div id="artworkInfo" >
+                    <label htmlFor="medium">Medium: </label>
+                    <span id="medium">{medium}</span>
+                </div >
                 <div id = "artwork-card-buttons">
                     {/* add onClick function that will save artwork to individual collection */}
                     <button type = 'button'  >Add to Collection </button>

@@ -19,8 +19,12 @@ const UserPage = (props) => {
         method: 'GET',
         url: `http://localhost:5050/${noColon}/collections`
       })
-      setCollections(collections.data);
-      console.log('results are =>', collections.data)
+      //so state is not being updated properly in this case!!!
+      collections.data.forEach((el) => {
+        console.log(el)
+        setCollections(...userCollections, el)
+      })
+
     }
     catch (err) {
       console.log('error in getting user collection')
@@ -30,9 +34,9 @@ const UserPage = (props) => {
   useEffect(() =>{
     //run get collections, and if user has collections, change boolean to true
     getCollections()
-    if (userCollections.length !== 0){
-      setBoolean(true)
-    }
+    // if (userCollections.length !== 0){
+    //   setBoolean(true)
+    // }
   }, [])
 
   return (

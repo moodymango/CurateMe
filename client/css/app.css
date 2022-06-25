@@ -1,11 +1,12 @@
 /* NAV BAR STYLING */
-#nav {
+#nav-container {
     width: 100%;
     float: left;
-    /* margin: 0 0 3em 0; */
+    margin: 1em;
     padding: 0;
     list-style: none; 
     display: flex;
+    justify-content: space-between;
     flex-direction: row;
 }
 #nav li {
@@ -50,13 +51,42 @@
     position: relative;
     text-align: center;
 }
+/* STYLING FOR SIGN UP */
+.login, .signup, .search-component, .logged-in {
+    top: 0;
+    left: 0;
+    text-align: center;
+    color:black
+}
+/* SEARCH RESULTS */
+#search-results {
+    display: flex;
+    flex-direction: column;
+}
+/* SEARCH BAR */
 
+/* ARTWORK CARDS */
+.artwork-cards{
+    position: block;
+    padding: 5px;
+    width:30%;
+    /* margin: 10px; */
+    margin: 5px 5px 13px 10px;
+    float:left;
+    font-size: .8em;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, .2);
+}
+
+
+label{
+    font-weight: 600;
+}
 
 body {
     box-sizing: border-box;
     font-family: 'Ubuntu Light', 'Century Gothic', sans-serif;
     margin: 0;
     padding: 0;
-    /* color: rgb(237, 232, 232); */
-    color: black;
+    color: rgb(237, 232, 232);
+    /* color: black; */
 }

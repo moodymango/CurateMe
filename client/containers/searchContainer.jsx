@@ -27,7 +27,11 @@ const SearchContainer= (props) => {
               //save response data to searchResults state array
               //I am successfully saving state, but only saving 5 pieces when I should be saving 10.
               setResults(apiResults.data);
-            //  setResults(searchResults => [...searchResults, apiResults.data])
+              // let dataArr = apiResults.data
+              // dataArr.forEach((el) => {
+              //   console.log(el)
+              //   setResults(...searchResults, el)
+              // })
           }
           catch (err) {
             if(err.response){
@@ -48,13 +52,14 @@ const SearchContainer= (props) => {
       // <h1>Hello World </h1>
       //SEARCH BAR, since for some reason we cannot find the search component??
       <div className='search-component'>
-
-          <form id = "search-form" role = "search" onSubmit = {handleSubmit}>
-            <label htmlFor='search'>
-            <input title ="search for art" type = 'search' id = "search" onChange={(e) => setSearch(e.target.value)} value={searchReq} placeholder ="Degas" />
-            </label>
-            <button type = 'submit'>Search</button>
-          </form>
+            <form id = "search-form" role = "search" onSubmit = {handleSubmit}>
+              <label htmlFor='search'>
+                <div id='search-bar'>
+                    <input title ="search for art" type = 'search' id = "search" onChange={(e) => setSearch(e.target.value)} value={searchReq} placeholder ="Degas" />
+                    <button type = 'submit'>Search</button>
+                </div>
+              </label>
+            </form>
           <div id ="search-results">
             <SearchResults searchResults = {searchResults} />
           </div>

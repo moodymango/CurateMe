@@ -76,7 +76,7 @@ const Login = () => {
      //<form>
          // htmlFor in label and attribute for id MUST match for each input field
          //value, set that equal to the user state to make it a controlled input - crucial if we are going to clear inputs upon submission
-     <section>
+     <section className='login'>
          <p ref = {errRef} className= {errMsg? "errmsg" : "offscreen"} aria-live="assertive">
              {errMsg}
          </p>

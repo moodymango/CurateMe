@@ -26,7 +26,7 @@ class Navbar extends Component {
                     <Link to="/" > Home </Link>
                   </li> 
                   <li>
-                    <Link to="/search" > Start Searching for Artworks </Link>
+                    <Link to="/search" > Search for Artworks </Link>
                   </li> 
                 </div>
                 <div id ="left-nav buttons ">
