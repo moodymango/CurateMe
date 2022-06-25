@@ -41,6 +41,7 @@ collectionsController.createCollection = async (req, res, next) =>{
 collectionsController.readCollection = (req, res, next) =>{
   console.log('reading collections')
   const {username} = req.params
+  console.log('user is =>', username)
   User.findOne({username})
     .then( async user => {
       //send collections array to to frontend

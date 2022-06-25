@@ -15,8 +15,12 @@ const UserPage = (props) => {
     //make get request if user has collections
     try{
       //within axios.get need to define search url for backend
-      const collections = await axios.get(`/:${noColon}/collections`)
+      const collections = await axios({
+        method: 'GET',
+        url: `http://localhost:5050/${noColon}/collections`
+      })
       setCollections(collections.data);
+      console.log('results are =>', collections.data)
     }
     catch (err) {
       console.log('error in getting user collection')
@@ -39,7 +43,7 @@ const UserPage = (props) => {
         <section id='conditional'>
             userHasCollections? (
                 <section>
-                    <p>{userCollections[0]}</p>
+                    <p>It Worked!</p>
                 </section>
             ) : (
                 <section>
