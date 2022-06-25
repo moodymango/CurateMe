@@ -2,6 +2,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 //importing axios from my api folder
 import axios from './api/axios';
+
+import {Link} from 'react-router-dom'
 //useRef - persist values between renders
     //used to store mutable values that does not cause a re-render when changed
     //useState  automatically rerenders our page
@@ -74,7 +76,7 @@ const SignUp = () => {
        {/* ternary which checks whether or not user has succesfully made an account */}
        {/* shows either account has been created OR the form which user submits the information */}
        {success? (
-        <section>
+        <section className='acc-created'>
             <h1>Welcome {user}. Your account has been created!</h1>
             <br/ >
             <p>
@@ -156,7 +158,7 @@ const SignUp = () => {
             <p>
                 Already have an account?
                  {/* need to put router link here */}
-                 <a href ="#"> Sign In</a>
+                 <Link to = '/login' > Login </Link>
             </p>
         </section>
         )}

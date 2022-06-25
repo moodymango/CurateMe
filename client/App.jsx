@@ -9,7 +9,7 @@
  * ************************************
  */
 
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect  } from 'react';
 
 //tips on react router 
 //https://ui.dev/react-router-cannot-get-url-refresh
@@ -26,6 +26,13 @@ import Login from './components/login.jsx'
 //  import MainContainer from './containers/MainContainer.jsx';
 
 const App = (props) => {
+  //need an is logged state in order to keep track of whether or not user is logged in
+  const [isLogged, setLogged] = useState(false);
+  const handleLog = () =>{
+    //sets isLogged to true
+    setLogged(true)
+  }
+
   return (
     <main>
       <Router>
@@ -35,10 +42,9 @@ const App = (props) => {
           <Route exact path = '/search' component={SearchContainer} /> 
           <Route path = "/signup" component = {SignUp} />
           <Route path = "/login" component = {Login} />
-          {/* <Route exact path = '/:username/collections/:title' component={} />
-          <Route exact path = '/:username/collections' component={} />  */}
-          {/* <Route  path = '/:username' component={UserPage} />
-          {/* //this route will go to different collections */}
+          {/* <Route exact path = '/:username/collections/:title' component={} /> */}
+          <Route exact path = '/:username/collections' component={UserPage} /> 
+           <Route  exact path = '/:username' component={UserPage} />
         </Switch> 
       </Router>
     </main>

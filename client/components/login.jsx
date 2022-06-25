@@ -1,5 +1,6 @@
 //maybe try following along and using react hooks?
 import React, { useRef, useState, useEffect } from 'react';
+import {Link} from 'react-router-dom'
 //importing axios from my api folder
 import axios from './api/axios';
 
@@ -66,7 +67,7 @@ const Login = () => {
          <br/ >
          <p>
              {/* put redirect router here */}
-             <a href= "#"> Go to your dashboard</a>
+             <Link to =' /:username'> Go to your dashboard</Link>
          </p>
      </section>
      ) : (
@@ -79,7 +80,7 @@ const Login = () => {
          <p ref = {errRef} className= {errMsg? "errmsg" : "offscreen"} aria-live="assertive">
              {errMsg}
          </p>
-         <h1>Sign Up</h1>
+         <h1>Login</h1>
          <form onSubmit={handleSubmit}>
              <div className="input-container">
                  <label htmlFor='username'>Username </label>
@@ -113,7 +114,7 @@ const Login = () => {
          <p>
              Don't have an account?
               {/* need to put router link here */}
-              <a href ="#"> Sign Up</a>
+              <Link to = '/signup' > Sign up </Link>
          </p>
      </section>
      )}

@@ -43,7 +43,7 @@ router.post('/collections', collectionsController.createCollection, (req, res) =
 //read user's collections
 router.get('/collections', collectionsController.readCollection, (req, res) =>{
   //send client current collections by user
-  return res.status(200).json(res.locals.allCollections);
+  return res.status(200).send(res.locals.allCollections);
 })
 //update new collection for user
 router.patch('/collections', collectionsController.updateCollection, (req, res) => {

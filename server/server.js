@@ -37,6 +37,12 @@ app.use(cors())
 
 
 
+//ONCE USER HAS LOGGED IN/SIGNUP
+//need to have a redirect for user dashboard (will just be the username) 
+//here we will have router to handle favorites and collections
+//source for postman testing
+//https://community.postman.com/t/what-is-api-paths/21818/2
+app.use('/:username', usernamerRouter);
 
 //route to handle user sign-up/login
 app.get('/signup', (req, res) => {
@@ -62,12 +68,6 @@ app.post('/login', userController.verifyUser)
 //   return res.redirect('/dashboard');
 // });
 
-//ONCE USER HAS LOGGED IN/SIGNUP
-//need to have a redirect for user dashboard (will just be the username) 
-//here we will have router to handle favorites and collections
-//source for postman testing
-//https://community.postman.com/t/what-is-api-paths/21818/2
-app.use('/:username', usernamerRouter);
 
 
 //route for any searches for specific artworks

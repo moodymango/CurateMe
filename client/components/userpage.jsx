@@ -5,6 +5,7 @@ import axios from './api/axios';
 //import collections card here
 const UserPage = (props) => {
   const {username} = useParams();
+  const noColon = username.substring(1)
   //if user has collections available, will render, if not, prompt user to create a collection
   const [userCollections, setCollections] = useState([])
   //if user does not have any collections, will render call to action
@@ -14,7 +15,7 @@ const UserPage = (props) => {
     //make get request if user has collections
     try{
       //within axios.get need to define search url for backend
-      const collections = await axios.get(`/${username}/collections`)
+      const collections = await axios.get(`/:${noColon}/collections`)
       setCollections(collections.data);
     }
     catch (err) {
@@ -32,19 +33,21 @@ const UserPage = (props) => {
 
   return (
       <>
-      <section className='username'>
-              <h1>{username}</h1>
-      </section>
-           userHasCollections? (
-              <section>
-                  <p>{userCollections[0]}</p>
-              </section>
-           ) : (
-              <section>
-                  <h1>Lets get started!</h1>
-                  <button>Create your first collection</button>
-              </section>
-           )
+        <section className='username'>
+              <h1>{noColon}</h1>
+        </section>
+        <section id='conditional'>
+            userHasCollections? (
+                <section>
+                    <p>{userCollections[0]}</p>
+                </section>
+            ) : (
+                <section>
+                    <h1>Lets get started!</h1>
+                    <button>Create your first collection</button>
+                </section>
+            )
+        </section>
       </>
   )
 }
