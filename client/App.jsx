@@ -40,8 +40,22 @@ const App = (props) => {
         <Switch>
           <Route exact path = '/' component={Homepage} />
           <Route exact path = '/search' component={SearchContainer} /> 
-          <Route path = "/signup" component = {SignUp} />
-          <Route path = "/login" component = {Login} />
+          {/* <Route path = "/signup" component = {SignUp} />
+          <Route path = "/login" component = {Login} /> */}
+            <Route path = "/signup"
+            render={() =>
+              <SignUp
+              
+              />
+            }
+          />
+          <Route path = "/login"
+            render={() =>
+              <Login
+
+              />
+            }
+          />
           {/* <Route exact path = '/:username/collections/:title' component={} /> */}
           <Route exact path = '/:username/collections' component={UserPage} /> 
            <Route  exact path = '/:username' component={UserPage} />

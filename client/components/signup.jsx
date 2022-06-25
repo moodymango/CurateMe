@@ -3,7 +3,7 @@ import React, { useRef, useState, useEffect } from 'react';
 //importing axios from my api folder
 import axios from './api/axios';
 
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 //useRef - persist values between renders
     //used to store mutable values that does not cause a re-render when changed
     //useState  automatically rerenders our page
@@ -81,7 +81,7 @@ const SignUp = () => {
             <br/ >
             <p>
                 {/* put redirect router here */}
-                <a href= "#"> Go to your dashboard</a>
+                <Redirect to= {`/:${user}`}> Go to your dashboard </Redirect>
             </p>
         </section>
         ) : (

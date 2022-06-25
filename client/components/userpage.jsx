@@ -34,28 +34,33 @@ const UserPage = (props) => {
   useEffect(() =>{
     //run get collections, and if user has collections, change boolean to true
     getCollections()
-    // if (userCollections.length !== 0){
-    //   setBoolean(true)
-    // }
+    if (userCollections.length){
+      setBoolean(true)
+    }
   }, [])
+  useEffect(() =>{
+    //run get collections, and if user has collections, change boolean to true
+  }, [userCollections])
 
   return (
       <>
-        <section className='username'>
+      <div className='user-page'>
+      <section className='user-name' >
               <h1>{noColon}</h1>
         </section>
         <section id='conditional'>
-            userHasCollections? (
+            {userHasCollections? (
                 <section>
                     <p>It Worked!</p>
                 </section>
             ) : (
-                <section>
+                <section >
                     <h1>Lets get started!</h1>
                     <button>Create your first collection</button>
                 </section>
-            )
+            )}
         </section>
+      </div>
       </>
   )
 }

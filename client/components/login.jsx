@@ -1,6 +1,6 @@
 //maybe try following along and using react hooks?
 import React, { useRef, useState, useEffect } from 'react';
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 //importing axios from my api folder
 import axios from './api/axios';
 
@@ -62,12 +62,13 @@ const Login = () => {
     {/* ternary which checks whether or not user has succesfully made an account */}
     {/* shows either account has been created OR the form which user submits the information */}
     {success? (
-     <section>
+     <section className='logged-in'>
          <h1>Welcome {user}! </h1>
          <br/ >
          <p>
              {/* put redirect router here */}
-             <Link to =' /:username'> Go to your dashboard</Link>
+             <Redirect to= {`/:${user}`}> Go to your dashboard </Redirect>
+             {/* <Link to =' /:username'> Go to your dashboard</Link> */}
          </p>
      </section>
      ) : (

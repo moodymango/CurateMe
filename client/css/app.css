@@ -52,7 +52,7 @@
     text-align: center;
 }
 /* STYLING FOR SIGN UP */
-.login, .signup, .search-component, .logged-in {
+.login, .signup, .search-component, .logged-in, .user-page{
     top: 0;
     left: 0;
     text-align: center;
