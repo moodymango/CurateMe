@@ -19,6 +19,7 @@ collectionsController.createCollection = async (req, res, next) =>{
   //look for the existing user first and push the new collection into the 
   await User.findOneAndUpdate({username}, {$push: {collectionArr: newCollection}}, {new:true, upsert: true})
     .then( async user => {
+      console.log('user is =>', user);
       //can maybe send back object id to frontend and store this information for later backend use
       //https://stackoverflow.com/questions/33049707/push-items-into-mongo-array-via-mongoose
       // https://stackoverflow.com/questions/36690982/accessing-a-sub-document-id-after-save-mongoose
@@ -58,10 +59,9 @@ collectionsController.readCollection = (req, res, next) =>{
 
 //POSTMAN TESTING PURPOSES
 // {
-//   "oldTitle": "Be Who You Areeeeee, For Your Priiiiiide",
-// "newTitle": "Be Who You Areeeeee, For Your Priiiiiide, Don't Hiiiiide",
-// "description": "A celebration of Black and brown queer pride",
-//  "likes": 23
+//   "oldTitle": "Glory of Nature",
+// "newTitle": 'A Celebration of Nature',
+// "description": "Scenes in nature"
 // }
 collectionsController.updateCollection = async (req, res, next) =>{
   //getting title of the collection from the uri

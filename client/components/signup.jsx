@@ -64,10 +64,9 @@ const SignUp = () => {
             setSuccess(true);
         }
         catch (err) {
-            if(!err.response){
-                setErrMsg('No server response')
-            } else {
+            if(err.response){
                 setErrMsg('Sign up Failed')
+            } else {
             }
         }
     }

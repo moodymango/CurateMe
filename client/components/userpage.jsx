@@ -66,13 +66,13 @@ const UserPage = (props) => {
       <section className='user-name' >
               <h1>{noColon}</h1>
         </section>
-        <section id='conditional'>
+        <section className='user-content'>
             {prevCollection.current.length? (
                 <section>
                     {collectionDisplay}
                 </section>
             ) : (
-                <section >
+                <section className='user-content' >
                     <h1>Lets get started:</h1>
                     <button>Create your first collection</button>
                 </section>

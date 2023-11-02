@@ -23,7 +23,7 @@ const userSchema = new Schema({
   email: {type: String, required: true},
   //Each user has an array of collections, and each of these is a collection schema, not the model itself
   collectionArr: [collectionSchema],
-  // collections: [{type: Schema.Types.ObjectId, ref: 'Collections'}],
+  collections: [{type: Schema.Types.ObjectId, ref: 'Collections'}]
   // favorites: {type: Schema.Types.ObjectId, ref: 'Favorites'}
 
 })

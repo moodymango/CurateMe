@@ -2,7 +2,6 @@
 #nav-container {
     width: 100%;
     float: left;
-    margin: 1em;
     padding: 0;
     list-style: none; 
     display: flex;
@@ -51,6 +50,19 @@
     position: relative;
     text-align: center;
 }
+/* USER CONTENT */
+/* .user-page{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center; */
+/*  */
+/* .user-content {
+    position: relative;
+    text-align: center;
+} */
 /* STYLING FOR SIGN UP */
 .login, .signup, .search-component, .logged-in, .user-page{
     top: 0;
@@ -87,6 +99,6 @@ body {
     font-family: 'Ubuntu Light', 'Century Gothic', sans-serif;
     margin: 0;
     padding: 0;
-    color: rgb(237, 232, 232);
+    color: white;
     /* color: black; */
 }

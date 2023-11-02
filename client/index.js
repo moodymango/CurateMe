@@ -9,23 +9,20 @@
  * ************************************
  */
 
- import React from 'react';
- import {createRoot} from 'react-dom/client'
- import { render } from 'react-dom';
- import { BrowserRouter} from 'react-router-dom';
+import React from "react";
+import { createRoot } from "react-dom/client";
+import { render } from "react-dom";
 //  import { ReactDOM } from 'react';
 // import { BrowserRouter } from 'react-router-dom';
- import App from './App.jsx';
- 
- //import any styling for the app here
- import './css/app.css';
+import App from "./App.jsx";
 
- const container = document.getElementById('root');
- const root = createRoot(container);
+//import any styling for the app here
+import "./css/app.css";
 
- root.render(
-     <App/ >
-  );
+const container = document.getElementById("root");
+const root = createRoot(container);
+
+root.render(<App />);
 
 // render(
 //          <App/ >,
