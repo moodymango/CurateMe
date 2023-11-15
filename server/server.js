@@ -35,11 +35,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //able to read cookies as object
 app.use(cookieParser());
-app.use(
-  cors({
-    credentials: true,
-  })
-);
+app.use(cors());
 
 //ONCE USER HAS LOGGED IN/SIGNUP
 //need to have a redirect for user dashboard (will just be the username)

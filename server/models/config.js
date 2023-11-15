@@ -19,6 +19,22 @@ module.exports = {
   REQUEST_HEADER_INFO: "Artsy Fartsy (artsyfartsy.duv@gmail.com)",
   //general info link
   ARTWORK_URL: "https://api.artic.edu/api/v1/artworks/search?params=",
+  ARTWORK_FIELDS: `
+  id,
+  title,
+  date_display,
+  artist_display,
+  artist_title,
+  place_of_origin,
+  dimensions,
+  medium_display,
+  inscriptions,
+  is_public_domain,
+  style_title,
+  classification_title,
+  image_id,
+  config
+`,
   timeout: function (seconds) {
     return new Promise(function (_, reject) {
       // Setting s ms time
