@@ -1,6 +1,16 @@
 const fetch = require("node-fetch");
 const artChicagoApiController = {};
+const {
+  ARTWORK_URL,
+  IMAGE_URL,
+  LARGE_IMAGE_URL,
+  SMALL_IMAGE_URL,
+  timeout,
+  REQUEST_HEADER_AGENT,
+  REQUEST_HEADER_INFO,
+} = require("../models/config.js");
 
+const headerObj = { [REQUEST_HEADER_AGENT]: REQUEST_HEADER_INFO };
 //helper function to get individual artwork information(used in almost every middleware)
 artChicagoApiController.getArtworkInfo = (req, res, next) => {
   //each middleware will give an array of artwork ids that will be persisted res.locals
@@ -8,7 +18,6 @@ artChicagoApiController.getArtworkInfo = (req, res, next) => {
   console.log("getting info on artworks");
   res.locals.artworkInfo = [];
   // console.log('sample id is =>', res.locals.artworks[0])
-
   res.locals.artworks.forEach(async (artworkId, idx) => {
     await fetch(
       `https://api.artic.edu/api/v1/artworks/${artworkId}?fields=image_id,title,artist_title,medium_display,theme_titles,date_display,classification_titles,artwork_type_title`
@@ -42,18 +51,23 @@ artChicagoApiController.getArtworkInfo = (req, res, next) => {
 };
 
 artChicagoApiController.getArtworks = async (req, res, next) => {
-  console.log("grabbing artworks by search term");
-  //WORKING VERSION
-  //get the search term from the res.body
-  //now need a way to save the page number and persist that data for pagination (so the user can load more images upon request)
-  const { searchReq, page } = req.body;
-  //what do I want to serve to the front-end? ultimately json data containing the artwork image, title,
-  await fetch(
-    // `https://api.artic.edu/api/v1/artworks/search?q=${searchReq}&limit=10&page=${page}`
-    `https://api.artic.edu/api/v1/artworks/search?q=${searchReq}`
-  )
+  //   console.log("grabbing artworks by search term");
+  const { searchReq } = req.body;
+  //pass minified URL encoded json
+  const URLEncodeQuery = encodeURIComponent(JSON.stringify(searchReq));
+  const url = `https://api.artic.edu/api/v1/artworks/search?params=${URLEncodeQuery}`;
+  //   try {
+  //     const res = await Promise.race([fetch(url), timeout(5)]);
+  //     const data = await res.json();
+  //     console.log("data is =>", data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+  await fetch(url)
     .then((data) => data.json())
     .then((dataObj) => {
+      console.log("...data grabbed", dataObj.data);
       //instantiate empty arr on artworks prop of res.locals
       res.locals.artworks = [];
       //data found in dataObj.data
