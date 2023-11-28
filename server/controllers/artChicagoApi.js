@@ -11,8 +11,8 @@ const {
   REQUEST_HEADER_INFO,
 } = require("../models/config.js");
 
-//query build from elastic search according to API
-const queryBuild = function (searchQ) {
+//query build from elastic search according to Art Institute API
+const queryBuild = function (category = artist_title, searchQ) {
   return {
     query: {
       bool: {
@@ -24,8 +24,8 @@ const queryBuild = function (searchQ) {
           },
           {
             match: {
-              //if I wanted to add functionality to search by artist, would have to make the key for this property dynamic, and add artist_title
-              title: {
+              //category either represents artist_title (artist name) or title (search term included in title of artwork)
+              [category]: {
                 query: searchQ,
               },
             },
@@ -41,6 +41,7 @@ const queryBuild = function (searchQ) {
 //helper function to get individual artwork information(used in almost every middleware)
 //consider following this advice in order to optimize the following
 // https://stackoverflow.com/questions/60710423/fetch-in-fetch-inside-a-loop-js
+
 artChicagoApiController.getArtworkInfo = (req, res, next) => {
   //each middleware will give an array of artwork ids that will be persisted res.locals
   //this middleware iterates through the artwork ids received from the previous middleware to request specific information about the pieces.

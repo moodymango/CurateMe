@@ -1,14 +1,3 @@
-// //URLS for Images
-// export const IMAGE_URL = "https://www.artic.edu/iiif/2/";
-// export const LARGE_IMAGE_URL = "/full/843,/0/default.jpg";
-// export const SMALL_IMAGE_URL = "/full/200,/0/default.jpg";
-// //authentication
-// export const REQUEST_HEADER_AGENT = "AIC-User-Agent";
-// export const REQUEST_HEADER_INFO = "Artsy Fartsy (artsyfartsy@gmail.com)";
-// //general info link
-// export const ARTWORK_URL =
-//   "https://api.artic.edu/api/v1/artworks/search?params=";
-
 module.exports = {
   //URLS for Images
   IMAGE_URL: "https://www.artic.edu/iiif/2/",
