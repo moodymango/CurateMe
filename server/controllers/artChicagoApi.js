@@ -7,24 +7,31 @@ const {
   LARGE_IMAGE_URL,
   SMALL_IMAGE_URL,
   timeout,
-  REQUEST_HEADER_AGENT,
-  REQUEST_HEADER_INFO,
+  // REQUEST_HEADER_AGENT,
+  // REQUEST_HEADER_INFO,
 } = require("../models/config.js");
+
+//authentication
+const REQUEST_HEADER_AGENT = "AIC-User-Agent";
+const REQUEST_HEADER_INFO = "Artsy Fartsy (artsyfartsy.duv@gmail.com)";
 
 //query build from elastic search according to Art Institute API
 const queryBuild = function (category = artist_title, searchQ) {
   return {
     query: {
+      //combine multiple queries into one request
       bool: {
         must: [
           {
+            //ensure that I am only using artworks tagged as public domanin
             term: {
               is_public_domain: true,
             },
           },
           {
+            //keyword that allows me to search via full-text search
             match: {
-              //category either represents artist_title (artist name) or title (search term included in title of artwork)
+              //category either represents artist_title (artist name) or title (search term included in title of artwork) that I want to search
               [category]: {
                 query: searchQ,
               },
@@ -33,11 +40,12 @@ const queryBuild = function (category = artist_title, searchQ) {
         ],
       },
     },
+    //retrieves specific fields in the search response
+    //returns each value in a standardized way that matches the mapping
     fields: ARTWORK_FIELDS,
     limit: 50,
   };
 };
-
 //helper function to get individual artwork information(used in almost every middleware)
 //consider following this advice in order to optimize the following
 // https://stackoverflow.com/questions/60710423/fetch-in-fetch-inside-a-loop-js
@@ -79,13 +87,14 @@ artChicagoApiController.getArtworkInfo = (req, res, next) => {
       });
   });
 };
-
 artChicagoApiController.getArtworks = async (req, res, next) => {
   console.log("grabbing artworks by search term");
   const { searchReq } = req.body;
   // //pass minified URL encoded json
   const query = queryBuild(searchReq);
+
   const URLEncodeQuery = encodeURIComponent(JSON.stringify(query));
+
   const url = `${ARTWORK_URL}${URLEncodeQuery}`;
   try {
     const res = await Promise.race([

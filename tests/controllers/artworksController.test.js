@@ -1,4 +1,4 @@
-const artworkFunction = require("../../server/controllers/artChicagoApi");
+const artChicagoApiController = require("../../server/controllers/artChicagoApi");
 
 //what kind of behavior might I want to prevent due to client error?
 //should throw 400 error if there the search term field is an empty string
