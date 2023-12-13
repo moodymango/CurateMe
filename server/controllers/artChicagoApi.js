@@ -7,16 +7,17 @@ const {
   LARGE_IMAGE_URL,
   SMALL_IMAGE_URL,
   timeout,
-  // REQUEST_HEADER_AGENT,
-  // REQUEST_HEADER_INFO,
 } = require("../models/config.js");
 
-//authentication
-const REQUEST_HEADER_AGENT = "AIC-User-Agent";
-const REQUEST_HEADER_INFO = "Artsy Fartsy (artsyfartsy.duv@gmail.com)";
-
-//query build from elastic search according to Art Institute API
-const queryBuild = function (category = artist_title, searchQ) {
+//build headers w/ proper authentication as request by source institution
+const myHeaders = new fetch.Headers({
+  "Content-Type": "application/json",
+  "AIC-User-Agent": "Artsy Fartsy (artsyfartsy.duv@gmail.com)",
+});
+//query build from elastic search according to API
+const queryBuild = function (searchQ, categtoryField = "artist_title") {
+  console.log("searchq is", searchQ);
+  console.log("category is", categtoryField);
   return {
     query: {
       //combine multiple queries into one request
@@ -31,8 +32,8 @@ const queryBuild = function (category = artist_title, searchQ) {
           {
             //keyword that allows me to search via full-text search
             match: {
-              //category either represents artist_title (artist name) or title (search term included in title of artwork) that I want to search
-              [category]: {
+              //if I wanted to add functionality to search by artist, would have to make the key for this property dynamic, and add artist_title
+              [categtoryField]: {
                 query: searchQ,
               },
             },
@@ -49,7 +50,6 @@ const queryBuild = function (category = artist_title, searchQ) {
 //helper function to get individual artwork information(used in almost every middleware)
 //consider following this advice in order to optimize the following
 // https://stackoverflow.com/questions/60710423/fetch-in-fetch-inside-a-loop-js
-
 artChicagoApiController.getArtworkInfo = (req, res, next) => {
   //each middleware will give an array of artwork ids that will be persisted res.locals
   //this middleware iterates through the artwork ids received from the previous middleware to request specific information about the pieces.
@@ -90,17 +90,16 @@ artChicagoApiController.getArtworkInfo = (req, res, next) => {
 artChicagoApiController.getArtworks = async (req, res, next) => {
   console.log("grabbing artworks by search term");
   const { searchReq } = req.body;
-  // //pass minified URL encoded json
+  //build query using elasticsearch syntax
   const query = queryBuild(searchReq);
-
+  //pass minified URL encoded json
   const URLEncodeQuery = encodeURIComponent(JSON.stringify(query));
-
   const url = `${ARTWORK_URL}${URLEncodeQuery}`;
   try {
     const res = await Promise.race([
       // { headers: { [REQUEST_HEADER_AGENT]: REQUEST_HEADER_INFO } }
-      fetch(url, { headers: { [REQUEST_HEADER_AGENT]: REQUEST_HEADER_INFO } }),
-      timeout(3),
+      fetch(url, { headers: myHeaders }),
+      timeout(4),
     ]);
     const data = await res.json();
     //data I want is contained in data.data array. Each artwork is represented in an object
