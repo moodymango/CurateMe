@@ -44,7 +44,7 @@ const queryBuild = function (searchQ, categtoryField = "artist_title") {
     //retrieves specific fields in the search response
     //returns each value in a standardized way that matches the mapping
     fields: ARTWORK_FIELDS,
-    limit: 50,
+    limit: 10,
   };
 };
 //helper function to get individual artwork information(used in almost every middleware)

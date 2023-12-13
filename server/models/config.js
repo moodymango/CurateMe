@@ -5,6 +5,7 @@ module.exports = {
   SMALL_IMAGE_URL: "/full/200,/0/default.jpg",
   //general info link
   ARTWORK_URL: "https://api.artic.edu/api/v1/artworks/search?params=",
+  //field section for Elasticsearch
   ARTWORK_FIELDS: [
     "id",
     "title",
