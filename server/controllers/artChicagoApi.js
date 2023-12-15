@@ -44,7 +44,7 @@ const queryBuild = function (searchQ, categtoryField = "artist_title") {
     //retrieves specific fields in the search response
     //returns each value in a standardized way that matches the mapping
     fields: ARTWORK_FIELDS,
-    limit: 10,
+    limit: 50,
   };
 };
 //helper function to get individual artwork information(used in almost every middleware)
@@ -89,6 +89,7 @@ artChicagoApiController.getArtworkInfo = (req, res, next) => {
 };
 artChicagoApiController.getArtworks = async (req, res, next) => {
   console.log("grabbing artworks by search term");
+  // MAKE SURE TO ADD CATEGORY FIELD, AND PASS IT IN, MUST BUILD THIS IN ON THE FRONT-END
   const { searchReq } = req.body;
   //build query using elasticsearch syntax
   const query = queryBuild(searchReq);
@@ -102,8 +103,10 @@ artChicagoApiController.getArtworks = async (req, res, next) => {
       timeout(4),
     ]);
     const data = await res.json();
-    //data I want is contained in data.data array. Each artwork is represented in an object
-    console.log("data is =>", data);
+    //data I want is contained in data => {pagination, data properties as the most important} array. Each artwork is represented in an object
+    // console.log("data is =>", data.data);
+    res.locals.artworkInfo = data.data;
+    return next();
   } catch (err) {
     console.log(err);
   }
