@@ -1,19 +1,10 @@
 const express = require("express");
-const artChicagoApiController = require("../controllers/artChicagoApi");
-//remember, routers help modularize code,
+const artChicagoApiController = require("../controllers/artChicagoApi.js");
 //router instance is a complete middleware and routing system
 const router = express.Router();
 
 //user searches by both artist_title and potential title of artwork
-router.post(
-  "/",
-  artChicagoApiController.getArtworks,
-  // artChicagoApiController.getArtworkInfo,
-  (req, res) => {
-    //what do I want to serve to the front-end? ultimately json array of objects!
-    return res.status(200).json(res.locals.artworkInfo);
-  }
-);
+router.post("/", artChicagoApiController.getArtworksFromApi);
 //search by artist
 router.post(
   "/artist",
