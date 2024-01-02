@@ -20,49 +20,51 @@ const { Response } = jest.requireActual("node-fetch");
 //create a  mocked call api value representing a test call to the third party api
 describe("fetched artwork tests with mocking", () => {
   test("Should return a list of artworks based on search string", async () => {
-    //assigns fetch a resolved promise containing predefined response from the art chicago api
+    //mock Express Request and Response Objects and next function
     const req = {
       body: { searchReq: "degas" },
     };
-    // const res = {
-    //   json: jest.fn().mockReturnValue(postResponseArtApi.data),
-    //   status: jest.fn(() => res),
-    // };
-    const res = {};
-    res.json = jest.fn();
-    res.status = jest.fn(() => res);
-
+    const res = {
+      json: jest.fn(),
+      status: jest.fn(() => res),
+    };
     const mockedNext = jest.fn();
+    //create mock data object to return after fetch implementation
     data = postResponseArtApi;
-    data.status = 200;
-    data.json = jest.fn().mockReturnValue(postResponseArtApi.data);
+    data.status = jest.fn(() => data);
+    data.json = jest.fn().mockResolvedValue(postResponseArtApi.data);
     fetch.mockResolvedValue(new Response(JSON.stringify(data)));
+    // fetch.mockResolvedValue(data);
     console.log(
       "is tested function mocked?",
       artChicagoApiController.getArtworksFromApi
     );
+    // const test = fetch();
+    // console.log("test fetch eval result =>", test);
     const retrievedArtwork = await artChicagoApiController.getArtworksFromApi(
       req,
-      mockedNext,
-      res
+      res,
+      mockedNext
     );
     console.log("fetch result is", retrievedArtwork);
-    mockedNext();
+    // mockedNext();
     expect(fetch).toHaveBeenCalledTimes(1);
-    // expect(retrievedArtwork.status).toBe(200);
-    expect(retrievedArtwork).toEqual(postResponseArtApi.data);
-    expect(retrievedArtwork.length).toBeGreaterThan(0);
-    retrievedArtwork.forEach((artwork) => {
-      console.log("individual artwork is", artwork);
-      expect(artwork).toEqual(
-        expect.objectContaining({
-          artist_title: expect.any(String),
-          title: expect.any(String),
-          id: expect.any(Number),
-          image_id: expect.any(String),
-        })
-      );
-    });
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(postResponseArtApi.data);
+    // expect(retrievedArtwork.status).toHaveBeenCalledWith(200);
+    // expect(retrievedArtwork).toEqual(postResponseArtApi.data);
+    // expect(retrievedArtwork.length).toBeGreaterThan(0);
+    // retrievedArtwork.forEach((artwork) => {
+    //   console.log("individual artwork is", artwork);
+    //   expect(artwork).toEqual(
+    //     expect.objectContaining({
+    //       artist_title: expect.any(String),
+    //       title: expect.any(String),
+    //       id: expect.any(Number),
+    //       image_id: expect.any(String),
+    //     })
+    //   );
+    // });
   });
   //   test("Should fetch requested information by artwork title");
 });
