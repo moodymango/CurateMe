@@ -29,42 +29,27 @@ describe("fetched artwork tests with mocking", () => {
       status: jest.fn(() => res),
     };
     const mockedNext = jest.fn();
-    //create mock data object to return after fetch implementation
-    data = postResponseArtApi;
-    data.status = jest.fn(() => data);
-    data.json = jest.fn().mockResolvedValue(postResponseArtApi.data);
-    fetch.mockResolvedValue(new Response(JSON.stringify(data)));
-    // fetch.mockResolvedValue(data);
-    console.log(
-      "is tested function mocked?",
-      artChicagoApiController.getArtworksFromApi
-    );
-    // const test = fetch();
-    // console.log("test fetch eval result =>", test);
+    //mock return value of the fetch invocation
+    fetch.mockResolvedValue(new Response(JSON.stringify(postResponseArtApi)));
     const retrievedArtwork = await artChicagoApiController.getArtworksFromApi(
       req,
       res,
       mockedNext
     );
-    console.log("fetch result is", retrievedArtwork);
-    // mockedNext();
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith(postResponseArtApi.data);
-    // expect(retrievedArtwork.status).toHaveBeenCalledWith(200);
-    // expect(retrievedArtwork).toEqual(postResponseArtApi.data);
-    // expect(retrievedArtwork.length).toBeGreaterThan(0);
-    // retrievedArtwork.forEach((artwork) => {
-    //   console.log("individual artwork is", artwork);
-    //   expect(artwork).toEqual(
-    //     expect.objectContaining({
-    //       artist_title: expect.any(String),
-    //       title: expect.any(String),
-    //       id: expect.any(Number),
-    //       image_id: expect.any(String),
-    //     })
-    //   );
-    // });
+    const mockedJsonArg = res.json.mock.calls[0][0];
+    mockedJsonArg.forEach((artwork) => {
+      expect(artwork).toEqual(
+        expect.objectContaining({
+          artist_title: expect.any(String),
+          title: expect.any(String),
+          id: expect.any(Number),
+          image_id: expect.any(String),
+        })
+      );
+    });
   });
-  //   test("Should fetch requested information by artwork title");
+  test("Should throw an error if the service is down", async () => {});
 });
