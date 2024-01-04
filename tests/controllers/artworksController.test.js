@@ -1,23 +1,15 @@
 jest.mock("node-fetch");
 
 const fetch = require("node-fetch");
-require("jest-fetch-mock").enableMocks();
-
-// const nock = require("nock");
 const artChicagoApiController = require("../../server/controllers/artChicagoApi.js");
 const postResponseArtApi = require("../testData/postResponseArtApi");
 const { Response } = jest.requireActual("node-fetch");
 
-//what kind of behavior might I want to prevent due to client error?
-//should throw 400 error if there the search term field is an empty string
-//throw a 400 error if the due to mispelling of the search term?
-//should retrieve data by search term and send response correctly
 //consider possible errors from the server:
 //api limit errors, pagination errors, perhaps add throttling to API(reduce # of requests per second if the 3rd party api cannot handle it)
 //tefor schema changes - what if API releases new version and updates response schema?
-//the average response time or latency of the 3rd party api - want to ensure the response takes less than 3000ms?
+//the average response time or latency of the 3rd party api - want to ensure the response takes more than 4000ms?
 
-//create a  mocked call api value representing a test call to the third party api
 describe("fetched artwork tests with mocking", () => {
   test("Should return a list of artworks based on search string", async () => {
     //mock Express Request and Response Objects and next function
@@ -31,11 +23,7 @@ describe("fetched artwork tests with mocking", () => {
     const mockedNext = jest.fn();
     //mock return value of the fetch invocation
     fetch.mockResolvedValue(new Response(JSON.stringify(postResponseArtApi)));
-    const retrievedArtwork = await artChicagoApiController.getArtworksFromApi(
-      req,
-      res,
-      mockedNext
-    );
+    await artChicagoApiController.getArtworksFromApi(req, res, mockedNext);
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith(postResponseArtApi.data);
@@ -51,5 +39,56 @@ describe("fetched artwork tests with mocking", () => {
       );
     });
   });
-  test("Should throw an error if the service is down", async () => {});
+  //what if external API is down?
+  test("Should throw an error if the api service is down", async () => {
+    //mock Express Request and Response Objects and next function
+    const req = {
+      body: { searchReq: "Manet" },
+    };
+    const serverErr = new Error("Art Chicago Api Service Down");
+    serverErr.status = 500;
+    const res = {
+      json: jest.fn().mockRejectedValue(serverErr),
+      status: jest.fn(() => res),
+    };
+    const mockedNext = jest.fn();
+    fetch.mockRejectedValue(serverErr);
+    await artChicagoApiController.getArtworksFromApi(req, res, mockedNext);
+    //test that next has been called with error object
+    expect(mockedNext).toHaveBeenCalledTimes(1);
+    const mockedNextArg = mockedNext.mock.calls[0][0];
+    expect(mockedNextArg).toEqual(
+      expect.objectContaining({
+        status: 500,
+        message: "Art Chicago Api Service Down",
+      })
+    );
+  });
+  //what if external api finds nothing for the query?
+  test("Should throw a 404 error if query returns a 404", async () => {
+    expect.assertions(2);
+    //mock Express Request and Response Objects and next function
+    const req = {
+      body: { searchReq: "Donna Noble" },
+    };
+    const res = {
+      json: jest.fn(),
+      status: jest.fn(() => res),
+    };
+    const mockedNext = jest.fn();
+    //mock failed fetch response with empty object
+    fetch.mockResolvedValue(
+      new Response(JSON.stringify(postResponseArtApi.noData))
+    );
+    await artChicagoApiController.getArtworksFromApi(req, res, mockedNext);
+    //test that next has been called with error object
+    expect(mockedNext).toHaveBeenCalledTimes(1);
+    const mockedNextArg = mockedNext.mock.calls[0][0];
+    expect(mockedNextArg).toEqual(
+      expect.objectContaining({
+        status: 404,
+        message: "No artworks found by query: Donna Noble",
+      })
+    );
+  });
 });

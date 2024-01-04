@@ -179,6 +179,7 @@
 //   },
 // };
 module.exports = {
+  noData: [],
   data: [
     {
       _score: 78.21333,

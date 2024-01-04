@@ -8,7 +8,14 @@ const {
   SMALL_IMAGE_URL,
   timeout,
 } = require("../models/config.js");
-
+//custom errors for error handling
+class artChicagoApiFetchError extends Error {
+  constructor(code, message) {
+    super(message);
+    this.status = code;
+    this.name = "artChicagoApiError";
+  }
+}
 //build headers w/ proper authentication as request by source institution
 const myHeaders = new fetch.Headers({
   "Content-Type": "application/json",
@@ -64,20 +71,29 @@ artChicagoApiController.getArtworksFromApi = async (req, response, next) => {
       fetch(url, { headers: myHeaders }),
       timeout(4),
     ]);
-    const data = await res.json();
-    //data I want is contained in data => {pagination, data properties as the most important} object. Each artwork is represented in an object
-    // console.log("data is =>", data.data);
-    console.log("artwork", data.data);
-    //for testing purposes
-    // return data.data;
-    //response to send to front-end
-    response.status(200).json(data.data);
+    if (res.ok) {
+      const data = await res.json();
+      console.log("data in function is", data);
+      //data I want is contained in data => {pagination, data properties as the most important} object. Each artwork is represented in an object
+      if (data.length === 0 || data.data.length === 0) {
+        console.log("testing should be throwing error");
+        throw new artChicagoApiFetchError(
+          404,
+          `No artworks found by query: ${searchReq}`
+        );
+      }
+      response.status(200).json(data.data);
+    } else {
+      //throw error to execute catch block if the fetch response failed
+      throw new artChicagoApiFetchError(500, "Art Chicago Api Service Down");
+    }
   } catch (err) {
-    return (err) =>
-      next({
-        log: "Error when retrieving artwork by search string",
-        message: { err },
-      });
+    console.log("error is", err);
+    next({
+      log: "Error when retrieving artwork by search string",
+      status: err.status,
+      message: err.message,
+    });
   }
 };
 
