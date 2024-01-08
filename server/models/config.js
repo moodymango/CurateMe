@@ -22,12 +22,4 @@ module.exports = {
     "image_id",
     " config",
   ],
-  timeout: function (seconds) {
-    return new Promise(function (_, reject) {
-      // Setting s ms time
-      setTimeout(function () {
-        reject(new Error(`Request timed out after ${seconds} seconds`));
-      }, seconds * 1000);
-    });
-  },
 };

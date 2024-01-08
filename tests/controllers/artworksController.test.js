@@ -91,4 +91,29 @@ describe("fetched artwork tests with mocking", () => {
       })
     );
   });
+  //what if the external api takes too long and response times out?
+  test("Should throw a 504 error if server takes too long to service client request", async () => {
+    const req = {
+      body: { searchReq: "Gauguin" },
+    };
+    const res = {
+      json: jest.fn(),
+      status: jest.fn(() => res),
+    };
+    const serverErr = new Error("Request timed out after 4 seconds");
+    serverErr.status = 504;
+
+    const mockedNext = jest.fn();
+
+    fetch.mockRejectedValue(serverErr);
+    await artChicagoApiController.getArtworksFromApi(req, res, mockedNext);
+    expect(mockedNext).toHaveBeenCalledTimes(1);
+    const mockedNextArg = mockedNext.mock.calls[0][0];
+    expect(mockedNextArg).toEqual(
+      expect.objectContaining({
+        status: 504,
+        message: "Request timed out after 4 seconds",
+      })
+    );
+  });
 });

@@ -6,7 +6,6 @@ const {
   IMAGE_URL,
   LARGE_IMAGE_URL,
   SMALL_IMAGE_URL,
-  timeout,
 } = require("../models/config.js");
 //custom errors for error handling
 class artChicagoApiFetchError extends Error {
@@ -15,6 +14,19 @@ class artChicagoApiFetchError extends Error {
     this.status = code;
     this.name = "artChicagoApiError";
   }
+}
+function timeout(seconds) {
+  return new Promise(function (_, reject) {
+    // Setting s in ms time
+    setTimeout(function () {
+      reject(
+        new artChicagoApiFetchError(
+          `Request timed out after ${seconds} seconds`,
+          504
+        )
+      );
+    }, seconds * 1000);
+  });
 }
 //build headers w/ proper authentication as request by source institution
 const myHeaders = new fetch.Headers({
