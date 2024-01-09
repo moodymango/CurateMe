@@ -65,10 +65,6 @@ const queryBuild = function (searchQ, categtoryField = "artist_title") {
     limit: 50,
   };
 };
-// artChicagoApiController.urlBuild = function (ARTWORK_URL, query) {
-//   const URLEncodeQuery = encodeURIComponent(JSON.stringify(query));
-//   return (url = `${ARTWORK_URL}${URLEncodeQuery}`);
-// };
 artChicagoApiController.getArtworksFromApi = async (req, response, next) => {
   console.log("grabbing artworks by search term");
   // MAKE SURE TO ADD CATEGORY FIELD, AND PASS IT IN, MUST BUILD THIS IN ON THE FRONT-END

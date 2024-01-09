@@ -1,23 +1,35 @@
-# solo-project
-Progress check
-06/15
-1.Set up backend file structure, package.json, downloaded necessary dependencies for backend
-2. successfully fetched data from art institute chicago api
-06/16
-1. managed to git ignore the node_modules folder and stop tracking on git
-2. managed to get specific data from my api (artist, title, image url, etc)
-3. pseudocode additional routes for sign-up, login
-//ARTICLE ON RESTORING TO PREVIOUS COMMITS:
-https://medium.com/swlh/using-git-how-to-go-back-to-a-previous-commit-8579ccc8180f
+# Artsy Fartsy
 
-Hierarchy of the Client Side:
-The application should have the following hierarchical structure:
+<p>Artsy Farty empowers the everyday art enthusiast by encouraging users to make and share their own virtual exhibitions with artworks supplied by the Art Institute of Chicago's API.<p>
 
-````   
-|-- App
-  |-- MainContainer - With Nav bar?
-      |-- TotalsDisplay
-      |-- MarketsContainer
-          |-- MarketCreator
-          |—- MarketsDisplay
-              |—- Market
+## Built With
+
+## Getting Started
+
+To get the project running on your local machine
+
+## Features
+
+Users are able to search artworks based on the artwork title or artist's name.
+
+Users are encouraged to register for an account should they wish to create and save exhibitions, or add individual artworks to their favorites.
+
+Users are able to curate their own exhibitions. Users are also able to add their own impressions to artworks.
+
+## Lessons Learned
+
+### Testing
+
+I primarily wanted to focus on following the test driven development approach during this refactor, so prior to making any substantial changes to the
+
+### SQL
+
+I redesigned Artsy Fartsy's database in favor of a relational model.
+
+Indexing for optimizing queries, partitioning data, perhaps employing soft deletions.
+
+## License
+
+```
+
+```

@@ -1,5 +1,4 @@
 jest.mock("node-fetch");
-
 const fetch = require("node-fetch");
 const artChicagoApiController = require("../../server/controllers/artChicagoApi.js");
 const postResponseArtApi = require("../testData/postResponseArtApi");
@@ -7,8 +6,7 @@ const { Response } = jest.requireActual("node-fetch");
 
 //consider possible errors from the server:
 //api limit errors, pagination errors, perhaps add throttling to API(reduce # of requests per second if the 3rd party api cannot handle it)
-//tefor schema changes - what if API releases new version and updates response schema?
-//the average response time or latency of the 3rd party api - want to ensure the response takes more than 4000ms?
+//schema changes - what if API releases new version and updates response schema?
 
 describe("fetched artwork tests with mocking", () => {
   test("Should return a list of artworks based on search string", async () => {
