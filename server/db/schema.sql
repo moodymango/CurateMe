@@ -1,3 +1,6 @@
+--to do:
+    --create indexes for any foreign keys to speed up joins and other operations
+    --indexes on columns that appear freqeuntly in where clauses
 CREATE TABLE "user" (
     "id" SERIAL PRIMARY KEY,
     "first_name" VARCHAR(50),
