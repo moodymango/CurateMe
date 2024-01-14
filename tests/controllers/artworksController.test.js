@@ -9,6 +9,10 @@ const { Response } = jest.requireActual("node-fetch");
 //schema changes - what if API releases new version and updates response schema?
 
 describe("fetched artwork tests with mocking", () => {
+  //clean up after each test case
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
   test("Should return a list of artworks based on search string", async () => {
     //mock Express Request and Response Objects and next function
     const req = {
