@@ -18,17 +18,19 @@ userController.createUser = async (req, res, next) => {
   const { username, password, firstName, lastName } = req.body;
   //encrypt password prior to saving in db
   const hashedPass = await bcrypt.hash(password, saltRounds);
-  const text =
-    "INSERT INTO user(first_name, last_name, username, password) VALUES($1, $2, $3, $4)";
-  const params = [
-    req.body.firstName,
-    req.body.lastName,
-    req.body.username,
-    hashedPass,
-  ];
+  const text = `INSERT INTO users(first_name, last_name, username, password) VALUES($1, $2, $3, $4) RETURNING id;`;
+  const params = [firstName, lastName, username, hashedPass];
+  console.log("params is", params);
+  //the following query below works?
+  //INSERT INTO users(first_name, last_name, username, password) VALUES('imma', 'd', 'moodymango', '1234');
   try {
-    const { rows } = await db.query(text, params);
-    console.log("rows look like", rows);
+    console.log("writing this query now...");
+    await db.query(text, params).then((data) => {
+      console.log("looking through response now...", data);
+      //rows is an array of objects
+      console.log("rows are", data.rows);
+      next();
+    });
   } catch (err) {
     next({
       log: "Error in creating new user in userController.js",

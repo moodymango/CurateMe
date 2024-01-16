@@ -39,7 +39,7 @@ describe("Mocking calls to the database", () => {
       };
       const mockedNext = jest.fn();
       const text =
-        "INSERT INTO user(first_name, last_name, username, password) VALUES($1, $2, $3, $4)";
+        "INSERT INTO users(first_name, last_name, username, password) VALUES($1, $2, $3, $4)";
       const params = [
         req.body.first_name,
         req.body.last_name,

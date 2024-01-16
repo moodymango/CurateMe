@@ -14,41 +14,41 @@ DROP TABLE IF EXISTS artwork CASCADE;
 
 CREATE TABLE "users" (
     "id" SERIAL PRIMARY KEY,
-    "first_name" VARCHAR(50),
-    "last_name" VARCHAR(50),
-    "username" VARCHAR(50) NOT NULL UNIQUE,
-    "password" VARCHAR(50) NOT NULL
+    "first_name" VARCHAR(100) NULL,
+    "last_name" VARCHAR(100) NULL,
+    "username" VARCHAR(100) NOT NULL UNIQUE,
+    "password" VARCHAR NOT NULL
 ); 
 
 CREATE TABLE "collections" (
     "id" SERIAL PRIMARY KEY,
-    "user_id" INT,
+    "user_id" INT NULL,
     "title" VARCHAR(150) NOT NULL,
-    "description" TEXT,
-    "likes" INT, 
+    "description" TEXT NULL,
+    "likes" INT NULL, 
     "creation_date" DATE,
     FOREIGN KEY("user_id") REFERENCES users("id") ON DELETE CASCADE
 );
 CREATE TABLE "artworks" (
     "id" SERIAL PRIMARY KEY,
-    "title" VARCHAR(150),
-    "artist_title" VARCHAR(150),
-    "date_display" VARCHAR(150),
-    "image_url" VARCHAR(200)
+    "title" VARCHAR(150) NULL,
+    "artist_title" VARCHAR(150) NULL,
+    "date_display" VARCHAR(200) NULL,
+    "image_url" VARCHAR NULL
 );
 CREATE TABLE "impressions" (
     "id" SERIAL PRIMARY KEY,
-    "description" TEXT,
-    "user_id" INT, 
-    "artwork_id" INT,
+    "description" TEXT NULL,
+    "user_id" INT NULL, 
+    "artwork_id" INT NULL,
     FOREIGN KEY("user_id") REFERENCES users("id") ON DELETE CASCADE,
     FOREIGN KEY("artwork_id") REFERENCES artworks("id") ON DELETE CASCADE
 );
 --table to keep track of the sequence of artworks within a single collection
 CREATE TABLE "collection_order" (
     "id" SERIAL PRIMARY KEY,
-    "artwork_id" INT,
-    "collection_id" INT,
+    "artwork_id" INT NULL,
+    "collection_id" INT NULL,
     "position" INT UNIQUE DEFAULT NULL, 
     "prevID" INT DEFAULT NULL,
     "nextID" INT DEFAULT NULL,
