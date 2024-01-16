@@ -4,6 +4,14 @@ const User = require("../models/userModel");
 const db = require("../db/db.js");
 const bcrypt = require("bcrypt");
 const userController = {};
+//custom errors for error handling
+class userControllerError extends Error {
+  constructor(code, message) {
+    super(message);
+    this.status = code;
+    this.name = "userControllerError";
+  }
+}
 //middleware to create user
 userController.createUser = async (req, res, next) => {
   const saltRounds = 10;
@@ -16,9 +24,18 @@ userController.createUser = async (req, res, next) => {
     req.body.firstName,
     req.body.lastName,
     req.body.username,
-    req.body.password,
+    hashedPass,
   ];
-  await db.query();
+  try {
+    const { rows } = await db.query(text, params);
+    console.log("rows look like", rows);
+  } catch (err) {
+    next({
+      log: "Error in creating new user in userController.js",
+      message: "Error in creating new user",
+      status: 500,
+    });
+  }
 };
 // userController.createUser = async (req, res, next) => {
 //   // write code here
