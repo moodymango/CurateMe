@@ -8,11 +8,18 @@ const userController = {};
 userController.createUser = async (req, res, next) => {
   const saltRounds = 10;
   const { username, password, firstName, lastName } = req.body;
-  //hash user pass prior to saving in the database
+  //encrypt password prior to saving in db
   const hashedPass = await bcrypt.hash(password, saltRounds);
+  const text =
+    "INSERT INTO user(first_name, last_name, username, password) VALUES($1, $2, $3, $4)";
+  const params = [
+    req.body.firstName,
+    req.body.lastName,
+    req.body.username,
+    req.body.password,
+  ];
+  await db.query();
 };
-//ENCRYPTION OF PASSWORD happens in create user
-// const saltRounds = 10;
 // userController.createUser = async (req, res, next) => {
 //   // write code here
 //   console.log("creating user...");
