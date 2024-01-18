@@ -68,7 +68,7 @@ const queryBuild = function (searchQ, categtoryField = "artist_title") {
 artChicagoApiController.getArtworksFromApi = async (req, response, next) => {
   console.log("grabbing artworks by search term");
   // MAKE SURE TO ADD CATEGORY FIELD, AND PASS IT IN, MUST BUILD THIS IN ON THE FRONT-END
-  const { searchReq } = req.body;
+  const { searchReq, categtoryField } = req.body;
   //build query using elasticsearch syntax
   const query = queryBuild(searchReq);
   //pass minified URL encoded json

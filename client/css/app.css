@@ -1,54 +1,55 @@
 /* NAV BAR STYLING */
 #nav-container {
-    width: 100%;
-    float: left;
-    padding: 0;
-    list-style: none; 
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
+  width: 100%;
+  float: left;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
 }
 #nav li {
-    float: left;
- }
- #nav li a {
-    display: block;
-    padding: 8px 15px;
-    text-decoration: none;
-    font-weight: bold;
-    color: black;
-    border-right: 1px solid none }
+  float: left;
+}
+#nav li a {
+  display: block;
+  padding: 8px 15px;
+  text-decoration: none;
+  font-weight: bold;
+  color: black;
+  border-right: 1px solid none;
+}
 /* STYLING FOR HOMEPAGE */
 /* https://www.freecodecamp.org/news/css-full-page-background-image-tutorial/ */
 /* https://www.developerdrive.com/full-page-hero-image-html-css/ */
 .homepage {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .homepage::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url(/Users/imma/Codesmith/Mid/solo-project/solo-project/client/homepage-image.jpeg);
-    /* ensures background will not repeat */
-    background-repeat: no-repeat;
-    /* background stays centered */
-    background-position: center center;
-    /* makes sure image stays in background */
-    background-attachment: fixed;
-    background-size: cover;
-    filter: brightness(80%);
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(/Users/imma/Codesmith/Mid/solo-project/solo-project/client/homepage-image.jpeg);
+  /* ensures background will not repeat */
+  background-repeat: no-repeat;
+  /* background stays centered */
+  background-position: center center;
+  /* makes sure image stays in background */
+  background-attachment: fixed;
+  background-size: cover;
+  filter: brightness(80%);
 }
 #homepage-content {
-    position: relative;
-    text-align: center;
+  position: relative;
+  text-align: center;
 }
 /* USER CONTENT */
 /* .user-page{
@@ -64,41 +65,54 @@
     text-align: center;
 } */
 /* STYLING FOR SIGN UP */
-.login, .signup, .search-component, .logged-in, .user-page{
-    top: 0;
-    left: 0;
-    text-align: center;
-    color:black
+.login,
+.signup,
+.search-component,
+.logged-in,
+.user-page {
+  top: 0;
+  left: 0;
+  text-align: center;
+  color: black;
+}
+/* SEARCH INPUT */
+/* STYLING FOR SIGN UP */
+.login,
+.signup,
+.search-component,
+.logged-in,
+.user-page {
+  top: 0;
+  left: 0;
+  text-align: center;
+  color: black;
 }
 /* SEARCH RESULTS */
 #search-results {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
-/* SEARCH BAR */
-
 /* ARTWORK CARDS */
-.artwork-cards{
-    position: block;
-    padding: 5px;
-    width:30%;
-    /* margin: 10px; */
-    margin: 5px 5px 13px 10px;
-    float:left;
-    font-size: .8em;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, .2);
+.artwork-cards {
+  position: block;
+  padding: 5px;
+  width: 30%;
+  /* margin: 10px; */
+  margin: 5px 5px 13px 10px;
+  float: left;
+  font-size: 0.8em;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-
-label{
-    font-weight: 600;
+label {
+  font-weight: 600;
 }
 
 body {
-    box-sizing: border-box;
-    font-family: 'Ubuntu Light', 'Century Gothic', sans-serif;
-    margin: 0;
-    padding: 0;
-    color: white;
-    /* color: black; */
+  box-sizing: border-box;
+  font-family: "Ubuntu Light", "Century Gothic", sans-serif;
+  margin: 0;
+  padding: 0;
+  color: white;
+  /* color: black; */
 }
