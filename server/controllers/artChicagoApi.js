@@ -15,6 +15,14 @@ class artChicagoApiFetchError extends Error {
     this.name = "artChicagoApiError";
   }
 }
+//build headers w/ proper authentication as request by source institution
+const myHeaders = new fetch.Headers({
+  "Content-Type": "application/json",
+  "AIC-User-Agent": "Artsy Fartsy (artsyfartsy.duv@gmail.com)",
+});
+
+//Time and and Query Build Function Adapted from Artispyr from Adamcrombie:
+//https://github.com/adamcrombie/Artispyr/blob/master/src/js/model.js
 function timeout(seconds) {
   return new Promise(function (_, reject) {
     // Setting s in ms time
@@ -28,11 +36,6 @@ function timeout(seconds) {
     }, seconds * 1000);
   });
 }
-//build headers w/ proper authentication as request by source institution
-const myHeaders = new fetch.Headers({
-  "Content-Type": "application/json",
-  "AIC-User-Agent": "Artsy Fartsy (artsyfartsy.duv@gmail.com)",
-});
 //query build from elastic search according to API
 const queryBuild = function (searchQ, categtoryField = "artist_title") {
   console.log("searchq is", searchQ);

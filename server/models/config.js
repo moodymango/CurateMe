@@ -1,4 +1,6 @@
-module.exports = {
+//Config page based on Artispyr Config:
+//github.com/adamcrombie/Artispyr/blob/master/src/js/config.js
+https: module.exports = {
   //URLS for Images
   IMAGE_URL: "https://www.artic.edu/iiif/2/",
   LARGE_IMAGE_URL: "/full/843,/0/default.jpg",
