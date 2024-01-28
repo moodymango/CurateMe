@@ -10,7 +10,6 @@ const SearchContainer = (props) => {
   const [categoryField, setCategoryField] = useState("");
   //set initial state of results (which should be an array of objs)
   const [searchResults, setResults] = useState([]);
-  const resultsArr = useRef([]);
   //set error messaging
   const [errMsg, setErrMsg] = useState("");
   //make async function to fetch data
@@ -19,26 +18,15 @@ const SearchContainer = (props) => {
       //within axios.post, need to define search url for backend
       const apiResults = await axios.post(
         "/search",
-        //need to provide payload(data we're sending to backend)
-        //need to make sure the properties match the properties i've defined in my backend
         JSON.stringify({ searchReq, categoryField }),
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       );
-      //save response data to searchResults state array
-      //I am successfully saving state, but only saving 5 pieces when I should be saving 10.
       setResults(apiResults.data);
-      // let dataArr = apiResults.data
-      // dataArr.forEach((el) => {
-      //   resultsArr.current.push(el);
-      // })
-      // console.log('array is =>', resultsArr.current)
     } catch (err) {
       if (err.response) {
-        setErrMsg(`${err.response.data}`);
-      } else if (err.response.status === 404) {
         setErrMsg(`${err.response.data}`);
       }
     }
@@ -46,19 +34,13 @@ const SearchContainer = (props) => {
   //allows user to make calls via the api
   const handleSubmit = async (e) => {
     e.preventDefault();
-    radioValue();
-    //will make call to axios to make call to backend and set state
+    console.log("current category field is", categoryField);
     fetchData();
     //now need to pass down search results state to child component for this site
   };
-  const radioValue = () => {
-    console.log("is radioButtons working...");
-    const getRadioBtns = document.getElementsByName("categoryField");
-    for (let i = 0; i < getRadioBtns.length; i++) {
-      console.log("radio buttons are", getRadioBtns[i]);
-      console.log("radio buttons checked maybe>", getRadioBtns[i].checked);
-      if (getRadioBtns[i].checked) setCategoryField(getRadioBtns[i].value);
-    }
+  //function to capture value of radio buttons
+  const handleChange = (e) => {
+    setCategoryField(e.target.value);
   };
 
   return (
@@ -71,9 +53,18 @@ const SearchContainer = (props) => {
               id="artist_title"
               name="categoryField"
               value="artist_title"
+              onChange={handleChange}
+              checked={categoryField === "artist_title"}
             />
             <label htmlFor="artist_title">Artist Name</label>
-            <input type="radio" id="title" name="categoryField" value="title" />
+            <input
+              type="radio"
+              id="title"
+              name="categoryField"
+              value="title"
+              checked={categoryField === "title"}
+              onChange={handleChange}
+            />
             <label htmlFor="title">Artwork Title</label>
           </div>
           <div id="search-button&bar">

@@ -38,8 +38,6 @@ function timeout(seconds) {
 }
 //query build from elastic search according to API
 const queryBuild = function (searchQ, categtoryField = "artist_title") {
-  console.log("searchq is", searchQ);
-  console.log("category is", categtoryField);
   return {
     query: {
       //combines multiple queries into one request
@@ -70,10 +68,10 @@ const queryBuild = function (searchQ, categtoryField = "artist_title") {
 };
 artChicagoApiController.getArtworksFromApi = async (req, response, next) => {
   console.log("grabbing artworks by search term");
-  // MAKE SURE TO ADD CATEGORY FIELD, AND PASS IT IN, MUST BUILD THIS IN ON THE FRONT-END
-  const { searchReq, categtoryField } = req.body;
+  const { searchReq, categoryField } = req.body;
   //build query using elasticsearch syntax
-  const query = queryBuild(searchReq);
+  console.log("queries from req body are", categoryField, searchReq);
+  const query = queryBuild(searchReq, categoryField);
   //pass minified URL encoded json
   const URLEncodeQuery = encodeURIComponent(JSON.stringify(query));
   const url = `${ARTWORK_URL}${URLEncodeQuery}`;
