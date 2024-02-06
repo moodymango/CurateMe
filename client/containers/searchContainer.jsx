@@ -3,12 +3,12 @@ import axios from "../components/api/axios";
 
 //import children components
 import SearchResults from "../components/searchResults.jsx";
-// import InfiniteScroll from "../components/infiniteScroll.jsx";
-
+import InfiniteScroll from "../components/infiniteScroll.jsx";
 const SearchContainer = (props) => {
   //set initial state of search bar to empty string
   const [searchReq, setSearch] = useState("");
   const [categoryField, setCategoryField] = useState("");
+  const [pageNum, setPageNum] = useState(1);
   //set initial state of results (which should be an array of objs)
   const [searchResults, setResults] = useState([]);
   //set error messaging
@@ -74,7 +74,7 @@ const SearchContainer = (props) => {
                 title="searchReq"
                 type="search"
                 id="search"
-                onChange={handleChange}
+                onChange={(e) => setSearch(e.target.value)}
                 value={searchReq}
                 placeholder="Degas?"
               />
@@ -86,8 +86,15 @@ const SearchContainer = (props) => {
       <div id="search-results">
         {searchResults.length ? (
           //ideally would prefer to display infinite scroll here since search results will be nested within this function
-          <SearchResults searchResults={searchResults} />
+          <InfiniteScroll
+            handleSubmit={handleSubmit}
+            pageNum={pageNum}
+            searchResults={searchResults}
+          >
+            {" "}
+          </InfiniteScroll>
         ) : (
+          // <SearchResults searchResults={searchResults} />
           <h2>{errMsg}</h2>
         )}
       </div>
