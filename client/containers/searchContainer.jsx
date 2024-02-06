@@ -3,6 +3,7 @@ import axios from "../components/api/axios";
 
 //import children components
 import SearchResults from "../components/searchResults.jsx";
+// import InfiniteScroll from "../components/infiniteScroll.jsx";
 
 const SearchContainer = (props) => {
   //set initial state of search bar to empty string
@@ -18,7 +19,7 @@ const SearchContainer = (props) => {
       //within axios.post, need to define search url for backend
       const apiResults = await axios.post(
         "/search",
-        JSON.stringify({ searchReq, categoryField }),
+        JSON.stringify({ searchReq, categoryField, pageNum }),
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
@@ -73,7 +74,7 @@ const SearchContainer = (props) => {
                 title="searchReq"
                 type="search"
                 id="search"
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={handleChange}
                 value={searchReq}
                 placeholder="Degas?"
               />
@@ -84,6 +85,7 @@ const SearchContainer = (props) => {
       </form>
       <div id="search-results">
         {searchResults.length ? (
+          //ideally would prefer to display infinite scroll here since search results will be nested within this function
           <SearchResults searchResults={searchResults} />
         ) : (
           <h2>{errMsg}</h2>

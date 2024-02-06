@@ -37,7 +37,11 @@ function timeout(seconds) {
   });
 }
 //query build from elastic search according to API
-const queryBuild = function (searchQ, categtoryField = "artist_title") {
+const queryBuild = function (
+  searchQ,
+  categtoryField = "artist_title",
+  pageNum = 1
+) {
   return {
     query: {
       //combines multiple queries into one request
@@ -63,12 +67,13 @@ const queryBuild = function (searchQ, categtoryField = "artist_title") {
     },
     //retrieves specific fields in the search response
     fields: ARTWORK_FIELDS,
-    limit: 50,
+    limit: 15,
+    page: pageNum,
   };
 };
 artChicagoApiController.getArtworksFromApi = async (req, response, next) => {
   console.log("grabbing artworks by search term");
-  const { searchReq, categoryField } = req.body;
+  const { searchReq, categoryField, pageNum } = req.body;
   //build query using elasticsearch syntax
   console.log("queries from req body are", categoryField, searchReq);
   const query = queryBuild(searchReq, categoryField);
