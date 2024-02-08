@@ -14,6 +14,7 @@ const InfiniteScroll = (props) => {
       //if how much has been scrolled down (scroll top) and height of the visible window (window.height)are equal to the total height of the document, we have reached the bottom of the page
       window.innerHeight + document.documentElement.scrollTop ==
       document.documentElement.offsetHeight
+      //need to make this work
     ) {
       //want to update page num by 1.
       changePage();
