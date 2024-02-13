@@ -15,6 +15,7 @@ const InfiniteScroll = (props) => {
       window.innerHeight + document.documentElement.scrollTop ==
       document.documentElement.offsetHeight
       //need to make this work
+      //add comment
     ) {
       //want to update page num by 1.
       changePage();
