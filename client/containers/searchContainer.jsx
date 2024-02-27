@@ -29,7 +29,6 @@ const SearchContainer = (props) => {
       if (observer.current) observer.current.disconnect();
       //set current observer
       observer.current = new IntersectionObserver((entries) => {
-        console.log("has more is true", hasMore);
         //want to check if our last element is on the page, and we are not on the last page of pagination
         if (entries[0].isIntersecting && hasMore) {
           //if so, reassign page num to page num + 1
@@ -43,18 +42,22 @@ const SearchContainer = (props) => {
     [isLoading, hasMore]
   );
   //Sets state for searchQ and also resets page number to 1
+  //set submit to false since we are in the middle of typing query
   function handleSearch(e) {
+    e.preventDefault();
     setSearch(e.target.value);
+    setDidSubmit(false);
   }
   //handle submission of the form
   const handleSubmit = async (e) => {
     e.preventDefault();
     setDidSubmit(true);
-    setPageNum(1);
   };
   //function to capture value of radio buttons
+  //set submit to false since we are in the middle of changing fields.
   const handleChange = (e) => {
     setCategoryField(e.target.value);
+    setDidSubmit(false);
   };
   return (
     <div className="search-component">

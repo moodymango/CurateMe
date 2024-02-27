@@ -19,7 +19,7 @@ export default function useArtworkSearch(
   const [hasMore, setHasMore] = useState(false);
   useEffect(() => {
     setResults([]);
-  }, [didSubmit]);
+  }, [searchReq, categoryField]);
   useEffect(() => {
     //everytime we make request, set loading to be true
     setLoading(true);
@@ -38,7 +38,7 @@ export default function useArtworkSearch(
           }
         )
         .then((res) => {
-          setResults([...searchResults, ...res.data.data]);
+          setResults([...new Set([...searchResults, ...res.data.data])]);
           //no longer fetching data
           setLoading(false);
           if (pageNum !== res.data.pagination.total_pages) {
