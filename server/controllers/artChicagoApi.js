@@ -95,7 +95,7 @@ artChicagoApiController.getArtworksFromApi = async (req, response, next) => {
           `No artworks found by query: ${searchReq}`
         );
       }
-      response.status(200).json(data.data);
+      response.status(200).json(data);
     } else {
       //throw error to execute catch block if the fetch response failed
       throw new artChicagoApiFetchError(500, "Art Chicago Api Service Down");

@@ -24,8 +24,6 @@ export default function useArtworkSearch(
     //everytime we make request, set loading to be true
     setLoading(true);
     setError(false);
-    console.log("we are sending a request now");
-    console.log("search body is ", searchReq, categoryField, pageNum);
     //query the api
     try {
       //within axios.post, need to define search url for backend
@@ -40,15 +38,10 @@ export default function useArtworkSearch(
           }
         )
         .then((res) => {
-          setResults([...searchResults, ...res.data]);
-          console.log("setting search results ", searchResults);
-          console.log("total page number is ", res.pagination.total_pages);
-          setHasMore(pageNum === res.pagination.total_pages);
+          setResults([...searchResults, ...res.data.data]);
           //no longer fetching data
           setLoading(false);
-        })
-        .catch((e) => {
-          setError(true);
+          setHasMore(pageNum === res.data.pagination.total_pages);
         });
     } catch (err) {
       if (err.response) {

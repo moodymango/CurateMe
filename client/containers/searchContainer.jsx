@@ -28,11 +28,11 @@ const SearchContainer = (props) => {
       if (observer.current) observer.current.disconnect();
       //set current observer
       observer.current = new IntersectionObserver((entries) => {
+        console.log("has more is true", hasMore);
         //want to check if our last element is on the page, and we are not on the last page of pagination
         if (entries[0].isIntersecting && hasMore) {
           //if so, reassign page num to page num + 1
           setPageNum(pageNum + 1);
-          console.log("Visible");
         }
       });
       //if something is our last element, we want to make sure our observer is observing it
@@ -44,11 +44,9 @@ const SearchContainer = (props) => {
   //Sets state for searchQ and also resets page number to 1
   function handleSearch(e) {
     setSearch(e.target.value);
-    setPageNum(1);
   }
   //handle submission of the form
   const handleSubmit = async (e) => {
-    console.log("search button pressed!");
     e.preventDefault();
     setDidSubmit(true);
     setPageNum(1);
