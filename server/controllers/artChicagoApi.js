@@ -67,15 +67,14 @@ const queryBuild = function (
     },
     //retrieves specific fields in the search response
     fields: ARTWORK_FIELDS,
-    limit: 15,
+    limit: 10,
     page: pageNum,
   };
 };
 artChicagoApiController.getArtworksFromApi = async (req, response, next) => {
-  console.log("grabbing artworks by search term");
   const { searchReq, categoryField, pageNum } = req.body;
   //build query using elasticsearch syntax
-  const query = queryBuild(searchReq, categoryField);
+  const query = queryBuild(searchReq, categoryField, pageNum);
   //pass minified URL encoded json
   const URLEncodeQuery = encodeURIComponent(JSON.stringify(query));
   const url = `${ARTWORK_URL}${URLEncodeQuery}`;
@@ -86,7 +85,6 @@ artChicagoApiController.getArtworksFromApi = async (req, response, next) => {
     ]);
     if (res.ok) {
       const data = await res.json();
-      console.log("data in function is", data);
       //data I want is contained in data => {pagination, data properties as the most important} object. Each artwork is represented in an object
       if (data.length === 0 || data.data.length === 0) {
         console.log("testing should be throwing error");

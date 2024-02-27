@@ -17,9 +17,6 @@ const SearchResults = forwardRef((props, ref) => {
     } = artObj;
     //if we have reached the last element in the arr, attach the ref tag
     if (idx + 1 === searchResults.length) {
-      console.log(
-        "we have hit this block and assigned a ref to the last card!!"
-      );
       artworkCards.push(
         <ArtworkCard
           key={id}

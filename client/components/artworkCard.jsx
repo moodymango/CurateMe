@@ -19,8 +19,6 @@ const ArtworkCard = forwardRef((props, ref) => {
     medium,
     artworkId,
   } = props;
-  console.log("ref card is ", ref);
-  console.log();
   //create state for image api calls
   //assuming I will be getting a url returned from my api call
   const [images, setImages] = useState("");

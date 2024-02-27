@@ -8,6 +8,7 @@ export default function useArtworkSearch(
   pageNum,
   didSubmit
 ) {
+  console.log("page num is ", pageNum);
   //set load flags, initialize as true b/c we will load inside our app
   const [isLoading, setLoading] = useState(true);
   //set error messaging
