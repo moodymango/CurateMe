@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "./api/axios";
+import { forwardRef } from "react";
 const {
   IMAGE_URL,
   LARGE_IMAGE_URL,
   SMALL_IMAGE_URL,
 } = require("../../server/models/config.js");
-//need to import card components in this file in order to render each artwork card
-const ArtworkCard = (props) => {
-  //will inherent all necessary properties from search results component
-  //THIS FUNCTIONALITY WILL LIVE IN MY SEARCH CONTAINER FUNCTION
+const ArtworkCard = forwardRef((props, ref) => {
   //need to create an add to collection button that adds the artwork to user's specific collection on profile
   //will also need to add a delete button so user is able to delete it from their collection
   const {
@@ -21,6 +19,8 @@ const ArtworkCard = (props) => {
     medium,
     artworkId,
   } = props;
+  console.log("ref card is ", ref);
+  console.log();
   //create state for image api calls
   //assuming I will be getting a url returned from my api call
   const [images, setImages] = useState("");
@@ -58,6 +58,6 @@ const ArtworkCard = (props) => {
       </div>
     </div>
   );
-};
+});
 
 export default ArtworkCard;

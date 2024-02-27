@@ -1,7 +1,8 @@
 import React from "react";
 import ArtworkCard from "./artworkCard.jsx";
-const SearchResults = (props) => {
-  const { searchResults, lastArtworkElementRef } = props;
+import { forwardRef } from "react";
+const SearchResults = forwardRef((props, ref) => {
+  const { searchResults } = props;
   const artworkCards = [];
   searchResults.forEach((artObj, idx) => {
     const {
@@ -15,7 +16,10 @@ const SearchResults = (props) => {
       id,
     } = artObj;
     //if we have reached the last element in the arr, attach the ref tag
-    if (idx + 1 === searchResults) {
+    if (idx + 1 === searchResults.length) {
+      console.log(
+        "we have hit this block and assigned a ref to the last card!!"
+      );
       artworkCards.push(
         <ArtworkCard
           key={id}
@@ -27,7 +31,7 @@ const SearchResults = (props) => {
           title={title}
           medium={medium_display}
           id={id}
-          ref={lastArtworkElementRef}
+          ref={ref}
         />
       );
     } else {
@@ -47,6 +51,6 @@ const SearchResults = (props) => {
     }
   });
   return <div className="search-results">{artworkCards}</div>;
-};
+});
 
 export default SearchResults;

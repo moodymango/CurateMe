@@ -75,7 +75,6 @@ artChicagoApiController.getArtworksFromApi = async (req, response, next) => {
   console.log("grabbing artworks by search term");
   const { searchReq, categoryField, pageNum } = req.body;
   //build query using elasticsearch syntax
-  console.log("queries from req body are", categoryField, searchReq);
   const query = queryBuild(searchReq, categoryField);
   //pass minified URL encoded json
   const URLEncodeQuery = encodeURIComponent(JSON.stringify(query));

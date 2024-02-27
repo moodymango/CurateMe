@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import axios from "../components/api/axios";
 import useArtworkSearch from "../components/useArtworkSeach.js";
 //import children components
 import SearchResults from "../components/searchResults.jsx";
@@ -9,7 +8,6 @@ const SearchContainer = (props) => {
   const [searchReq, setSearch] = useState("");
   const [categoryField, setCategoryField] = useState("");
   const [pageNum, setPageNum] = useState(1);
-  const [initialMsg, setInitialMsg] = useState("");
   const [didSubmit, setDidSubmit] = useState(false);
 
   const { searchResults, isLoading, error, hasMore, errMsg } = useArtworkSearch(
@@ -26,14 +24,14 @@ const SearchContainer = (props) => {
     (node) => {
       //check isLoading, we dont want to trigger infinite scrolling
       if (isLoading) return;
-      //want to disconnect the observer from prev el
+      //want to disconnect the observer from prev last el
       if (observer.current) observer.current.disconnect();
       //set current observer
       observer.current = new IntersectionObserver((entries) => {
         //want to check if our last element is on the page, and we are not on the last page of pagination
         if (entries[0].isIntersecting && hasMore) {
           //if so, reassign page num to page num + 1
-          setPageNum((prevPageNum) => prevPageNum + 1);
+          setPageNum(pageNum + 1);
           console.log("Visible");
         }
       });
@@ -50,14 +48,15 @@ const SearchContainer = (props) => {
   }
   //handle submission of the form
   const handleSubmit = async (e) => {
+    console.log("search button pressed!");
     e.preventDefault();
     setDidSubmit(true);
+    setPageNum(1);
   };
   //function to capture value of radio buttons
   const handleChange = (e) => {
     setCategoryField(e.target.value);
   };
-
   return (
     <div className="search-component">
       <form id="search-form" role="search" onSubmit={handleSubmit}>
@@ -99,7 +98,7 @@ const SearchContainer = (props) => {
       </form>
       <div id="search-results">
         <div>{isLoading && "Loading..."}</div>
-        <div>{error && "Error..."}</div>
+        <div>{errMsg && { errMsg }}</div>
         <div>
           <SearchResults
             searchResults={searchResults}

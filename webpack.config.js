@@ -74,19 +74,14 @@ module.exports = {
       publicPath: "/",
       directory: path.resolve(__dirname),
     },
-    //make it so that the fetch calls from the front end get to our actual backend
     proxy: {
       //must proxy ANY route in which we are making an api call
-      //whenever we get a fetch request to signup, send it to the actual server on localhost:5050
-      "/signup": "http://localhost:5050",
-      "/login": "http://localhost:5050",
-      "/search": "http://localhost:5050",
-      "/:username": "http://localhost:5050",
-      "/:username/collections": "http://localhost:5050",
-      "/:username/collections/:title": "http://localhost:5050",
+      "/signup": "http://127.0.0.1:5050/",
+      "/login": "http://127.0.0.1:5050/",
+      "/search": "http://127.0.0.1:5050/",
+      "/:username": "http://127.0.0.1:5050/",
+      "/:username/collections": "http://127.0.0.1:5050/",
+      "/:username/collections/:title": "http://127.0.0.1:5050/",
     },
   },
 };
-//I guess the following makes code cleaner, but isnnt related to webpack
-// "eslint": "^7.12.1",
-// "eslint-plugin-react": "^7.21.5",

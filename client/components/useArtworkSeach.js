@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import axios from "../components/api/axios";
+import axios from "axios";
 const controller = new AbortController();
-
+//@source - webdevsimplified infinite scroll with react tutorial
 export default function useArtworkSearch(
   searchReq,
   categoryField,
@@ -17,14 +17,15 @@ export default function useArtworkSearch(
   const [searchResults, setResults] = useState([]);
   //checks when we get to the end of the paginations, we don't want to keep calling our function once we've reached the end of the results
   const [hasMore, setHasMore] = useState(false);
-
   useEffect(() => {
     setResults([]);
-  }, [searchReq]);
+  }, [didSubmit]);
   useEffect(() => {
     //everytime we make request, set loading to be true
     setLoading(true);
     setError(false);
+    console.log("we are sending a request now");
+    console.log("search body is ", searchReq, categoryField, pageNum);
     //query the api
     try {
       //within axios.post, need to define search url for backend
@@ -39,16 +40,14 @@ export default function useArtworkSearch(
           }
         )
         .then((res) => {
-          setResults((prevBooks) => {
-            [...new Set([...prevBooks, ...res.data])];
-          });
+          setResults([...searchResults, ...res.data]);
+          console.log("setting search results ", searchResults);
           console.log("total page number is ", res.pagination.total_pages);
           setHasMore(pageNum === res.pagination.total_pages);
           //no longer fetching data
           setLoading(false);
         })
         .catch((e) => {
-          if (axios.isCancel(e)) return;
           setError(true);
         });
     } catch (err) {
@@ -56,8 +55,7 @@ export default function useArtworkSearch(
         setErrMsg(`${err.response.data}`);
       }
     }
-    //cancel additional requests to api since every new character to str search is causing useEffect to change
-    return () => controller.abort();
+    //cancel additional requests to api since every new character to searchReq is causing useEffect to change
   }, [didSubmit, pageNum]);
   //return all the state from our hook
   return { isLoading, error, searchResults, hasMore, errMsg };
