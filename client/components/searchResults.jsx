@@ -1,14 +1,9 @@
 import React from "react";
-//need to import card components in this file in order to render each artwork card
 import ArtworkCard from "./artworkCard.jsx";
 const SearchResults = (props) => {
-  const { searchResults } = props;
-  //going to render an array of smaller card components, each containing artwork info
-  //need to iterate through search result array, rendering a new card component each time, making sure to pass down relevant info pertaining to artwork.
+  const { searchResults, lastArtworkElementRef } = props;
   const artworkCards = [];
-  searchResults.forEach((artObj) => {
-    //here is where we will render the artworks, make sure to put a key on to know which to identify
-    //destructure each artObj  during each iteration, and pass those same properties from the object to the card component
+  searchResults.forEach((artObj, idx) => {
     const {
       artist_title,
       artwork_type_title,
@@ -17,21 +12,39 @@ const SearchResults = (props) => {
       image_id,
       title,
       medium_display,
-      artworkId,
+      id,
     } = artObj;
-
-    artworkCards.push(
-      <ArtworkCard
-        artist={artist_title}
-        artwork_type={artwork_type_title}
-        classifications={classification_titles}
-        date={date_display}
-        image_id={image_id}
-        title={title}
-        medium={medium_display}
-        artworkId={artworkId}
-      />
-    );
+    //if we have reached the last element in the arr, attach the ref tag
+    if (idx + 1 === searchResults) {
+      artworkCards.push(
+        <ArtworkCard
+          key={id}
+          artist={artist_title}
+          artwork_type={artwork_type_title}
+          classifications={classification_titles}
+          date={date_display}
+          image_id={image_id}
+          title={title}
+          medium={medium_display}
+          id={id}
+          ref={lastArtworkElementRef}
+        />
+      );
+    } else {
+      artworkCards.push(
+        <ArtworkCard
+          key={id}
+          artist={artist_title}
+          artwork_type={artwork_type_title}
+          classifications={classification_titles}
+          date={date_display}
+          image_id={image_id}
+          title={title}
+          medium={medium_display}
+          id={id}
+        />
+      );
+    }
   });
   return <div className="search-results">{artworkCards}</div>;
 };

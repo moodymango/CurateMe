@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import axios from "../components/api/axios";
-
+import useArtworkSearch from "../components/useArtworkSeach.js";
 //import children components
 import SearchResults from "../components/searchResults.jsx";
 import InfiniteScroll from "../components/infiniteScroll.jsx";
@@ -8,45 +8,50 @@ const SearchContainer = (props) => {
   //set initial state of search bar to empty string
   const [searchReq, setSearch] = useState("");
   const [categoryField, setCategoryField] = useState("");
-  const [pageNum, setPageNum] = useState(0);
-  //set initial state of results (which should be an array of objs)
-  const [searchResults, setResults] = useState([]);
-  //set error messaging
-  const [errMsg, setErrMsg] = useState("");
+  const [pageNum, setPageNum] = useState(1);
+  const [initialMsg, setInitialMsg] = useState("");
+  const [didSubmit, setDidSubmit] = useState(false);
 
-  useEffect(() => {
-    //make async function to fetch data
-    async function fetchData() {
-      try {
-        //within axios.post, need to define search url for backend
-        const apiResults = await axios.post(
-          "/search",
-          JSON.stringify({ searchReq, categoryField, pageNum }),
-          {
-            headers: { "Content-Type": "application/json" },
-            withCredentials: true,
-          }
-        );
-        //update state by calling setResults with callbacl form
-        //create new array containing the first parts I already had, and the results from the API
-        setResults((searchResults) => [...searchResults, ...apiResults.data]);
-      } catch (err) {
-        if (err.response) {
-          setErrMsg(`${err.response.data}`);
+  const { searchResults, isLoading, error, hasMore, errMsg } = useArtworkSearch(
+    searchReq,
+    categoryField,
+    pageNum,
+    didSubmit
+  );
+  //initially undefined
+  const observer = useRef();
+  //need a reference to the very last artwork el is shown on the screen,
+  //then we change page number and add 1 to it
+  const lastArtworkElementRef = useCallback(
+    (node) => {
+      //check isLoading, we dont want to trigger infinite scrolling
+      if (isLoading) return;
+      //want to disconnect the observer from prev el
+      if (observer.current) observer.current.disconnect();
+      //set current observer
+      observer.current = new IntersectionObserver((entries) => {
+        //want to check if our last element is on the page, and we are not on the last page of pagination
+        if (entries[0].isIntersecting && hasMore) {
+          //if so, reassign page num to page num + 1
+          setPageNum((prevPageNum) => prevPageNum + 1);
+          console.log("Visible");
         }
-      }
-    }
-    fetchData();
-  }, [pageNum]);
+      });
+      //if something is our last element, we want to make sure our observer is observing it
+      if (node) observer.current.observe(node);
+    },
+    //need to return the dependencies of the useCallback hook
+    [isLoading, hasMore]
+  );
+  //Sets state for searchQ and also resets page number to 1
+  function handleSearch(e) {
+    setSearch(e.target.value);
+    setPageNum(1);
+  }
   //handle submission of the form
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //page number will only update  when the handle submit function runs, which in turn will trigger our useEffect hook
-    setPageNum(1);
-  };
-  //function to change page
-  const changePage = () => {
-    setPageNum(pageNum + 1);
+    setDidSubmit(true);
   };
   //function to capture value of radio buttons
   const handleChange = (e) => {
@@ -83,7 +88,7 @@ const SearchContainer = (props) => {
                 title="searchReq"
                 type="search"
                 id="search"
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={handleSearch}
                 value={searchReq}
                 placeholder="Degas?"
               />
@@ -93,20 +98,14 @@ const SearchContainer = (props) => {
         </div>
       </form>
       <div id="search-results">
-        {pageNum === 1 ? (
-          //ideally would prefer to display infinite scroll here since search results will be nested within this function
-          <InfiniteScroll
-            handleSubmit={handleSubmit}
-            changePage={changePage}
-            pageNum={pageNum}
+        <div>{isLoading && "Loading..."}</div>
+        <div>{error && "Error..."}</div>
+        <div>
+          <SearchResults
             searchResults={searchResults}
-          >
-            {" "}
-          </InfiniteScroll>
-        ) : (
-          // <SearchResults searchResults={searchResults} />
-          <h2>{errMsg}</h2>
-        )}
+            ref={lastArtworkElementRef}
+          ></SearchResults>
+        </div>
       </div>
     </div>
   );
