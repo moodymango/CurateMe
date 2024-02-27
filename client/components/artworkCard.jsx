@@ -28,7 +28,7 @@ const ArtworkCard = forwardRef((props, ref) => {
   //only need to display title, artist, date created, and medium,
   //artworkID will be used to save the results from search, which will be done on searchContainer
   return (
-    <div className="artwork-cards">
+    <div className="artwork-cards" ref={ref}>
       {/* seperate div in order to show artwork image */}
       {/* when user clicks on image, will be able to see a larger version */}
       <div id="art-image">

@@ -41,7 +41,9 @@ export default function useArtworkSearch(
           setResults([...searchResults, ...res.data.data]);
           //no longer fetching data
           setLoading(false);
-          setHasMore(pageNum === res.data.pagination.total_pages);
+          if (pageNum !== res.data.pagination.total_pages) {
+            setHasMore(true);
+          }
         });
     } catch (err) {
       if (err.response) {

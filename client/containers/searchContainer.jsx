@@ -22,6 +22,7 @@ const SearchContainer = (props) => {
   //then we change page number and add 1 to it
   const lastArtworkElementRef = useCallback(
     (node) => {
+      console.log("is isLoading true?", isLoading);
       //check isLoading, we dont want to trigger infinite scrolling
       if (isLoading) return;
       //want to disconnect the observer from prev last el
@@ -38,7 +39,7 @@ const SearchContainer = (props) => {
       //if something is our last element, we want to make sure our observer is observing it
       if (node) observer.current.observe(node);
     },
-    //need to return the dependencies of the useCallback hook
+    // need to return the dependencies of the useCallback hook
     [isLoading, hasMore]
   );
   //Sets state for searchQ and also resets page number to 1
