@@ -1,6 +1,7 @@
 //webpack creates a static js file that is ready to be attached to my html
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 //must require in dotenv in order for this to work
 require("dotenv").config();
 //module.exports to export
@@ -61,6 +62,7 @@ module.exports = {
       publicPath: "/dist",
       template: "./index.html",
     }),
+    new NodePolyfillPlugin(),
   ],
   devServer: {
     //Specify a port number to listen for requests on:

@@ -1,14 +1,12 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import useArtworkSearch from "../components/useArtworkSeach.js";
-//import children components
 import SearchResults from "../components/searchResults.jsx";
-import InfiniteScroll from "../components/infiniteScroll.jsx";
 const SearchContainer = () => {
   //set initial state of search bar to empty string
   const [searchReq, setSearch] = useState("");
   const [categoryField, setCategoryField] = useState("");
   const [pageNum, setPageNum] = useState(1);
-  const [didSubmit, setDidSubmit] = useState(false);
+  const [didSubmit, setDidSubmit] = useState();
 
   const { searchResults, isLoading, error, hasMore, errMsg } = useArtworkSearch(
     searchReq,
@@ -98,13 +96,17 @@ const SearchContainer = () => {
         </div>
       </form>
       <div id="search-results">
-        <div>{isLoading && "Loading..."}</div>
-        <div>{errMsg && { errMsg }}</div>
         <div>
-          <SearchResults
-            searchResults={searchResults}
-            ref={lastArtworkElementRef}
-          ></SearchResults>
+          {error ? (
+            <h1>{errMsg}</h1>
+          ) : (
+            <div>
+              <SearchResults
+                searchResults={searchResults}
+                ref={lastArtworkElementRef}
+              ></SearchResults>
+            </div>
+          )}
         </div>
       </div>
     </div>
