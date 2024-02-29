@@ -56,7 +56,6 @@ const queryBuild = function (
           {
             //match keyword that allows me to search via full-text search
             match: {
-              //if I wanted to add functionality to search by artist, would have to make the key for this property dynamic, and add artist_title
               [categtoryField]: {
                 query: searchQ,
               },

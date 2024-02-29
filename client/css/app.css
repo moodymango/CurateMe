@@ -1,5 +1,4 @@
 /* NAV BAR STYLING */
-/* removeall height: 100% if we want to use document.scrollTop */
 #nav-container {
   width: 100%;
   float: left;
@@ -52,19 +51,6 @@
   position: relative;
   text-align: center;
 }
-/* USER CONTENT */
-/* .user-page{
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center; */
-/*  */
-/* .user-content {
-    position: relative;
-    text-align: center;
-} */
 /* STYLING FOR SIGN UP */
 .login,
 .signup,

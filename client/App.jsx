@@ -10,6 +10,8 @@
  */
 
 import React, { useState } from "react";
+//https://stackoverflow.com/questions/51971449/react-warning-computedmatch-regarding-some-case-issues
+//had error when placing a regular div inside the switch tags
 
 //https://ui.dev/react-router-cannot-get-url-refresh
 //must wrap entire app component in BrowserRouter to make sure it is rendered at the root of my element hierachy
@@ -23,8 +25,6 @@ import BaseModalWrapper from "./components/ModalPopUp/BaseModalWrapper.jsx";
 import Login from "./components/login.jsx";
 import LoginModal from "./components/LoginModel.jsx";
 
-//  import MainContainer from './containers/MainContainer.jsx';
-
 const App = (props) => {
   //need an is logged state in order to keep track of whether or not user is logged in
   const [isLogged, setLogged] = useState(false);
@@ -34,9 +34,7 @@ const App = (props) => {
     setLogged(true);
   };
   function toggleModal() {
-    console.log("i've been toggled!");
     setSeen(!seen);
-    console.log("seen is ", seen);
   }
   return (
     <main>
