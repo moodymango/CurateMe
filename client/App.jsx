@@ -37,7 +37,7 @@ const App = (props) => {
     setSeen(!seen);
   }
   return (
-    <main>
+    <main id="totalApp">
       <Router>
         <Navbar />
         <Switch>
