@@ -15,7 +15,9 @@ function Modal({ onBackdropClick, children }) {
   //need to give user a way to close the modal in the modal corner
   return ReactDom.createPortal(
     <div style={overLay} onClick={onBackdropClick}>
-      <span color="black">{children}</span>
+      <div onClick={(e) => e.stopPropagation()}>
+        <span color="black">{children}</span>
+      </div>
     </div>,
     document.getElementById("modal-root")
   );
