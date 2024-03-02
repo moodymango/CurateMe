@@ -42,6 +42,7 @@ const SearchContainer = () => {
   function handleSearch(e) {
     e.preventDefault();
     setSearch(e.target.value);
+    setPageNum(1);
     setDidSubmit(false);
   }
   //handle submission of the form
@@ -53,6 +54,7 @@ const SearchContainer = () => {
   //set submit to false since we are in the middle of changing fields.
   const handleChange = (e) => {
     setCategoryField(e.target.value);
+    setPageNum(1);
     setDidSubmit(false);
   };
   return (

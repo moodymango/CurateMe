@@ -7,11 +7,12 @@ export default function useArtworkSearch(
   pageNum,
   didSubmit
 ) {
-  const hasPageBeenRendered = useRef({
-    usrDidSubmit: false,
-    usrFirstLoad: false,
-  });
-
+  const hasPageBeenRendered = useRef(false);
+  const userDidSubmit = useRef(false);
+  if (didSubmit === true) {
+    console.log("should set current to true");
+    userDidSubmit.current = true;
+  }
   //set load flags, initialize as true b/c we will load inside our app
   const [isLoading, setLoading] = useState(true);
   //set error messaging
@@ -22,44 +23,47 @@ export default function useArtworkSearch(
   const [hasMore, setHasMore] = useState(false);
   const [error, setError] = useState(false);
   useEffect(() => {
+    userDidSubmit.current = false;
     setResults([]);
-  }, [searchReq]);
+  }, [searchReq, categoryField]);
+
   useEffect(() => {
-    console.log("category field is ", categoryField);
-    if (hasPageBeenRendered.current["usrFirstLoad"]) {
-      //everytime we make request, set loading to be true
-      setLoading(true);
-      setError(false);
-      //query the api
-      axios
-        .post(
-          "/search",
-          JSON.stringify({ searchReq, categoryField, pageNum }),
-          {
-            headers: { "Content-Type": "application/json" },
-            withCredentials: true,
-          }
-        )
-        .then((res) => {
-          setResults([...new Set([...searchResults, ...res.data.data])]);
-          //set loading to false now that api call is done
-          setLoading(false);
-          //check if there are more pages to scroll through from the backend
-          if (pageNum !== res.data.pagination.total_pages) {
-            //reassign setHasMore to true for observer callbac func
-            setHasMore(true);
-          }
-        })
-        .catch((err) => {
-          if (err.response) {
-            setErrMsg(`${err.response.data}`);
-            setError(true);
-          }
-          //call useEffect for every change in didSubmit and pageNum state
-        });
+    if (hasPageBeenRendered.current) {
+      if (userDidSubmit.current) {
+        //everytime we make request, set loading to be true
+        setLoading(true);
+        setError(false);
+        //query the api
+        axios
+          .post(
+            "/search",
+            JSON.stringify({ searchReq, categoryField, pageNum }),
+            {
+              headers: { "Content-Type": "application/json" },
+              withCredentials: true,
+            }
+          )
+          .then((res) => {
+            setResults([...new Set([...searchResults, ...res.data.data])]);
+            //set loading to false now that api call is done
+            setLoading(false);
+            //check if there are more pages to scroll through from the backend
+            if (pageNum !== res.data.pagination.total_pages) {
+              //reassign setHasMore to true for observer callbac func
+              setHasMore(true);
+            }
+          })
+          .catch((err) => {
+            if (err.response) {
+              setErrMsg(`${err.response.data}`);
+              setError(true);
+            }
+          });
+      }
+      userDidSubmit.current = false;
     }
-    hasPageBeenRendered.current["usrFirstLoad"] = true;
-    //cancel additional requests to api since every new character to searchReq is causing useEffect to change
+    hasPageBeenRendered.current = true;
+    //call useEffect for every change in didSubmit and pageNum state
   }, [didSubmit, pageNum]);
   //return all the state from our hook
   return { isLoading, error, searchResults, hasMore, errMsg };
