@@ -1,12 +1,13 @@
-# Artsy Fartsy
+# CurateMe
 
-<p>Artsy Farty empowers the everyday art enthusiast by encouraging users to make and share their own virtual exhibitions with artworks supplied by the Art Institute of Chicago's API.<p>
+<p> CurateMe empowers the everyday art enthusiast to make and share their own virtual exhibitions with artworks supplied by the Art Institute of Chicago's API.<p>
 
 ## Built With
 
+
 ## Getting Started
 
-To get the project running on your local machine
+
 
 ## Features
 
