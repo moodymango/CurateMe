@@ -38,10 +38,10 @@ const App = (props) => {
     setSeen(!seen);
   }
   return (
-    <main class="app-parent">
+    <main className="app-parent">
       <Router>
-        <div class="nav">
-          <Navbar class="nav" />
+        <div className="nav">
+          <Navbar className="nav" />
           {/* <div>
             <button onClick={toggleModal}>Show modal</button>
             <BaseModalWrapper
@@ -50,7 +50,7 @@ const App = (props) => {
             ></BaseModalWrapper>
           </div> */}
         </div>
-        <div class="home">
+        <div className="home">
           <Switch>
             <Route exact path="/" component={Homepage} />
             <Route exact path="/search" component={SearchContainer} />
@@ -61,7 +61,7 @@ const App = (props) => {
             <Route exact path="/:username" component={UserPage} />
           </Switch>
         </div>
-        <div class="foot">
+        <div className="foot">
           <Footer />
         </div>
       </Router>

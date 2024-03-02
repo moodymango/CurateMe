@@ -6,8 +6,7 @@ const SearchContainer = () => {
   const [searchReq, setSearch] = useState("");
   const [categoryField, setCategoryField] = useState("");
   const [pageNum, setPageNum] = useState(1);
-  const [didSubmit, setDidSubmit] = useState();
-
+  const [didSubmit, setDidSubmit] = useState(false);
   const { searchResults, isLoading, error, hasMore, errMsg } = useArtworkSearch(
     searchReq,
     categoryField,

@@ -9,8 +9,8 @@ class Navbar extends Component {
   render() {
     return (
       <nav>
-        <ul class="navbar">
-          <div class="right-nav">
+        <ul className="navbar">
+          <div className="right-nav">
             <li>
               <Link to="/"> CurateMe </Link>
             </li>
@@ -18,7 +18,7 @@ class Navbar extends Component {
               <Link to="/search"> Search for Artworks </Link>
             </li>
           </div>
-          <div class="left-nav">
+          <div className="left-nav">
             <li>
               <Link to="/signup"> Sign Up </Link>
             </li>
