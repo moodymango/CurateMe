@@ -38,26 +38,32 @@ const App = (props) => {
     setSeen(!seen);
   }
   return (
-    <main id="totalApp">
+    <main class="app-parent">
       <Router>
-        <Navbar />
-        <Switch>
-          <Route exact path="/" component={Homepage} />
-          <Route exact path="/search" component={SearchContainer} />
-          <Route path="/signup" render={() => <SignUp />} />
-          {/* <Route path="/login" render={() => <Login />} /> */}
-          {/* <Route exact path = '/:username/collections/:title' component={} /> */}
-          <Route exact path="/:username/collections" component={UserPage} />
-          <Route exact path="/:username" component={UserPage} />
-        </Switch>
-        <div>
-          <button onClick={toggleModal}>Show modal</button>
-          <BaseModalWrapper
-            isVisible={seen}
-            onBackdropClick={toggleModal}
-          ></BaseModalWrapper>
+        <div class="nav">
+          <Navbar class="nav" />
+          {/* <div>
+            <button onClick={toggleModal}>Show modal</button>
+            <BaseModalWrapper
+              isVisible={seen}
+              onBackdropClick={toggleModal}
+            ></BaseModalWrapper>
+          </div> */}
         </div>
-        <Footer></Footer>
+        <div class="home">
+          <Switch>
+            <Route exact path="/" component={Homepage} />
+            <Route exact path="/search" component={SearchContainer} />
+            <Route path="/signup" render={() => <SignUp />} />
+            {/* <Route path="/login" render={() => <Login />} /> */}
+            {/* <Route exact path = '/:username/collections/:title' component={} /> */}
+            <Route exact path="/:username/collections" component={UserPage} />
+            <Route exact path="/:username" component={UserPage} />
+          </Switch>
+        </div>
+        <div class="foot">
+          <Footer />
+        </div>
       </Router>
     </main>
   );
