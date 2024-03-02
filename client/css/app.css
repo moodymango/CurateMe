@@ -1,23 +1,42 @@
+/* set variables using :root */
+:root {
+  --color-primary: #b50938;
+  --color-text-on-primary: #fff;
+  --color-secondary: #d9d2d4;
+  --color-text-on-secondary: black;
+  --color-tertiary: #fff;
+  --color-text-on-tertiary: black;
+
+  --font-family: "Inter", sans-serif;
+}
+body {
+  background-color: var(--color-tertiary);
+  color: var(--color-text-on-tertiary);
+}
 /* NAV BAR STYLING */
-#nav-container {
-  width: 100%;
-  float: left;
-  padding: 0;
-  list-style: none;
+.navbar {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   flex-direction: row;
-}
-#nav li {
-  float: left;
-}
-#nav li a {
-  display: block;
-  padding: 8px 15px;
+  width: 100%;
+  padding: 5px 5px;
+  list-style: none;
   text-decoration: none;
-  font-weight: bold;
-  color: black;
+  /* defines the inline end of an element depending on the text orientation
+  margin-inline-end: 3px; */
+}
+.navbar li a {
+  display: block;
+  text-decoration: none;
+  margin: 5px 0 0;
+  color: var(--color-text-on-secondary);
   border-right: 1px solid none;
+}
+.footer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 /* STYLING FOR HOMEPAGE */
 /* https://www.freecodecamp.org/news/css-full-page-background-image-tutorial/ */
@@ -25,7 +44,6 @@
 .homepage {
   position: relative;
   width: 100%;
-  /* height: 100%; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,8 +53,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  /* width: 100%; */
-  /* height: 100%; */
+  width: 100%;
+  height: 100%;
   background: url(/Users/imma/Codesmith/Mid/solo-project/solo-project/client/homepage-image.jpeg);
   /* ensures background will not repeat */
   background-repeat: no-repeat;
@@ -47,7 +65,7 @@
   background-size: cover;
   filter: brightness(80%);
 }
-#homepage-content {
+.homepage-content {
   position: relative;
   text-align: center;
 }
@@ -84,7 +102,6 @@
   position: block;
   padding: 5px;
   width: 30%;
-  /* margin: 10px; */
   margin: 5px 5px 13px 10px;
   float: left;
   font-size: 0.8em;
@@ -101,5 +118,4 @@ body {
   margin: 0;
   padding: 0;
   color: rgb(5, 5, 5);
-  /* color: black; */
 }

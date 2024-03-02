@@ -24,6 +24,7 @@ import SignUp from "./components/signup.jsx";
 import BaseModalWrapper from "./components/ModalPopUp/BaseModalWrapper.jsx";
 import Login from "./components/login.jsx";
 import LoginModal from "./components/LoginModel.jsx";
+import Footer from "./components/footer.jsx";
 
 const App = (props) => {
   //need an is logged state in order to keep track of whether or not user is logged in
@@ -56,6 +57,7 @@ const App = (props) => {
             onBackdropClick={toggleModal}
           ></BaseModalWrapper>
         </div>
+        <Footer></Footer>
       </Router>
     </main>
   );
