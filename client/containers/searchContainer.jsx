@@ -81,7 +81,7 @@ const SearchContainer = () => {
             />
             <label htmlFor="title">Artwork Title</label>
           </div>
-          <div id="search-button&bar">
+          <div id="search-btn-and-bar">
             <div id="search-bar">
               <input
                 title="searchReq"
