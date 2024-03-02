@@ -10,7 +10,7 @@ class Navbar extends Component {
     return (
       <nav>
         <ul className="navbar">
-          <div className="right-nav">
+          <div className="left-nav">
             <li>
               <Link to="/"> CurateMe </Link>
             </li>
@@ -18,7 +18,7 @@ class Navbar extends Component {
               <Link to="/search"> Search for Artworks </Link>
             </li>
           </div>
-          <div className="left-nav">
+          <div className="right-nav">
             <li>
               <Link to="/signup"> Sign Up </Link>
             </li>

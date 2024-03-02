@@ -72,13 +72,27 @@ body {
   text-decoration: none;
   color: var(--color-text-on-secondary);
   border-right: 1px solid none;
-  margin-bottom: 5px;
-}
-.right-nav {
+  margin-right: 10px;
   margin-left: 10px;
 }
+.navbar li a :hover {
+  font-weight: 800;
+}
+.right-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-right: 5px;
+  padding: px;
+}
 .left-nav {
-  margin-right: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-right: 5px;
+  padding: px;
 }
 /* FOOTER STYLING */
 .footer {
@@ -96,12 +110,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-.homepage::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   background: url(/Users/imma/Codesmith/Mid/solo-project/solo-project/client/homepage-image.jpeg);
@@ -112,11 +120,12 @@ body {
   /* makes sure image stays in background */
   background-attachment: fixed;
   background-size: cover;
-  filter: brightness(80%);
+  filter: brightness(90%);
 }
 .homepage-content {
-  position: relative;
+  position: absolute;
   text-align: center;
+  top: 0px;
 }
 /* STYLING FOR SIGN UP */
 .login,
@@ -130,16 +139,8 @@ body {
   color: black;
 }
 /* SEARCH INPUT */
-/* STYLING FOR SIGN UP */
-.login,
-.signup,
-.search-component,
-.logged-in,
-.user-page {
-  top: 0;
-  left: 0;
-  text-align: center;
-  color: black;
+#search-form {
+  position: relative;
 }
 /* SEARCH RESULTS */
 #search-results {

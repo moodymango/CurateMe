@@ -16,7 +16,7 @@ import React, { useState } from "react";
 //https://ui.dev/react-router-cannot-get-url-refresh
 //must wrap entire app component in BrowserRouter to make sure it is rendered at the root of my element hierachy
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Homepage from "./components/homepage.jsx";
+import Homepage from "./components/Homepage.jsx";
 import UserPage from "./components/userpage.jsx";
 import SearchContainer from "./containers/searchContainer.jsx";
 import Navbar from "./components/navBar.jsx";
