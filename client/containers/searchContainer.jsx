@@ -86,13 +86,14 @@ const SearchContainer = () => {
               <input
                 title="searchReq"
                 type="search"
-                id="search"
+                id="search_input"
                 onChange={handleSearch}
                 value={searchReq}
-                placeholder="Degas?"
+                placeholder="Search your favorite artist"
               />
             </div>
-            <button type="submit">Search</button>
+
+            {/* <button id="search-btn" type="submit">Search</button> */}
           </div>
         </div>
       </form>
