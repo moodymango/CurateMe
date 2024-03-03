@@ -302,7 +302,7 @@ body {
 .query-results {
   margin: 20px 0 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   grid-gap: 0%;
 }
 #error-msg {
