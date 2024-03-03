@@ -1,6 +1,4 @@
-//maybe try following along and using react hooks?
 import React, { useRef, useState, useEffect } from "react";
-//importing axios from my api folder
 import axios from "./api/axios";
 
 import { Link, Redirect } from "react-router-dom";
@@ -96,66 +94,63 @@ const SignUp = () => {
           >
             {errMsg}
           </p>
-          <h1>Sign Up</h1>
-          <form onSubmit={handleSubmit}>
-            <div className="input-container">
-              <label htmlFor="username">Username </label>
-              <input
-                type="text"
-                id="username"
-                //again, allows that immediate focus to be on this field
-                ref={userRef}
-                onChange={(e) => setUser(e.target.value)}
-                value={user}
-                required
-              />
+
+          <form className="signup_form" onSubmit={handleSubmit}>
+            <div className="signup-container">
+              <header className="signup-header">
+                <h1>Sign Up</h1>
+                <p style={{ margin: "0" }}>
+                  Register in order to create and share your collections
+                </p>
+              </header>
+              <div className="signup-input-field">
+                <input
+                  type="text"
+                  className="signup_input"
+                  //again, allows that immediate focus to be on this field
+                  ref={userRef}
+                  onChange={(e) => setUser(e.target.value)}
+                  value={user}
+                  placeholder="@Username"
+                  required
+                />
+                <input
+                  //changing the type to password, changes the input field to dots so we cannot see the pass
+                  type="password"
+                  className="signup_input"
+                  onChange={(e) => setPwd(e.target.value)}
+                  value={pwd}
+                  placeholder="Password"
+                  required
+                />
+                <input
+                  type="text"
+                  className="signup_input"
+                  onChange={(e) => setFirstName(e.target.value)}
+                  value={firstName}
+                  placeholder="First name: Pierre"
+                  required
+                />
+                <input
+                  type="text"
+                  className="signup_input"
+                  onChange={(e) => setLastName(e.target.value)}
+                  value={lastName}
+                  placeholder="Last name: Renoir"
+                  required
+                />
+                {/* don't need an onlick to the button because it's the only button in the form. will trigger a submit event! */}
+              </div>
             </div>
-            <div className="input-container">
-              <label htmlFor="pwd">Password </label>
-              <input
-                //changing the type to password, changes the input field to dots so we cannot see the pass
-                type="password"
-                id="pwd"
-                onChange={(e) => setPwd(e.target.value)}
-                value={pwd}
-                required
-              />
-            </div>
-            <div className="input-container">
-              <label htmlFor="firstName">First Name </label>
-              <input
-                type="text"
-                id="firstName"
-                onChange={(e) => setFirstName(e.target.value)}
-                value={firstName}
-                required
-              />
-            </div>
-            <div className="input-container">
-              <label htmlFor="lastName">Last Name </label>
-              <input
-                type="text"
-                id="lastName"
-                onChange={(e) => setLastName(e.target.value)}
-                value={lastName}
-                required
-              />
-              {/* don't need an onlick to the button because it's the only button in the form. will trigger a submit event! */}
-            </div>
-            <div className="button-container">
-              {/* if we don't have these fields, button will be disabled */}
-              <button
-                disabled={
-                  !user || !pwd || !firstName || !lastName ? true : false
-                }
-              >
-                Sign Up
-              </button>
-            </div>
+            <button
+              id="signup-btn"
+              disabled={!user || !pwd || !firstName || !lastName ? true : false}
+            >
+              Sign Up
+            </button>
           </form>
-          <p>
+          <p id="switch-login">
             Already have an account?
-            {/* need to put router link here */}
             <Link to="/login"> Login </Link>
           </p>
         </section>

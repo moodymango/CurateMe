@@ -88,7 +88,7 @@ const Login = () => {
             <div className="login-container">
               <header className="login-header">
                 <h2>Login</h2>
-                <p>Enter your username and password</p>
+                <p style={{ margin: "0" }}>Enter your username and password</p>
               </header>
               <div className="login_input_field">
                 <input
@@ -114,14 +114,12 @@ const Login = () => {
               </div>
             </div>
             {/* don't need an onlick to the button because it's the only button in the form. will trigger a submit event! */}
-            <div className="login_button">
-              {/* if we don't have these fields, button will be disabled */}
-              <button id="login-btn" disabled={!user || !pwd ? true : false}>
-                Sign In
-              </button>
-            </div>
+            {/* if we don't have these fields, button will be disabled */}
+            <button id="login-btn" disabled={!user || !pwd ? true : false}>
+              Sign In
+            </button>
           </form>
-          <p>
+          <p id="switch-login">
             Don't have an account yet?
             <Link to="/signup"> Sign up </Link>
           </p>
