@@ -21,6 +21,7 @@ export default function useArtworkSearch(
   const [searchResults, setResults] = useState([]);
   //checks when we get to the end of the paginations, we don't want to keep calling our function once we've reached the end of the results
   const [hasMore, setHasMore] = useState(false);
+  const [finalPage, setFinalPage] = useState(1);
   const [error, setError] = useState(false);
   useEffect(() => {
     userDidSubmit.current = false;
@@ -49,6 +50,8 @@ export default function useArtworkSearch(
             setLoading(false);
             //check if there are more pages to scroll through from the backend
             if (pageNum !== res.data.pagination.total_pages) {
+              //assign totalPage count to finalpage state
+              setFinalPage(res.data.pagination.total_pages);
               //reassign setHasMore to true for observer callbac func
               setHasMore(true);
             }
@@ -66,5 +69,5 @@ export default function useArtworkSearch(
     //call useEffect for every change in didSubmit and pageNum state
   }, [didSubmit, pageNum]);
   //return all the state from our hook
-  return { isLoading, error, searchResults, hasMore, errMsg };
+  return { isLoading, error, searchResults, hasMore, errMsg, finalPage };
 }

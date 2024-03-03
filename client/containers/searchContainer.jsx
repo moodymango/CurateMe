@@ -7,20 +7,18 @@ const SearchContainer = () => {
   const [categoryField, setCategoryField] = useState("");
   const [pageNum, setPageNum] = useState(1);
   const [didSubmit, setDidSubmit] = useState(false);
-  const { searchResults, isLoading, error, hasMore, errMsg } = useArtworkSearch(
-    searchReq,
-    categoryField,
-    pageNum,
-    didSubmit
-  );
+  const { searchResults, isLoading, error, hasMore, errMsg, finalPage } =
+    useArtworkSearch(searchReq, categoryField, pageNum, didSubmit);
   //initially undefined
   const observer = useRef();
-  //need a reference to the very last artwork el is shown on the screen,
-  //then we change page number and add 1 to it
+  //attach reference to the very last artwork el is shown on the screen,
+  //then we update page number by 1
   const lastArtworkElementRef = useCallback(
     (node) => {
       //check isLoading, we dont want to trigger infinite scrolling
       if (isLoading) return;
+      //if we have hit the last page of our function, do not trigger infinite scrolling
+      if (pageNum === finalPage) return;
       //want to disconnect the observer from prev last el
       if (observer.current) observer.current.disconnect();
       //set current observer
@@ -101,7 +99,6 @@ const SearchContainer = () => {
         <div>
           {error ? (
             <div>
-              {" "}
               <h1 id="error-msg">{errMsg}</h1>{" "}
             </div>
           ) : (

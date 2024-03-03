@@ -211,7 +211,7 @@ body {
   top: 100px;
 }
 .query-results {
-  margin: 3em 0 0;
+  margin: 10px 0 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-gap: 0%;
@@ -236,8 +236,6 @@ body {
 }
 #title {
   font-weight: 800;
-}
-#artist {
 }
 
 label {
