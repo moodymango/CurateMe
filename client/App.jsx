@@ -22,33 +22,20 @@ import SearchContainer from "./containers/searchContainer.jsx";
 import Navbar from "./components/navBar.jsx";
 import SignUp from "./components/signup.jsx";
 import BaseModalWrapper from "./components/ModalPopUp/BaseModalWrapper.jsx";
-import Login from "./components/login.jsx";
-import LoginModal from "./components/LoginModel.jsx";
 import Footer from "./components/footer.jsx";
 
 const App = (props) => {
   //need an is logged state in order to keep track of whether or not user is logged in
   const [isLogged, setLogged] = useState(false);
-  const [seen, setSeen] = useState(false);
   const handleLog = () => {
     //sets isLogged to true
     setLogged(true);
   };
-  function toggleModal() {
-    setSeen(!seen);
-  }
   return (
     <main className="app-parent">
       <Router>
         <div className="nav">
           <Navbar className="nav" />
-          {/* <div>
-            <button onClick={toggleModal}>Show modal</button>
-            <BaseModalWrapper
-              isVisible={seen}
-              onBackdropClick={toggleModal}
-            ></BaseModalWrapper>
-          </div> */}
         </div>
         <div className="home">
           <Switch>

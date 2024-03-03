@@ -16,7 +16,8 @@ function Modal({ onBackdropClick, children }) {
   return ReactDom.createPortal(
     <div style={overLay} onClick={onBackdropClick}>
       <div onClick={(e) => e.stopPropagation()}>
-        <span color="black">{children}</span>
+        {/* <span color="black">{children}</span> */}
+        {/* <span color="black">Sign In</span> */}
       </div>
     </div>,
     document.getElementById("modal-root")

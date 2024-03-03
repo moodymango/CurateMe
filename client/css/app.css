@@ -40,9 +40,9 @@ body {
 .app-parent {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 50px 1fr 10px;
+  grid-template-rows: 55px 1fr 10px;
   grid-column-gap: 0px;
-  grid-row-gap: 0px;
+  grid-row-gap: 10px;
 }
 
 .nav {
@@ -63,6 +63,7 @@ body {
   width: 100%;
   padding: 5px 5px;
   list-style: none;
+  margin: 1em 0;
   text-decoration: none;
   /* defines the inline end of an element depending on the text orientation
   margin-inline-end: 3px; */
@@ -211,7 +212,7 @@ body {
   top: 100px;
 }
 .query-results {
-  margin: 10px 0 0;
+  margin: 20px 0 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-gap: 0%;
