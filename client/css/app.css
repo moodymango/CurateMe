@@ -206,25 +206,44 @@ body {
   }
 }
 /* SEARCH RESULTS */
-#search-results {
+.search-results {
   position: sticky;
   top: 100px;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
+}
+.query-results {
+  margin: 3em 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 0%;
+}
+#error-msg {
+  position: relative;
+  bottom: 450px;
 }
 
 /* ARTWORK CARDS */
-.artwork-cards {
-  position: block;
-  padding: 5px;
-  width: 30%;
-  margin: 5px 5px 13px 10px;
-  float: left;
-  font-size: 0.8em;
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+.artwork_card {
+  position: sticky;
+  font-size: 1em;
+  margin: 0;
+}
+#artwork_info {
+  display: inline-grid;
+  width: 200px;
+  background-color: rgba(92, 87, 87, 0.386);
+  padding: 0.5em;
+  border-radius: 0.3em;
+}
+#title {
+  font-weight: 800;
+}
+#artist {
 }
 
 label {
   font-weight: 600;
+}
+img {
+  max-width: 100%;
+  border-radius: 0.3em;
 }

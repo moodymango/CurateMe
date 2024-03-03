@@ -27,7 +27,6 @@ const SearchResults = forwardRef((props, ref) => {
           image_id={image_id}
           title={title}
           medium={medium_display}
-          id={id}
           ref={ref}
         />
       );
@@ -42,12 +41,11 @@ const SearchResults = forwardRef((props, ref) => {
           image_id={image_id}
           title={title}
           medium={medium_display}
-          id={id}
         />
       );
     }
   });
-  return <div className="search-results">{artworkCards}</div>;
+  return <div className="query-results">{artworkCards}</div>;
 });
 
 export default SearchResults;

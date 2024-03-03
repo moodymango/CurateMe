@@ -100,7 +100,10 @@ const SearchContainer = () => {
       <div id="search-results">
         <div>
           {error ? (
-            <h1>{errMsg}</h1>
+            <div>
+              {" "}
+              <h1 id="error-msg">{errMsg}</h1>{" "}
+            </div>
           ) : (
             <div>
               <SearchResults
