@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import BaseModalWrapper from "../components/ModalPopUp/BaseModalWrapper.jsx";
 
 function Navbar(props) {
-  const [seen, setSeen] = useState(false);
-  function toggleModal() {
-    setSeen(!seen);
-  }
-
   return (
     <nav>
       <ul className="navbar">
@@ -20,11 +14,6 @@ function Navbar(props) {
           </li>
         </div>
         <div className="right-nav">
-          <button onClick={toggleModal}>Show modal</button>
-          <BaseModalWrapper
-            isVisible={seen}
-            onBackdropClick={toggleModal}
-          ></BaseModalWrapper>
           <li>
             <Link to="/signup"> Sign Up </Link>
           </li>

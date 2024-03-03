@@ -21,8 +21,8 @@ import UserPage from "./components/userpage.jsx";
 import SearchContainer from "./containers/searchContainer.jsx";
 import Navbar from "./components/navBar.jsx";
 import SignUp from "./components/signup.jsx";
-import BaseModalWrapper from "./components/ModalPopUp/BaseModalWrapper.jsx";
 import Footer from "./components/footer.jsx";
+import Login from "./components/login.jsx";
 
 const App = (props) => {
   //need an is logged state in order to keep track of whether or not user is logged in
@@ -42,7 +42,7 @@ const App = (props) => {
             <Route exact path="/" component={Homepage} />
             <Route exact path="/search" component={SearchContainer} />
             <Route path="/signup" render={() => <SignUp />} />
-            {/* <Route path="/login" render={() => <Login />} /> */}
+            <Route path="/login" render={() => <Login />} />
             {/* <Route exact path = '/:username/collections/:title' component={} /> */}
             <Route exact path="/:username/collections" component={UserPage} />
             <Route exact path="/:username" component={UserPage} />

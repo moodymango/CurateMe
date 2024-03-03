@@ -8,10 +8,7 @@ const Footer = () => {
           Data and images are sourced from the Art Institute of Chicago API.
         </p>
         <p>Please visit their main website here: </p>
-        <a href="https://api.artic.edu/docs/">
-          {" "}
-          "https://api.artic.edu/docs/"{" "}
-        </a>
+        <a href="https://www.artic.edu/"> "https://www.artic.edu/" </a>
       </div>
       <p>Copyright © by Imma Duverger - all rights reserved</p>
       <p>
