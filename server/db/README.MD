@@ -2,16 +2,16 @@
 
 I was inspired to redesign my database after taking <a href=""> CS50's Introduction to Databases with SQL course.</a>
 
-- What is the purpose of CurateMe database?
+### What is the purpose of CurateMe database?
 
 Artsy Fartsy's database aims to keep track of the individual users, the collections they curate, the artworks they add to collectons, and the ordering of the artworks within the individual collections.
 
-- Which people, places, things, etc. are you including in the scope of this database?
+### Which people, places, things, etc. are you including in the scope of this database?
 
 I am including individual users, the collections they create, a special collection of artworks representing a user's favorites, and the individual artworks saved within those collections, and a user's individual impressions on these artworks.
 Because the front-end of this project includes drag-and-drop functionality, I also want to persist the order of a collection's artwork items within a separate table.
 
-- Which people, places, things, etc. are _outside_ the scope of this database?
+### Which people, places, things, etc. are _outside_ the scope of this database?
 
 The application utilziing this database interacts with a third party API containing more detailed information about the artworks the users choose to add their own collections.
 Because I am only interested in keeping track of basic information such as the artwork title, artist, and date, any other information about individual works such as the exibition history, department and themes are out of scope.
@@ -49,11 +49,11 @@ DELETE
 
 UPDATE
 
-- make updates to a user's information such as password, username, first and last name
-- re-order individual artworks within a collection by changing its positions, nextID(reference to the artwork in front of it) and prevID(reference to the artwork behind it)
-- add an artwork to a collection by adding the collection_id and individual artwork_id to the collection_order table
-- update the title or description of an individual user's collection based on user_id and collection id
-- update the description of a user's impression on an artwork according to the user_id and artwork_id
+    - make updates to a user's information such as password, username, first and last name
+    - re-order individual artworks within a collection by changing its positions, nextID(reference to the artwork in front of it) and prevID(reference to the artwork behind it)
+    - add an artwork to a collection by adding the collection_id and individual artwork_id to the collection_order table
+    - update the title or description of an individual user's collection based on user_id and collection id
+    - update the description of a user's impression on an artwork according to the user_id and artwork_id
 
 ### What's beyond the scope of what a user should be able to do with your database?
 
@@ -95,16 +95,22 @@ On each foreign key, I also ensured to use keyword ON DELETE CASCADE to ensure w
 
 ### Relationships
 
-Entity Relationship Diagram
+Please visit the entity relationship diagram here: <a href="https://mermaid.live/edit#pako:eNqNUsFOwzAM_ZUo520f0BuISVRITOqG4FBpMo1XrDVJ5SQg1PbfydYCRekBX2L5vSTPfu5kZRXKTCLfEdQMujQixtN-W4i-32z6Tmxf7vPb_JDvHkUmqsDg0c1Y3ZhfwnkmUwvUQE1SDQ7ZgMYEaMG5D8sqAU7Ezh8X7zTwBxnGY6Y0VeXJN-lDCl3F1Hqy5hczQb8ii4bO352mHwx2vY7DuSkOz7viIQ7GGg9kJv5U_rcMYE-xo2WQNNR4DNwsIC2jcz_ih5kvF4F2JvAE75bp6l15pcuV1MjRKxX9vwotpX_DOFOZxVQBn0tZmiHyIHi7_zSVzDwHXMnQqrgF08aMxeELb223Eg"> CurateMe ER </a>
 
 User - Registered user who is able to create art collections and favorite individual pieces
+
 Collections - Collections of curated artworks selected by the user
+
 Artworks - Artworks on featured in user's digital collection
+
 Collection_Order - Join table for artworks and collections, also keeps track of an individual artwork's position within a single collection.
+
 Impressions - Written reflections on individual artworks by users
 
 User and Collections - 1 to many relationship
+
 User and Impressions - 1 to many relationship
+
 Artwork and Impressions - 1 to many relationship
 
 Collections and Artwork - Many to Many relationship managed with a join table called collection_order, which will also keep track of an individual artwork's position within the collection
