@@ -36,7 +36,6 @@ const SearchContainer = () => {
     [isLoading, hasMore]
   );
   //Sets state for searchQ and also resets page number to 1
-  //set submit to false since we are in the middle of typing query
   function handleSearch(e) {
     e.preventDefault();
     setSearch(e.target.value);
@@ -49,7 +48,6 @@ const SearchContainer = () => {
     setDidSubmit(true);
   };
   //function to capture value of radio buttons
-  //set submit to false since we are in the middle of changing fields.
   const handleChange = (e) => {
     setCategoryField(e.target.value);
     setPageNum(1);

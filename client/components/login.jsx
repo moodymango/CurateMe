@@ -34,8 +34,6 @@ const Login = () => {
       //within axios.post, need to define registration url
       const response = await axios.post(
         "/login",
-        //need to provide payload(data we're sending to backend)
-        //need to make sure the properties match the properties i've defined in my backend
         JSON.stringify({ username: user, password: pwd }),
         {
           headers: { "Content-Type": "application/json" },
@@ -44,20 +42,22 @@ const Login = () => {
       );
       //this is represents the response from the server
       console.log("response is =>", response);
+      //MUST UPDATE STATE OF USER ID AND FIRST NAME AFTER WE RECEIVE A SUCCESSFUL RESPONSE FROM THE BACKEND
       //reassign so user knows they've successfully made an account
       setSuccess(true);
     } catch (err) {
-      if (!err.response) {
-        setErrMsg("No server response");
-      } else if (err.reponse?.status === 400) {
-        setErrMsg("Incorrect username or password");
-      } else {
-        setErrMsg("Login Failed");
+      console.log("error on login is ", err);
+      if (err.response) {
+        setErrMsg(`${err.response.data}`);
       }
       errRef.current.focus();
     }
   };
-
+  // style={{
+  //   display: 'flex',
+  //   flex-direction: 'column',
+  //   align-items: 'center'
+  // }}
   return (
     <>
       {/* ternary which checks whether or not user has succesfully made an account */}
@@ -78,6 +78,11 @@ const Login = () => {
         //value, set that equal to the user state to make it a controlled input - crucial if we are going to clear inputs upon submission
         <section className="login">
           <p
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
             ref={errRef}
             className={errMsg ? "errmsg" : "offscreen"}
             aria-live="assertive"

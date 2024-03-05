@@ -84,9 +84,7 @@ artChicagoApiController.getArtworksFromApi = async (req, response, next) => {
     ]);
     if (res.ok) {
       const data = await res.json();
-      //data I want is contained in data => {pagination, data properties as the most important} object. Each artwork is represented in an object
       if (data.length === 0 || data.data.length === 0) {
-        console.log("testing should be throwing error");
         throw new artChicagoApiFetchError(
           404,
           `No artworks found by query: ${searchReq}`
@@ -98,7 +96,6 @@ artChicagoApiController.getArtworksFromApi = async (req, response, next) => {
       throw new artChicagoApiFetchError(500, "Art Chicago Api Service Down");
     }
   } catch (err) {
-    console.log("error is", err);
     next({
       log: "Error when retrieving artwork by search string",
       status: err.status,

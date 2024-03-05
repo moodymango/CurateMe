@@ -10,16 +10,12 @@ export default function useArtworkSearch(
   const hasPageBeenRendered = useRef(false);
   const userDidSubmit = useRef(false);
   if (didSubmit === true) {
-    console.log("should set current to true");
     userDidSubmit.current = true;
   }
   //set load flags, initialize as true b/c we will load inside our app
   const [isLoading, setLoading] = useState(true);
-  //set error messaging
   const [errMsg, setErrMsg] = useState("");
-  //set initial state of results
   const [searchResults, setResults] = useState([]);
-  //checks when we get to the end of the paginations, we don't want to keep calling our function once we've reached the end of the results
   const [hasMore, setHasMore] = useState(false);
   const [finalPage, setFinalPage] = useState(1);
   const [error, setError] = useState(false);

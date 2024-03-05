@@ -1,13 +1,10 @@
-//requiring in "dotenv" in order to save my connection
 require("dotenv").config();
 const express = require("express");
-//REQUIRE IN ANY NECESSARY NATIVE MODULES
 const path = require("path");
-const mongoose = require("mongoose");
-//in order to read properties off the cookie obj in req.cookies?
+//parsers
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-//require in all my routers
+//routers
 const artRouter = require("./routes/searchArtworks");
 const usernamerRouter = require("./routes/usernameRouter");
 const userController = require("./controllers/userController");
@@ -15,20 +12,8 @@ const userController = require("./controllers/userController");
 // const cookieController = require('./controllers/cookieController');
 // const sessionController = require('./controllers/sessionController');
 
-//start our express server
 const app = express();
-//establish a port
 const port = process.env.PORT || 3000;
-//connection to database
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-// { useNewUrlParser: true, useUnifiedTopology: true }
-//this connects to our database
-mongoose.connection.once("open", () => {
-  console.log("Connected to Database");
-});
 
 //parse all req body info
 app.use(express.json());
@@ -46,7 +31,6 @@ app.use("/:username", usernamerRouter);
 
 //route to handle user sign-up/login
 app.get("/signup", (req, res) => {
-  console.log("path is=>", path.resolve(__dirname, "../client/signup.html"));
   res.sendFile(path.resolve(__dirname, "../client/users/signup.html"));
 });
 
