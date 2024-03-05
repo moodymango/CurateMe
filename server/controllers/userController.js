@@ -1,6 +1,3 @@
-//require in userModel from models folder here
-//mongoose
-const User = require("../models/userModel");
 const db = require("../db/db.js");
 const bcrypt = require("bcrypt");
 const userController = {};
