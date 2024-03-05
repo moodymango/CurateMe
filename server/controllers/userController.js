@@ -41,7 +41,6 @@ userController.createUser = async (req, res, next) => {
 //middleware for login to verify user
 userController.verifyUser = async (req, res, next) => {
   //receiving username and pass from the req body
-  console.log("logging in");
   let { username, password } = req.body;
   //case sensitivity
   //reassign all values from the req.body to lowercase values
@@ -53,7 +52,6 @@ userController.verifyUser = async (req, res, next) => {
   const params = [caseUsername];
 
   try {
-    console.log("finding user by username");
     await db.query(text, params).then(async (data) => {
       //if we cannot find the user, send back an error stating user not found by that username
       if (!data.rows.length) {
@@ -84,38 +82,6 @@ userController.verifyUser = async (req, res, next) => {
     });
   }
 };
-
-// //middleware for login to verify user
-// userController.verifyUser = async (req, res, next) => {
-//   //receiving username and pass from the req body
-//   console.log("logging in");
-//   const { username, password } = req.body;
-//   //need to check password from the hashed one saved in the db
-//   //first find user only by userName
-//   await User.findOne({ username })
-//     .then(async (result) => {
-//       //if we cannot find that user, send back an error
-//       if (!result) next({ message: { err: "user does not exist" } });
-//       //now need to compare the hashed password with the one sent by the user
-//       //MUST AWAIT RESULTS OF BCRYPT COMPARE IN ORDER TO MOVE ON!
-//       //result doc should have a password property
-//       const compared = await bcrypt.compare(password, result.password);
-//       if (compared) {
-//         //saveUser id onto res.locals for set SSID middleware
-//         res.locals.userId = result._id;
-//         console.log("userId is =>", res.locals.userId);
-//         //CAN I DO THIS ON THE FRONTEND? - /will most likely redirect user to their own dashboard
-//         return res.status(200).send(res.locals.userId);
-//         // return res.redirect(`/:${username}`);
-//       } else {
-//         console.log("incorrect pass");
-//         return res.status(401).send("Incorrct password");
-//       }
-//     })
-//     .catch((err) =>
-//       next({ log: "error when logging in user", message: { err: err } })
-//     );
-// };
 
 //stretch features:
 //ADD FUNCTIONALITY TO UPDATE USER
