@@ -30,11 +30,10 @@
 
  <p>Please ensure Node.js and npm are installed on your machine and then follow the steps below: </p>
 
-1. Clone the repository to your local machine 
+1. Clone the repository to your local machine
 
 2. Install the necessary dependencies with the command: npm install.
-   
-4. Start the server and client with the command: npm start.
+3. Start the server and client with the command: npm start.
 
 ## Key Features
 
@@ -45,7 +44,7 @@
 ![CurateMe Search Page](./client/CurateMe%20Search.png)
 
 - User Registration and Login
-  
+
 ![CurateMe Registration](./client/CurateMe%20Register.png)
 
 ## To Do Features
@@ -56,14 +55,21 @@
 
 - Integrate oAuth for user registration
 
+## In Progress Features
+
+- Translating DB from noSQL to SQL
+
+- Updating controllers for a SQL DB
+
+- Implementing a favorites functionality by creating a favorites collection at the same time of user creation
+
 ## API
 
 Data and images are all in the public domain, and are sourced from the Art Institute of Chicago's API. You can find the link <a href="https://api.artic.edu/docs/#collections-2"> here. </a>
 
 Huge thank you to @adamcrombie who inspired me to make this project. I gained inspiration for how to implement my function to query the API from his project <a href="https://github.com/adamcrombie/Artispyr/tree/master"> Artispyr.</a>
 
-## License 
+## License
+
 Copyright © 2024 Imma Duverger.
 This project is MIT licensed.
-
-
