@@ -47,9 +47,8 @@ describe("Mocking calls to the database", () => {
         req.body.password,
       ];
       //pool.query(test, params, callback)
-      pool.query.mockResolvedValue({ rows: [] });
+      pool.query.mockResolvedValue({ rows: [{ id: 1 }] });
       const newUser = userController.createUser(req, res, mockedNext);
-      console.log("new user is", newUser);
       expect(pool.query).toBeCalledTimes(1);
       expect(pool.query).toHaveBeenCalledWith(text, params);
       expect(newUser).toEqual(
@@ -62,6 +61,4 @@ describe("Mocking calls to the database", () => {
     test("Should produce error object if there is no username or password, or both", async () => {});
   });
   describe("Reading user information with mocking", () => {});
-  describe("Updating user information with mocking", () => {});
-  describe("Deleting user information with mocking", () => {});
 });

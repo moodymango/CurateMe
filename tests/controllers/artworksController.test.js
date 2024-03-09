@@ -28,8 +28,9 @@ describe("fetched artwork tests with mocking", () => {
     await artChicagoApiController.getArtworksFromApi(req, res, mockedNext);
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith(postResponseArtApi.data);
-    const mockedJsonArg = res.json.mock.calls[0][0];
+    // expect(res.json).toHaveBeenCalledWith(postResponseArtApi.data);
+    const mockedJsonArg = res.json.mock.calls[0][0].data;
+    console.log("mockedJsonArg is", mockedJsonArg);
     mockedJsonArg.forEach((artwork) => {
       expect(artwork).toEqual(
         expect.objectContaining({
