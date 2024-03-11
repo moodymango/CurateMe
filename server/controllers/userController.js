@@ -23,11 +23,11 @@ userController.createUser = async (req, res, next) => {
   const hashedPass = await bcrypt.hash(casePassword, saltRounds);
 
   const text = `INSERT INTO users(first_name, last_name, username, password) VALUES($1, $2, $3, $4) RETURNING id;`;
-  const params = [caseFirstName, caseLastName, caseUsername, casePassword];
+  const params = [caseFirstName, caseLastName, caseUsername, hashedPass];
   try {
     await db.query(text, params).then((data) => {
       res.locals.userID = data.rows[0];
-      return res.sendStatus(200).send(res.locals.userId);
+      return res.status(200).json(res.locals.userId);
     });
   } catch (err) {
     next({
@@ -66,8 +66,8 @@ userController.verifyUser = async (req, res, next) => {
         const compared = await bcrypt.compare(casePassword, userPass);
         //if compared is truthy, log the user in
         if (compared) {
-          res.locals.userId = data.rows[0].id;
-          return res.sendStatus(200).send(res.locals.userId);
+          res.locals.userId = data.rows[0];
+          return res.status(200).json(res.locals.userId);
         } else {
           //throw error stating that user has given the wrong password
           throw new userControllerError(401, `Incorrect Password: ${password}`);
@@ -85,7 +85,6 @@ userController.verifyUser = async (req, res, next) => {
 
 //stretch features:
 //ADD FUNCTIONALITY TO UPDATE USER
-
 //ADD FUNCTIONALITY TO DELETE USER
 
 module.exports = userController;

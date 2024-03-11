@@ -10,8 +10,6 @@
  */
 
 import React, { useState } from "react";
-//https://stackoverflow.com/questions/51971449/react-warning-computedmatch-regarding-some-case-issues
-//had error when placing a regular div inside the switch tags
 
 //https://ui.dev/react-router-cannot-get-url-refresh
 //must wrap entire app component in BrowserRouter to make sure it is rendered at the root of my element hierachy
@@ -27,10 +25,15 @@ import Login from "./components/login.jsx";
 const App = (props) => {
   //need an is logged state in order to keep track of whether or not user is logged in
   const [isLogged, setLogged] = useState(false);
+  const [userId, setUserId] = useState(0);
+  const [username, setUsername] = useState("");
+
+  const [token, setToken] = useState();
   const handleLog = () => {
     //sets isLogged to true
     setLogged(true);
   };
+
   return (
     <main className="app-parent">
       <Router>
@@ -41,8 +44,26 @@ const App = (props) => {
           <Switch>
             <Route exact path="/" component={Homepage} />
             <Route exact path="/search" component={SearchContainer} />
-            <Route path="/signup" render={() => <SignUp />} />
-            <Route path="/login" render={() => <Login />} />
+            <Route
+              path="/signup"
+              render={() => (
+                <SignUp
+                  handleLog={handleLog}
+                  setUserId={setUserId}
+                  setUsername={setUsername}
+                />
+              )}
+            />
+            <Route
+              path="/login"
+              render={() => (
+                <Login
+                  handleLog={handleLog}
+                  setUserId={setUserId}
+                  setUsername={setUsername}
+                />
+              )}
+            />
             {/* <Route exact path = '/:username/collections/:title' component={} /> */}
             <Route exact path="/:username/collections" component={UserPage} />
             <Route exact path="/:username" component={UserPage} />

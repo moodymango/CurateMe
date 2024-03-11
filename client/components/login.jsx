@@ -4,7 +4,8 @@ import { Link, Redirect } from "react-router-dom";
 //importing axios from my api folder
 import axios from "./api/axios";
 
-const Login = () => {
+const Login = (props) => {
+  const { handleLog, setUserId, setUsername } = props;
   const userRef = useRef();
   //to set focus on the first input when the component loads
   const errRef = useRef();
@@ -41,9 +42,9 @@ const Login = () => {
         }
       );
       //this is represents the response from the server
-      console.log("response is =>", response);
-      //MUST UPDATE STATE OF USER ID AND FIRST NAME AFTER WE RECEIVE A SUCCESSFUL RESPONSE FROM THE BACKEND
-      //reassign so user knows they've successfully made an account
+      const { id, username } = response;
+      setUserId(id);
+      setUsername(username);
       setSuccess(true);
     } catch (err) {
       console.log("error on login is ", err);
@@ -53,11 +54,6 @@ const Login = () => {
       errRef.current.focus();
     }
   };
-  // style={{
-  //   display: 'flex',
-  //   flex-direction: 'column',
-  //   align-items: 'center'
-  // }}
   return (
     <>
       {/* ternary which checks whether or not user has succesfully made an account */}
