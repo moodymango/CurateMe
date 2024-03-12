@@ -1,8 +1,50 @@
+const db = require("../db/db.js");
 const collectionsController = {};
 
-// collectionsController.createFavorites = async (req, res, next) => {
-//   const title = "favorites"
-// };
+//create favorite collection for individual user
+collectionsController.createFavorites = async (req, res, next) => {
+  const { id } = res.locals.userID;
+  console.log("res.locals", id);
+
+  const title = "favorites";
+  const description = `Favorite artworks`;
+
+  const text = `INSERT INTO collections(user_id, title, description) VALUES($1, $2, $3);`;
+  const params = [id, title, description];
+  try {
+    console.log("inserting favorites into db....");
+    await db.query(text, params).then((data) => {
+      res.locals.userFavorites = data.rows[0];
+      return res.status(200).json(res.locals.userID);
+    });
+  } catch (err) {
+    next({
+      log: "Error when creating favorite's collection for individual user",
+      status: err.status,
+      message: err.message,
+    });
+  }
+};
+
+collectionsController.readFavorites = async (req, res, next) => {
+  const { username } = req.params;
+  const title = "favorites";
+
+  const text = `SELECT title, description, likes FROM collections WHERE user_id=$1 AND title=$2;`;
+  const params = [username, title];
+  try {
+    await db.query(text, params).then((data) => {
+      res.locals.favorites = data.rows[0];
+      return res.status(200).json(res.locals.favorites);
+    });
+  } catch (err) {
+    next({
+      log: "Error when retrieving favorites for individual user",
+      status: err.status,
+      message: err.message,
+    });
+  }
+};
 
 // collectionsController.createCollection = async (req, res, next) =>{
 //   //collection name, description coming from user body

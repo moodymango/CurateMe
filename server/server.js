@@ -8,9 +8,7 @@ const cors = require("cors");
 const artRouter = require("./routes/searchArtworks");
 const usernamerRouter = require("./routes/usernameRouter");
 const userController = require("./controllers/userController");
-//cookie controllers
-// const cookieController = require('./controllers/cookieController');
-// const sessionController = require('./controllers/sessionController');
+const collectionsController = require("./controllers/collectionsController");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -38,19 +36,12 @@ app.get("/login", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../client/users/login.html"));
 });
 
-app.post("/signup", userController.createUser);
+app.post(
+  "/signup",
+  userController.createUser,
+  collectionsController.createFavorites
+);
 app.post("/login", userController.verifyUser);
-
-//LOGIN WITH COOKIES, go back and work on if we have some time!
-// app.post('/signup', userController.createUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
-//   return res.redirect('/dashboard');
-// });
-// // /**
-// // * login
-// // */
-// app.post('/login', userController.verifyUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
-//   return res.redirect('/dashboard');
-// });
 
 //route for any searches for specific artworks
 app.use("/search", artRouter);
@@ -62,11 +53,6 @@ app.get("/", (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, "../index.html"));
 });
 
-//catch all route handler for any requests made to unknown routes
-// app.all('*', (req, res) => res.sendStatus(404));
-
-//FOLLOWING LINK EXPLAINS WHY I MUST SET UP CATCH ALL THIS WAY
-//https://ui.dev/react-router-cannot-get-url-refresh
 app.all("*", (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, "../index.html"));
 });

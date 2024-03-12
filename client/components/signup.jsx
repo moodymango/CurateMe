@@ -3,7 +3,8 @@ import axios from "./api/axios";
 
 import { Link, Redirect } from "react-router-dom";
 
-const SignUp = () => {
+const SignUp = (props) => {
+  const { handleLog, setUserApp } = props;
   //set focus on the first input when the component loads
   const userRef = useRef();
   const errRef = useRef();
@@ -13,10 +14,12 @@ const SignUp = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
+  const [userId, setUserId] = useState(0);
+
   //error msg to communicate issues from backend
   const [errMsg, setErrMsg] = useState("");
   //successful login
-  const [success, setSuccess] = useState("");
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     userRef.current.focus();
@@ -37,12 +40,11 @@ const SignUp = () => {
           withCredentials: true,
         }
       );
-      //this is represents the response from the server
-      console.log("response is =>", response);
-      //reassign so user knows they've successfully made an account
+      setUserApp(response.data);
+      setUserId(response.data.id);
+      handleLog();
       setSuccess(true);
     } catch (err) {
-      console.log("error on signup is ", err);
       if (err.response) {
         setErrMsg(`${err.response.data}`);
       }
@@ -55,8 +57,7 @@ const SignUp = () => {
           <h1>Welcome {user}. Your account has been created!</h1>
           <br />
           <p>
-            {/* put redirect router here */}
-            <Redirect to={`/:${user}`}> Go to your dashboard </Redirect>
+            <Link to={`/:${userId}`}> Go to your dashboard </Link>
           </p>
         </section>
       ) : (

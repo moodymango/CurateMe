@@ -19,11 +19,17 @@ function Navbar(props) {
             <li>
               <Link to={`/:${user.id}`}>
                 {" "}
-                {`${user.first_Name}'s Homepage`}{" "}
+                {`${user.first_name}'s Homepage`}{" "}
               </Link>
             </li>
           ) : (
-            <div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+              }}
+            >
               <li>
                 <Link to="/signup"> Sign Up </Link>
               </li>

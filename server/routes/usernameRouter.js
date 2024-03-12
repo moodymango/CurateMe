@@ -1,13 +1,8 @@
 const express = require("express");
-//will need to have another controller to handle pulling up favorites, collections, and artwork additions
 const router = express.Router({ mergeParams: true });
 const collectionsController = require("../controllers/collectionsController");
 const artworkController = require("../controllers/artworksController");
 const { route } = require("./searchArtworks");
-
-//need to access favorites and collections
-//need routes that handle the individual artworks pertaining to each collection
-//title of the collection for queries will come from req.params
 
 //for http://localhost:5050/:username/collections/artworks
 // router.post(

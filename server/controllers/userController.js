@@ -22,12 +22,13 @@ userController.createUser = async (req, res, next) => {
   //encrypt password prior to saving in db
   const hashedPass = await bcrypt.hash(casePassword, saltRounds);
 
-  const text = `INSERT INTO users(first_name, last_name, username, password) VALUES($1, $2, $3, $4) RETURNING id;`;
+  const text = `INSERT INTO users(first_name, last_name, username, password) VALUES($1, $2, $3, $4) RETURNING id, first_name;`;
   const params = [caseFirstName, caseLastName, caseUsername, hashedPass];
   try {
     await db.query(text, params).then((data) => {
       res.locals.userID = data.rows[0];
-      return res.status(200).json(res.locals.userId);
+      next();
+      // return res.status(200).json(res.locals.userId);
     });
   } catch (err) {
     next({

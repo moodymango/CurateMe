@@ -14,11 +14,12 @@ const Login = (props) => {
   //first 5 pieces state variables refering to user input, the empty string we are passing in is the initial state
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
+  const [userId, setUserId] = useState(0);
   //corresponds to an error we may have if for some reason, sign up fails
   const [errMsg, setErrMsg] = useState("");
   //let's us see a successful sign up for now
   //but will use reactRouter to a page after we've had a successful login
-  const [success, setSuccess] = useState("");
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     userRef.current.focus();
@@ -42,6 +43,7 @@ const Login = (props) => {
         }
       );
       setUserApp(response.data);
+      setUserId(response.data.id);
       handleLog();
       setSuccess(true);
     } catch (err) {
@@ -61,7 +63,7 @@ const Login = (props) => {
           <h1>Welcome {user}! </h1>
           <br />
           <p>
-            <Redirect to={`/:${user}`}> Go to your dashboard </Redirect>
+            <Link to={`/:${userId}`}> Go to your dashboard </Link>
           </p>
         </section>
       ) : (
