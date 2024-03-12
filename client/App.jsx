@@ -25,10 +25,9 @@ import Login from "./components/login.jsx";
 const App = (props) => {
   //need an is logged state in order to keep track of whether or not user is logged in
   const [isLogged, setLogged] = useState(false);
-  const [userId, setUserId] = useState(0);
-  const [username, setUsername] = useState("");
-
-  const [token, setToken] = useState();
+  const [user, setUser] = useState({});
+  console.log("state from user login");
+  console.log("app level user obj", user);
   const handleLog = () => {
     //sets isLogged to true
     setLogged(true);
@@ -38,7 +37,7 @@ const App = (props) => {
     <main className="app-parent">
       <Router>
         <div className="nav">
-          <Navbar className="nav" />
+          <Navbar className="nav" isLogged={isLogged} user={user} />
         </div>
         <div className="home">
           <Switch>
@@ -47,21 +46,13 @@ const App = (props) => {
             <Route
               path="/signup"
               render={() => (
-                <SignUp
-                  handleLog={handleLog}
-                  setUserId={setUserId}
-                  setUsername={setUsername}
-                />
+                <SignUp handleLog={handleLog} setUserApp={setUser} />
               )}
             />
             <Route
               path="/login"
               render={() => (
-                <Login
-                  handleLog={handleLog}
-                  setUserId={setUserId}
-                  setUsername={setUsername}
-                />
+                <Login handleLog={handleLog} setUserApp={setUser} />
               )}
             />
             {/* <Route exact path = '/:username/collections/:title' component={} /> */}

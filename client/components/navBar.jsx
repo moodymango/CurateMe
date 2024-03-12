@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 function Navbar(props) {
+  const { isLogged, user } = props;
   return (
     <nav>
       <ul className="navbar">
@@ -14,12 +15,23 @@ function Navbar(props) {
           </li>
         </div>
         <div className="right-nav">
-          <li>
-            <Link to="/signup"> Sign Up </Link>
-          </li>
-          <li>
-            <Link to="/login"> Login </Link>
-          </li>
+          {isLogged ? (
+            <li>
+              <Link to={`/:${user.id}`}>
+                {" "}
+                {`${user.first_Name}'s Homepage`}{" "}
+              </Link>
+            </li>
+          ) : (
+            <div>
+              <li>
+                <Link to="/signup"> Sign Up </Link>
+              </li>
+              <li>
+                <Link to="/login"> Login </Link>
+              </li>
+            </div>
+          )}
         </div>
       </ul>
     </nav>

@@ -2,10 +2,10 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 //importing axios from my api folder
-import axios from "./api/axios";
+import axios from "axios";
 
 const Login = (props) => {
-  const { handleLog, setUserId, setUsername } = props;
+  const { handleLog, setUserApp } = props;
   const userRef = useRef();
   //to set focus on the first input when the component loads
   const errRef = useRef();
@@ -41,10 +41,8 @@ const Login = (props) => {
           withCredentials: true,
         }
       );
-      //this is represents the response from the server
-      const { id, username } = response;
-      setUserId(id);
-      setUsername(username);
+      setUserApp(response.data);
+      handleLog();
       setSuccess(true);
     } catch (err) {
       console.log("error on login is ", err);

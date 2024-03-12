@@ -47,10 +47,8 @@ userController.verifyUser = async (req, res, next) => {
   caseUsername = username.toLowerCase();
   casePassword = password.toLowerCase();
   //need to check password from the hashed one saved in the db
-  //first find user by username
   const text = `SELECT id, first_name, password FROM users WHERE username=$1`;
   const params = [caseUsername];
-
   try {
     await db.query(text, params).then(async (data) => {
       //if we cannot find the user, send back an error stating user not found by that username
