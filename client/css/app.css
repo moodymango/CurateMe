@@ -316,6 +316,34 @@ body {
   font-size: 1em;
   margin: 0;
 }
+.favorite-heart {
+  display: inline-block;
+  position: relative;
+  font-size: 32px;
+  cursor: pointer;
+  &::before {
+    font-size: 3em;
+    color: #000;
+    content: "♥";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  &::after {
+    font-size: 3em;
+    color: var(--color-primary);
+    content: "♥";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.2s;
+  }
+  &.liked::after {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
 #artwork_info {
   display: inline-grid;
   width: 200px;
@@ -323,6 +351,7 @@ body {
   padding: 0.5em;
   border-radius: 0.3em;
 }
+
 #title {
   font-weight: 800;
 }

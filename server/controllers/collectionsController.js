@@ -12,7 +12,6 @@ collectionsController.createFavorites = async (req, res, next) => {
   const text = `INSERT INTO collections(user_id, title, description) VALUES($1, $2, $3);`;
   const params = [id, title, description];
   try {
-    console.log("inserting favorites into db....");
     await db.query(text, params).then((data) => {
       res.locals.userFavorites = data.rows[0];
       return res.status(200).json(res.locals.userID);

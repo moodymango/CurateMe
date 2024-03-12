@@ -19,10 +19,21 @@ const ArtworkCard = forwardRef((props, ref) => {
   } = props;
   const [images, setImages] = useState("");
   const fetchImage = async () => {};
+
+  const handleFavorite = (e) => {
+    e.preventDefault();
+    e.currentTarget.classList.toggle("liked");
+  };
   return (
     <div className="artwork_card" ref={ref}>
-      {/* seperate div in order to show artwork image */}
-      {/* when user clicks on image, will be able to see a larger version */}
+      <div id="artwork-card-buttons">
+        {/* add onClick function that will save artwork to individual collection */}
+        <button
+          className="favorite-heart"
+          type="button"
+          onClick={handleFavorite}
+        ></button>
+      </div>
       <div
         id="art-image"
         style={{
@@ -36,10 +47,6 @@ const ArtworkCard = forwardRef((props, ref) => {
       <div id="artwork_info">
         <span id="title">{title}</span>
         <span id="artist">{artist}</span>
-      </div>
-      <div id="artwork-card-buttons">
-        {/* add onClick function that will save artwork to individual collection */}
-        {/* <button type="button">Add to Collection </button> */}
       </div>
     </div>
   );

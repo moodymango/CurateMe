@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 const collectionsController = require("../controllers/collectionsController");
-const artworkController = require("../controllers/artworksController");
+// const artworkController = require("../controllers/artworksController");
 const { route } = require("./searchArtworks");
 
 //for http://localhost:5050/:username/collections/artworks
