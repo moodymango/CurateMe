@@ -1,42 +1,51 @@
-// //this controller will serve as my schema for artworks
-// //require in artworkModel schemas
-// const Artwork = require('../models/artworkModel');
-// const User = require('../models/userModel');
-// const fetch = require('node-fetch');
-// //WILL COME BACK TO THIS AFTER I FINISH FAVORITES AND COLLECTION
-// const artworkController = {};
-// //artworks are saved and updated in the database in order to be referenced in collections and favorites
-// //so we need to store these works somehow
-// //GET INDIVIDUAL ARTWORK INFO
+const fetch = require("node-fetch");
+const db = require("../db/db.js");
+const artworkController = {};
 
-// //POSTMAN TESTING:
-// //URL : http://localhost:5050/:username/collections/artworks
-// //title: Be Who You Areeeeee, For Your Priiiiiide, Don't Hiiiiide
-// // SAMPLE ARTOWRK ID => 193320
-// artworkController.artworkInfo = async (req, res, next) => {
-//   console.log('getting artwork info');
-//   //only getting info from one piece of art!
-//   //artwork id comes from  the frontend? either through params or uri, haven't decided.
-//   const {artworkId} = req.body;
-//   await fetch(`https://api.artic.edu/api/v1/artworks/${artworkId}?fields=image_id,title,artist_title,medium_display,theme_titles,date_display,classification_titles,artwork_type_title`)
-//     .then(data => data.json())
-//     .then(artworkData => {
-//     //need to construct image url so I can save in DB and display on client side later on.
-//       const imageURLApi = `${artworkData.config.iiif_url}/${artworkData.data.image_id}/full/843,/0/default.jpg`
-//       // //save url as a new prop on my response obj
-//       artworkData.data.image = imageURLApi
-//       //save returned data onto res.locals to persist to next middleware
-//       res.locals.artInfo = artworkData.data;
-//       // console.log('art info is =>', res.locals.artInfo)
-//       next()
-//     })
-//     .catch(err => {
-//       next({
-//         log: err,
-//         message: {err: 'Error when retrieving individual artwork data in artworkInfo in artworksController'}
-//       })
-//     })
-// }
+//save artwork to favorites list
+artworkController.saveArtToFavorites = async (req, res, next) => {
+  //receive user id from the params
+  const { username } = req.params;
+  //receive artwork info from req.body
+  const { title, artist_title, image_irl, date_display } = req.body;
+
+  //first find user favorites collection by id
+  const collection_title = "favorites";
+  const text = `SELECT id FROM collections WHERE user_id=$1 AND title=$2;`;
+  const params = [username, collection_title];
+
+  //then update both the
+};
+
+//middleware to create user
+userController.createUser = async (req, res, next) => {
+  const saltRounds = 10;
+  let { username, password, firstName, lastName } = req.body;
+  //case sensitivity
+  //reassign all values from the req.body to lowercase values before storing in db
+  caseUsername = username.toLowerCase();
+  casePassword = password.toLowerCase();
+  caseFirstName = firstName.toLowerCase();
+  caseLastName = lastName.toLowerCase();
+  //encrypt password prior to saving in db
+  const hashedPass = await bcrypt.hash(casePassword, saltRounds);
+
+  const text = `INSERT INTO users(first_name, last_name, username, password) VALUES($1, $2, $3, $4) RETURNING id, first_name;`;
+  const params = [caseFirstName, caseLastName, caseUsername, hashedPass];
+  try {
+    await db.query(text, params).then((data) => {
+      res.locals.userID = data.rows[0];
+      next();
+      // return res.status(200).json(res.locals.userId);
+    });
+  } catch (err) {
+    next({
+      log: "Error when creating new user account",
+      status: err.status,
+      message: err.message,
+    });
+  }
+};
 
 // // {
 // //   "artworkId" : "193320"

@@ -34,16 +34,7 @@ const ArtworkCard = forwardRef((props, ref) => {
           onClick={handleFavorite}
         ></button>
       </div>
-      <div
-        id="art-image"
-        style={{
-          backgroundImage: `${IMAGE_URL}${image_id}${SMALL_IMAGE_URL}`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "100%",
-        }}
-      >
-        <img src={IMAGE_URL + image_id + SMALL_IMAGE_URL} alt={title} />
-      </div>
+      <img src={IMAGE_URL + image_id + SMALL_IMAGE_URL} alt={title} />
       <div id="artwork_info">
         <span id="title">{title}</span>
         <span id="artist">{artist}</span>

@@ -316,10 +316,13 @@ body {
   font-size: 1em;
   margin: 0;
 }
+/* @source favorite heart styling - https://codepen.io/austin_dudas/pen/XeqJmX */
 .favorite-heart {
   display: inline-block;
   position: relative;
-  font-size: 32px;
+  top: 10px;
+  left: 41%;
+  font-size: 15px;
   cursor: pointer;
   &::before {
     font-size: 3em;
@@ -360,6 +363,7 @@ label {
   font-weight: 600;
 }
 img {
-  max-width: 100%;
-  border-radius: 0.3em;
+  width: 80%;
+  height: fit-content;
+  border: 4mm ridge #cca189;
 }
