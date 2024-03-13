@@ -47,7 +47,6 @@ const Login = (props) => {
       handleLog();
       setSuccess(true);
     } catch (err) {
-      console.log("error on login is ", err);
       if (err.response) {
         setErrMsg(`${err.response.data}`);
       }
@@ -60,11 +59,7 @@ const Login = (props) => {
       {/* shows either account has been created OR the form which user submits the information */}
       {success ? (
         <section className="logged-in">
-          <h1>Welcome {user}! </h1>
-          <br />
-          <p>
-            <Link to={`/:${userId}`}> Go to your dashboard </Link>
-          </p>
+          <Redirect to={`/:${userId}`} />
         </section>
       ) : (
         //section, using a semantic element

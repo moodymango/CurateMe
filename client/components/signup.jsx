@@ -54,11 +54,7 @@ const SignUp = (props) => {
     <div className="sign_up">
       {success ? (
         <section className="acc-created">
-          <h1>Welcome {user}. Your account has been created!</h1>
-          <br />
-          <p>
-            <Link to={`/:${userId}`}> Go to your dashboard </Link>
-          </p>
+          <Redirect to={`/:${userId}`} />
         </section>
       ) : (
         <section className="signup">
