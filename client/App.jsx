@@ -42,6 +42,7 @@ const App = (props) => {
         <div className="home">
           <Switch>
             <Route exact path="/" component={Homepage} />
+            {/* <Route exact path="/" component={UserPage} /> */}
             <Route exact path="/search" component={SearchContainer} />
             <Route
               path="/signup"

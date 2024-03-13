@@ -140,23 +140,30 @@ body {
   text-align: center;
   color: black;
 }
+.sign_up,
+.login_page {
+  background: var(--color-primary);
+  height: 100%;
+}
 .signup {
-  width: 60%;
+  width: 40%;
   padding: 10px;
   border: 5px solid black;
   position: absolute;
-  top: 15%;
-  left: 20%;
+  top: 12%;
+  left: 30%;
   box-shadow: 10px 5px 5px;
   color: black;
+  background: white;
 }
 .login {
-  width: 60%;
+  width: 40%;
   padding: 10px;
   border: 5px solid black;
   position: absolute;
-  top: 25%;
-  left: 20%;
+  top: 20%;
+  background: white;
+  left: 30%;
   box-shadow: 10px 5px 5px;
   color: black;
 }
@@ -221,7 +228,9 @@ body {
   font-weight: 800;
 }
 #switch-login {
-  margin-left: 33%;
+  left: 24%;
+  bottom: 0.05%;
+  position: relative;
 }
 /* SEARCH PAGE */
 .search-component {
@@ -366,4 +375,23 @@ img {
   width: 80%;
   height: fit-content;
   border: 4mm ridge #cca189;
+}
+/* USER HOMEPAGE TO CURATE COLLECTION */
+.user-page {
+  background: var(--color-primary);
+  height: 100%;
+  width: 100%;
+}
+.user_no_collection {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 30px;
+  top: 30%;
+  left: 20%;
+  border: 4mm ridge #000;
+  background: white;
+  box-shadow: 10px 5px 5px;
 }

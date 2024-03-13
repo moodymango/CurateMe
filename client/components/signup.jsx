@@ -51,7 +51,7 @@ const SignUp = (props) => {
     }
   };
   return (
-    <>
+    <div className="sign_up">
       {success ? (
         <section className="acc-created">
           <h1>Welcome {user}. Your account has been created!</h1>
@@ -135,7 +135,7 @@ const SignUp = (props) => {
           </p>
         </section>
       )}
-    </>
+    </div>
   );
 };
 

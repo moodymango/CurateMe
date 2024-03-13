@@ -55,7 +55,7 @@ const Login = (props) => {
     }
   };
   return (
-    <>
+    <div className="login_page">
       {/* ternary which checks whether or not user has succesfully made an account */}
       {/* shows either account has been created OR the form which user submits the information */}
       {success ? (
@@ -126,7 +126,7 @@ const Login = (props) => {
           </p>
         </section>
       )}
-    </>
+    </div>
   );
 };
 
