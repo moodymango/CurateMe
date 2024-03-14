@@ -55,5 +55,8 @@ CREATE TABLE "collection_order" (
     FOREIGN KEY("artwork_id") REFERENCES artworks("id") ON DELETE CASCADE
 );
 
+CREATE INDEX collection_order_prevID ON collection_order (prevID);
+CREATE INDEX collection_order_nextID ON collection_order (nextID);
+
 CREATE INDEX collection_order_id ON collection_order USING HASH (collection_id);
 CREATE INDEX collection_order_artwork_id on collection_order USING HASH (artwork_id);

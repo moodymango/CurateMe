@@ -1,51 +1,60 @@
-const fetch = require("node-fetch");
 const db = require("../db/db.js");
 const artworkController = {};
-
-//save artwork to favorites list
-artworkController.saveArtToFavorites = async (req, res, next) => {
-  //receive user id from the params
+// @desc        Add a Transaction
+// @route       CREATE /:username/collections/favorites
+artworkController.addToFavoritesTransaction = async (req, res, next) => {
   const { username } = req.params;
-  //receive artwork info from req.body
-  const { title, artist_title, image_irl, date_display } = req.body;
-
-  //first find user favorites collection by id
+  const { title, artist_title, image_url, date_display } = req.body;
+  //insert new artwork into the db
+  const insertArtworkQuery = `INSERT INTO artworks(title, artist_title, date_display, image_url) VALUES($1, $2, $3, $4) RETURNING id;`;
+  const insertArtworkParams = [title, artist_title, date_display, image_url];
+  //find user favorites collection by id
   const collection_title = "favorites";
-  const text = `SELECT id FROM collections WHERE user_id=$1 AND title=$2;`;
-  const params = [username, collection_title];
+  const findUserFavoritesQuery = `SELECT id FROM collections WHERE user_id=$1 AND title=$2;`;
+  const findFavortiesParams = [username, collection_title];
+  //insert artwork and collection id into collection_order table
+  const insertArtworkAndCollectionID = `INSERT INTO collection_order()`;
 
-  //then update both the
-};
-
-//middleware to create user
-userController.createUser = async (req, res, next) => {
-  const saltRounds = 10;
-  let { username, password, firstName, lastName } = req.body;
-  //case sensitivity
-  //reassign all values from the req.body to lowercase values before storing in db
-  caseUsername = username.toLowerCase();
-  casePassword = password.toLowerCase();
-  caseFirstName = firstName.toLowerCase();
-  caseLastName = lastName.toLowerCase();
-  //encrypt password prior to saving in db
-  const hashedPass = await bcrypt.hash(casePassword, saltRounds);
-
-  const text = `INSERT INTO users(first_name, last_name, username, password) VALUES($1, $2, $3, $4) RETURNING id, first_name;`;
-  const params = [caseFirstName, caseLastName, caseUsername, hashedPass];
   try {
-    await db.query(text, params).then((data) => {
-      res.locals.userID = data.rows[0];
-      next();
-      // return res.status(200).json(res.locals.userId);
-    });
   } catch (err) {
+    await db.query("ROLLBACK");
     next({
-      log: "Error when creating new user account",
+      log: "Error when retrieving user by username and password",
       status: err.status,
       message: err.message,
     });
   }
 };
+
+//middleware to create user
+// userController.createUser = async (req, res, next) => {
+//   const saltRounds = 10;
+//   let { username, password, firstName, lastName } = req.body;
+//   //case sensitivity
+//   //reassign all values from the req.body to lowercase values before storing in db
+//   caseUsername = username.toLowerCase();
+//   casePassword = password.toLowerCase();
+//   caseFirstName = firstName.toLowerCase();
+//   caseLastName = lastName.toLowerCase();
+//   //encrypt password prior to saving in db
+//   const hashedPass = await bcrypt.hash(casePassword, saltRounds);
+
+//   const text = `INSERT INTO users(first_name, last_name, username, password) VALUES($1, $2, $3, $4) RETURNING id, first_name;`;
+//   const params = [caseFirstName, caseLastName, caseUsername, hashedPass];
+//   try {
+//     await db.query(text, params).then((data) => {
+//       res.locals.userID = data.rows[0];
+//       next();
+//       // return res.status(200).json(res.locals.userId);
+//     });
+//   } catch (err) {
+//     next({
+//       log: "Error when creating new user account",
+//       status: err.status,
+//       message: err.message,
+//     });
+//   }
+// };
 
 // // {
 // //   "artworkId" : "193320"

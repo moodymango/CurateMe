@@ -8,9 +8,16 @@ collectionsController.createFavorites = async (req, res, next) => {
 
   const title = "favorites";
   const description = `Favorite artworks`;
+  //create favorites collection
 
-  const text = `INSERT INTO collections(user_id, title, description) VALUES($1, $2, $3);`;
+  const text = `INSERT INTO collections(user_id, title, description) VALUES($1, $2, $3) RETURNING id;`;
   const params = [id, title, description];
+  const createFavoriteCollectionQuery = `INSERT INTO collections(user_id, title, description) VALUES($1, $2, $3) RETURNING id;`;
+  const createFavoriteParams = [id, title, description];
+  //create sentinel artwork node within collections to make ddl circular
+  const sentinelArtworkQuery = `INSERT INTO collections_order(artwork_id, collection_id, position) VALUES($1, $2) RETURNING artwork_id`;
+  const artworkId = (position = 0);
+
   try {
     await db.query(text, params).then((data) => {
       res.locals.userFavorites = data.rows[0];

@@ -5,9 +5,9 @@ import axios from "./api/axios.js";
 //user page will contain cards for both collections and individual artworks based on collections
 //import collections card here
 const UserPage = (props) => {
-  // console.log("params are ", useParams);
-  // const { username } = useParams();
-  // const noColon = username.substring(1);
+  console.log("params are ", useParams);
+  const { username } = useParams();
+  const noColon = username.substring(1);
   //if user has collections available, will render, if not, prompt user to create a collection
   const [userCollections, setCollections] = useState([]);
   const prevCollection = useRef([]);
@@ -60,7 +60,6 @@ const UserPage = (props) => {
   return (
     <>
       <div className="user-page">
-        <section className="user-name">{/* <h1>{noColon}</h1> */}</section>
         <section className="user_collections">
           {prevCollection.current.length ? (
             <section>{collectionDisplay}</section>
