@@ -81,9 +81,9 @@ module.exports = {
       "/signup": "http://127.0.0.1:5050/",
       "/login": "http://127.0.0.1:5050/",
       "/search": "http://127.0.0.1:5050/",
-      "/:username": "http://127.0.0.1:5050/",
-      "/:username/collections": "http://127.0.0.1:5050/",
-      "/:username/collections/:title": "http://127.0.0.1:5050/",
+      "/:user": "http://127.0.0.1:5050/",
+      "/:user/collections": "http://127.0.0.1:5050/",
+      "/:user/collections/:title": "http://127.0.0.1:5050/",
     },
   },
 };

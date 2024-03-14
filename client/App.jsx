@@ -26,8 +26,6 @@ const App = (props) => {
   //need an is logged state in order to keep track of whether or not user is logged in
   const [isLogged, setLogged] = useState(false);
   const [user, setUser] = useState({});
-  console.log("state from user login");
-  console.log("app level user obj", user);
   const handleLog = () => {
     //sets isLogged to true
     setLogged(true);
@@ -57,8 +55,8 @@ const App = (props) => {
               )}
             />
             {/* <Route exact path = '/:username/collections/:title' component={} /> */}
-            <Route exact path="/:username/collections" component={UserPage} />
-            <Route exact path="/:username" component={UserPage} />
+            <Route exact path="/:user/collections" component={UserPage} />
+            <Route exact path="/:user" component={UserPage} />
           </Switch>
         </div>
         <div className="foot">

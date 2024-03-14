@@ -12,7 +12,7 @@ import axios from "axios";
 //     //call axios to save the information in the backend
 //     //query the api
 //     axios.post(
-//       "/:username/:title",
+//       "/:user/:title",
 //       JSON.stringify({ title, artist_title, image_url, date_display }),
 //       {
 //         headers: { "Content-Type": "application/json" },

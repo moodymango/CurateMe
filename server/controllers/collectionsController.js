@@ -12,7 +12,7 @@ class collectionsControllerError extends Error {
 collectionsController.createFavorites = async (req, res, next) => {
   const { id } = res.locals.userID;
   console.log("res.locals", id);
-  //ensure we are using same client instance for all statements within a transaction
+
   const client = await db.pool.connect();
 
   const title = "favorites";
@@ -22,7 +22,7 @@ collectionsController.createFavorites = async (req, res, next) => {
   try {
     //use SQL transaction
     await client.query("BEGIN");
-    console.log("starting my transaction now...");
+
     const favoriteCollectionData = await client.query(
       createFavoriteCollectionQuery,
       createFavoriteParams
@@ -62,43 +62,69 @@ collectionsController.createFavorites = async (req, res, next) => {
     await client.query("COMMIT");
     return res.status(200).json(res.locals.userID);
   } catch (err) {
-    console.log("DB ERROR IS ", err);
     await client.query("ROLLBACK");
-    // next({
-    //   log: "Error when creating favorite's collection for individual user",
-    //   status: err.status,
-    //   message: err.message,
-    // });
+    next({
+      log: "Error when creating favorite's collection for individual user",
+      status: err.status,
+      message: err.message,
+    });
   }
-
-  // try {
-  //   await db.query(text, params).then((data) => {
-  //     res.locals.userFavorites = data.rows[0];
-  //     return res.status(200).json(res.locals.userID);
-  //   });
-  // } catch (err) {
-  //   next({
-  //     log: "Error when creating favorite's collection for individual user",
-  //     status: err.status,
-  //     message: err.message,
-  //   });
-  // }
 };
 
 collectionsController.readFavorites = async (req, res, next) => {
-  const { username } = req.params;
+  const { user } = req.params;
   const title = "favorites";
 
-  const text = `SELECT title, description, likes FROM collections WHERE user_id=$1 AND title=$2;`;
-  const params = [username, title];
+  const retrieveFavorites = `SELECT title, description, likes FROM collections WHERE user_id=$1 AND title=$2;`;
+  const favoritesParams = [user, title];
+
+  const client = await db.pool.connect();
+
   try {
-    await db.query(text, params).then((data) => {
-      res.locals.favorites = data.rows[0];
-      return res.status(200).json(res.locals.favorites);
-    });
+    //use SQL transaction
+    await client.query("BEGIN");
+    const favoritesData = await client.query(
+      createFavoriteCollectionQuery,
+      createFavoriteParams
+    );
+    if (favoriteCollectionData.rowCount < 1) {
+      throw new collectionsControllerError(
+        404,
+        `No favorite collection found by user ${id}`
+      );
+    }
+    //save the id of the collections id for the user
+    const collectionObj = favoriteCollectionData.rows[0];
+    const collection_id = collectionObj.id;
+    //create sentinel artwork node within collections to make ddl circular
+    const sentinelArtworkQuery = `INSERT INTO collection_order(artwork_id, collection_id, position, prev_id, next_id) VALUES($1, $2, $3, $4, $5) RETURNING artwork_id`;
+    const artworkId = 1;
+    const position = 0;
+    const prev_id = 1;
+    const next_id = 1;
+    const sentinelParams = [
+      artworkId,
+      collection_id,
+      position,
+      prev_id,
+      next_id,
+    ];
+    const sentinelArtworkData = await client.query(
+      sentinelArtworkQuery,
+      sentinelParams
+    );
+    if (sentinelArtworkData.rowCount < 1) {
+      throw new collectionsControllerError(
+        500,
+        "Error when creating sentinel artwork node in collection_order table"
+      );
+    }
+    await client.query("COMMIT");
+    return res.status(200).json(res.locals.userID);
   } catch (err) {
+    await client.query("ROLLBACK");
     next({
-      log: "Error when retrieving favorites for individual user",
+      log: "Error when creating favorite's collection for individual user",
       status: err.status,
       message: err.message,
     });
