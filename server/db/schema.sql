@@ -32,6 +32,8 @@ CREATE TABLE "artworks" (
     "date_display" VARCHAR(200) NULL,
     "image_url" VARCHAR NULL
 );
+INSERT INTO artworks("title") VALUES('sentinel'); 
+
 CREATE TABLE "impressions" (
     "id" SERIAL PRIMARY KEY,
     "description" TEXT NULL,
@@ -48,15 +50,15 @@ CREATE INDEX impression_artwork ON impressions USING HASH (artwork_id);
 CREATE TABLE "collection_order" (
     "artwork_id" INT NULL,
     "collection_id" INT NULL,
-    "position" INT UNIQUE DEFAULT NULL, 
-    "prevID" INT DEFAULT NULL,
-    "nextID" INT DEFAULT NULL,
+    "position" INT DEFAULT NULL, 
+    "prev_id" INT DEFAULT NULL,
+    "next_id" INT DEFAULT NULL,
     FOREIGN KEY("collection_id") REFERENCES collections("id") ON DELETE CASCADE,
     FOREIGN KEY("artwork_id") REFERENCES artworks("id") ON DELETE CASCADE
 );
 
-CREATE INDEX collection_order_prevID ON collection_order (prevID);
-CREATE INDEX collection_order_nextID ON collection_order (nextID);
+CREATE INDEX collection_order_prevID ON collection_order (prev_id);
+CREATE INDEX collection_order_nextID ON collection_order (next_id);
 
 CREATE INDEX collection_order_id ON collection_order USING HASH (collection_id);
 CREATE INDEX collection_order_artwork_id on collection_order USING HASH (artwork_id);

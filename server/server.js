@@ -61,11 +61,12 @@ app.all("*", (req, res) => {
 app.use((err, req, res, next) => {
   const defaultErr = {
     log: "Express error handler caught unknown middleware error",
-    status: 400,
+    status: 500,
     message: { err: "An unknown error occured" },
   };
   const errObj = Object.assign(defaultErr, err);
-  res.status(errObj.status).send(errObj.message);
+  console.log("error object is", errObj);
+  // res.status(errObj.status).send(errObj.message);
 });
 
 //make sure app is listening on some type of port
