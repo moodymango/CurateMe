@@ -62,7 +62,7 @@ collectionsController.createFavorites = async (req, res, next) => {
       );
     }
     await client.query("COMMIT");
-    return res.status(200).json(res.locals.userID);
+    next();
   } catch (err) {
     await client.query("ROLLBACK");
     next({

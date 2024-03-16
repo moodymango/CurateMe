@@ -8,6 +8,7 @@ const cors = require("cors");
 const artRouter = require("./routes/searchArtworks");
 const usernamerRouter = require("./routes/usernameRouter");
 const userController = require("./controllers/userController");
+const tokenController = require("./controllers/tokenController");
 const collectionsController = require("./controllers/collectionsController");
 
 const app = express();
@@ -34,9 +35,10 @@ app.get("/login", (req, res) => {
 app.post(
   "/signup",
   userController.createUser,
-  collectionsController.createFavorites
+  collectionsController.createFavorites,
+  tokenController.assignToken
 );
-app.post("/login", userController.verifyUser);
+app.post("/login", userController.verifyUser, tokenController.assignToken);
 
 //route for any searches for specific artworks
 app.use("/search", artRouter);

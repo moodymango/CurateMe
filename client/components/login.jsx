@@ -42,6 +42,7 @@ const Login = (props) => {
           withCredentials: true,
         }
       );
+      console.log("response data is", response.data);
       setUserApp(response.data);
       setUserId(response.data.id);
       handleLog();

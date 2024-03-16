@@ -28,7 +28,6 @@ userController.createUser = async (req, res, next) => {
     await db.query(text, params).then((data) => {
       res.locals.userID = data.rows[0];
       next();
-      // return res.status(200).json(res.locals.userId);
     });
   } catch (err) {
     next({
@@ -61,12 +60,13 @@ userController.verifyUser = async (req, res, next) => {
       } else {
         //save pass from user
         const userPass = data.rows[0].password;
-        //check password from db with hashed ps
+        //authenticate user
         const compared = await bcrypt.compare(casePassword, userPass);
         //if compared is truthy, log the user in
         if (compared) {
-          res.locals.userId = data.rows[0];
-          return res.status(200).json(res.locals.userId);
+          res.locals.userID = data.rows[0];
+          next();
+          // return res.status(200).json(res.locals.userId);
         } else {
           //throw error stating that user has given the wrong password
           throw new userControllerError(401, `Incorrect Password: ${password}`);
