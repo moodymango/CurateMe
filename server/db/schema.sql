@@ -29,8 +29,10 @@ CREATE TABLE "artworks" (
     "id" SERIAL PRIMARY KEY,
     "title" VARCHAR(150) NULL,
     "artist_title" VARCHAR(150) NULL,
+    "medium" VARCHAR(150) NULL,
     "date_display" VARCHAR(200) NULL,
-    "image_url" VARCHAR NULL
+    "small_image_url" VARCHAR NULL,
+    "large_image_url" VARCHAR NULL
 );
 INSERT INTO artworks("title") VALUES('sentinel'); 
 

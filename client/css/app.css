@@ -116,7 +116,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: url(/Users/imma/Codesmith/Mid/solo-project/solo-project/client/homepage-image.jpeg);
+  background: url("../static/homepage-image.jpeg");
   /* ensures background will not repeat */
   background-repeat: no-repeat;
   /* background stays centered  */
@@ -240,7 +240,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: url(/Users/imma/Codesmith/Mid/solo-project/solo-project/client/searchBackgroundInterior.jpg);
+  background: url("../static/searchBackgroundInterior.jpg");
   /* ensures background will not repeat */
   background-repeat: no-repeat;
   /* background stays centered  */
