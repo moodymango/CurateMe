@@ -6,6 +6,7 @@ const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 require("dotenv").config();
 //module.exports to export
 module.exports = {
+  devtool: "source-map",
   //the js entrypoint - references the top most level component
   entry: "./client/index.js",
   //this is only really relevant to our production mode since we need to direct where the created bundle.js file will go

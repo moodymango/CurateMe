@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 
-const AuthContext = React.createContext();
+export const AuthContext = React.createContext();
 
 export function useAuth() {
   return useContext(AuthContext);
 }
 
-function AuthProvider(children) {
+function AuthProvider() {
   const [authUser, setAuthUser] = useState(null);
   const [isLogged, setIsLogged] = useState(false);
 
@@ -20,4 +20,4 @@ function AuthProvider(children) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-export default AuthProvider;
+// export default AuthProvider;
