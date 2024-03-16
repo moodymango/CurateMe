@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "./api/axios";
 import { forwardRef } from "react";
+import favoriteArtwork from "./favoriteArtwork.js";
 const {
   IMAGE_URL,
   LARGE_IMAGE_URL,
@@ -17,12 +18,11 @@ const ArtworkCard = forwardRef((props, ref) => {
     medium,
     artworkId,
   } = props;
-  const [images, setImages] = useState("");
-  const fetchImage = async () => {};
 
   const handleFavorite = (e) => {
     e.preventDefault();
     e.currentTarget.classList.toggle("liked");
+    handleFavorite(artworkId, title, artist, medium, date, image_id);
   };
   return (
     <div className="artwork_card" ref={ref}>

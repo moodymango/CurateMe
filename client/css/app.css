@@ -149,9 +149,10 @@ body {
   width: 40%;
   padding: 10px;
   border: 5px solid black;
-  position: absolute;
+  position: sticky;
   top: 12%;
   left: 30%;
+  margin-bottom: 15px;
   box-shadow: 10px 5px 5px;
   color: black;
   background: white;
@@ -160,7 +161,7 @@ body {
   width: 40%;
   padding: 10px;
   border: 5px solid black;
-  position: absolute;
+  position: sticky;
   top: 20%;
   background: white;
   left: 30%;

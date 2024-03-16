@@ -26,13 +26,12 @@ CREATE TABLE "collections" (
 CREATE INDEX user_collection ON collections USING HASH (user_id);
 
 CREATE TABLE "artworks" (
-    "id" SERIAL PRIMARY KEY,
+    "id" INT UNIQUE PRIMARY KEY,
     "title" VARCHAR(150) NULL,
     "artist_title" VARCHAR(150) NULL,
     "medium" VARCHAR(150) NULL,
     "date_display" VARCHAR(200) NULL,
-    "small_image_url" VARCHAR NULL,
-    "large_image_url" VARCHAR NULL
+    "image_id" INT NULL
 );
 INSERT INTO artworks("title") VALUES('sentinel'); 
 
