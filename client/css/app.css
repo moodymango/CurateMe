@@ -163,6 +163,7 @@ body {
   border: 5px solid black;
   position: sticky;
   top: 20%;
+  margin-bottom: 60px;
   background: white;
   left: 30%;
   box-shadow: 10px 5px 5px;
@@ -229,9 +230,9 @@ body {
   font-weight: 800;
 }
 #switch-login {
-  left: 24%;
+  margin-left: 23%;
   bottom: 0.05%;
-  position: relative;
+  position: sticky;
 }
 /* SEARCH PAGE */
 .search-component {
