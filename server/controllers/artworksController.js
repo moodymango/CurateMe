@@ -28,7 +28,6 @@ artworkController.addToFavoritesTransaction = async (req, res, next) => {
       insertArtworkQuery,
       insertArtworkParams
     );
-
     await client.query("COMMIT");
   } catch (err) {
     await db.query("ROLLBACK");

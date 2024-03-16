@@ -33,7 +33,7 @@ CREATE TABLE "artworks" (
     "date_display" VARCHAR(200) NULL,
     "image_id" INT NULL
 );
-INSERT INTO artworks("title") VALUES('sentinel'); 
+INSERT INTO artworks("id", "title") VALUES(1,'sentinel'); 
 
 CREATE TABLE "impressions" (
     "id" SERIAL PRIMARY KEY,
