@@ -22,7 +22,7 @@ const ArtworkCard = forwardRef((props, ref) => {
   const handleFavorite = (e) => {
     e.preventDefault();
     e.currentTarget.classList.toggle("liked");
-    handleFavorite(artworkId, title, artist, medium, date, image_id);
+    favoriteArtwork(artworkId, title, artist, medium, date, image_id);
   };
   return (
     <div className="artwork_card" ref={ref}>

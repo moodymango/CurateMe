@@ -1,19 +1,17 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
-const collectionsController = require("../controllers/collectionsController");
-// const artworkController = require("../controllers/artworksController");
+const artworkController = require("../controllers/artworksController");
 const { route } = require("./searchArtworks");
 
 //for http://localhost:5050/:user/collections/favorites
-// router.post(
-//   "/collections/:title",
-//   artworkController.artworkInfo,
-//   artworkController.addToCollection,
-//   (req, res) => {
-//     //sending new artwork title to the frontend to verify creation!
-//     return res.status(200).json(res.locals.updatedCollection);
-//   }
-// );
+router.post(
+  "/collections/",
+  artworkController.addToFavoritesTransaction
+  //   (req, res) => {
+  //     //sending new artwork title to the frontend to verify creation!
+  //     return res.status(200).json("Hello");
+  //   }
+);
 //read all the artworks in the user's collection
 //need to get :title param from uri
 // router.get("/collections/:title", artworkController.getArtworks, (req, res) => {

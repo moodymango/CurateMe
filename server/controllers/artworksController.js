@@ -4,9 +4,7 @@ const artworkController = {};
 // @route       CREATE /:user/collections/
 
 artworkController.addToFavoritesTransaction = async (req, res, next) => {
-  const { user } = req.params;
-
-  const { id, title, artist_title, medium, date_display } = req.body;
+  const { user, id, title, artist_title, medium, date_display } = req.body;
 
   const client = db.pool.connect();
   //upsert new artwork into the db
@@ -28,6 +26,7 @@ artworkController.addToFavoritesTransaction = async (req, res, next) => {
       insertArtworkQuery,
       insertArtworkParams
     );
+    console.log("testing inserting an artwork into the database");
     await client.query("COMMIT");
   } catch (err) {
     await db.query("ROLLBACK");
