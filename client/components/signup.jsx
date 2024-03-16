@@ -1,10 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
-import axios from "./api/axios";
+// import { useAuth } from "../components/Contexts/AuthContext.jsx";
+import axios from "axios";
 
 import { Link, Redirect } from "react-router-dom";
 
 const SignUp = (props) => {
   const { handleLog, setUserApp } = props;
+  // const { authUser, setAuthUser, isLogged, setIsLogged } = useAuth();
   //set focus on the first input when the component loads
   const userRef = useRef();
   const errRef = useRef();
@@ -40,6 +42,9 @@ const SignUp = (props) => {
           withCredentials: true,
         }
       );
+      // setIsLogged(true);
+      // setAuthUser(response.data);
+      // console.log("islogged and auth user", authUser, isLogged);
       setUserApp(response.data);
       setUserId(response.data.id);
       handleLog();

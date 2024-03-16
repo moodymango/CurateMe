@@ -1,11 +1,12 @@
-//maybe try following along and using react hooks?
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import { Link, Redirect } from "react-router-dom";
-//importing axios from my api folder
 import axios from "axios";
+
+// import { useAuth } from "../components/Contexts/AuthContext.jsx";
 
 const Login = (props) => {
   const { handleLog, setUserApp } = props;
+  // const { authUser, setAuthUser, isLogged, setIsLogged } = useAuth();
   const userRef = useRef();
   //to set focus on the first input when the component loads
   const errRef = useRef();
@@ -42,7 +43,9 @@ const Login = (props) => {
           withCredentials: true,
         }
       );
-      console.log("response data is", response.data);
+      // setIsLogged(true);
+      // setAuthUser(response.data);
+      // console.log("islogged and auth user", authUser, isLogged);
       setUserApp(response.data);
       setUserId(response.data.id);
       handleLog();

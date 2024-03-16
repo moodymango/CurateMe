@@ -64,7 +64,10 @@ userController.verifyUser = async (req, res, next) => {
         const compared = await bcrypt.compare(casePassword, userPass);
         //if compared is truthy, log the user in
         if (compared) {
-          res.locals.userID = data.rows[0];
+          const id = data.rows[0].id;
+          const user_name = data.rows[0].first_name;
+          const user = { id, user_name };
+          res.locals.userID = user;
           next();
           // return res.status(200).json(res.locals.userId);
         } else {
@@ -74,11 +77,12 @@ userController.verifyUser = async (req, res, next) => {
       }
     });
   } catch (err) {
-    next({
-      log: "Error when retrieving user by username and password",
-      status: err.status,
-      message: err.message,
-    });
+    console.log("error is ", err);
+    // next({
+    //   log: "Error when retrieving user by username and password",
+    //   status: err.status,
+    //   message: err.message,
+    // });
   }
 };
 

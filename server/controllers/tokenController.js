@@ -10,27 +10,33 @@ class tokenControllerError extends Error {
     this.name = "tokenControllerError";
   }
 }
-
+const generateAccessToken = (user) =>
+  jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: "1hr",
+  });
 tokenController.assignToken = async (req, res, next) => {
   //pull user object from res.locals
   const user = res.locals.userID;
-  const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-  res.status(200).json({ accessToken: accessToken });
+  const accessToken = generateAccessToken(user);
+  res
+    .status(200)
+    .cookie("token", accessToken, { httpOnly: true })
+    .json("Login Sucessfull");
 };
 
 tokenController.authenticateToken = async (req, res, next) => {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
+  const token = req.cookies.token;
   if (token == null) {
     throw new tokenControllerError(401, "Token is required");
   }
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) {
-      throw new tokenControllerError(403, "Token is no longer valid");
-    }
+  try {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
     req.user = user;
     next();
-  });
+  } catch (err) {
+    res.clearCookie("token");
+    throw new tokenControllerError(403, "Please make an account first");
+  }
 };
 
 module.exports = tokenController;

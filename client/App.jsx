@@ -19,6 +19,7 @@ import Navbar from "./components/navBar.jsx";
 import SignUp from "./components/signup.jsx";
 import Footer from "./components/footer.jsx";
 import Login from "./components/login.jsx";
+import AuthProvider from "./components/Contexts/AuthContext.jsx";
 
 const App = (props) => {
   //need an is logged state in order to keep track of whether or not user is logged in
@@ -40,6 +41,7 @@ const App = (props) => {
             <Route exact path="/" component={Homepage} />
             {/* <Route exact path="/" component={UserPage} /> */}
             <Route exact path="/search" component={SearchContainer} />
+
             <Route
               path="/signup"
               render={() => (
