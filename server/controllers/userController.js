@@ -13,8 +13,6 @@ class userControllerError extends Error {
 userController.createUser = async (req, res, next) => {
   const saltRounds = 10;
   let { username, password, firstName, lastName } = req.body;
-  //case sensitivity
-  //reassign all values from the req.body to lowercase values before storing in db
   caseUsername = username.toLowerCase();
   casePassword = password.toLowerCase();
   caseFirstName = firstName.toLowerCase();
@@ -40,29 +38,23 @@ userController.createUser = async (req, res, next) => {
 
 //middleware for login to verify user
 userController.verifyUser = async (req, res, next) => {
-  //receiving username and pass from the req body
   let { username, password } = req.body;
   //case sensitivity
-  //reassign all values from the req.body to lowercase values
   caseUsername = username.toLowerCase();
   casePassword = password.toLowerCase();
-  //need to check password from the hashed one saved in the db
   const text = `SELECT id, first_name, password FROM users WHERE username=$1`;
   const params = [caseUsername];
   try {
     await db.query(text, params).then(async (data) => {
-      //if we cannot find the user, send back an error stating user not found by that username
       if (!data.rows.length) {
         throw new userControllerError(
           401,
           `User not found by that username: ${username}`
         );
       } else {
-        //save pass from user
         const userPass = data.rows[0].password;
         //authenticate user
         const compared = await bcrypt.compare(casePassword, userPass);
-        //if compared is truthy, log the user in
         if (compared) {
           const id = data.rows[0].id;
           const user_name = data.rows[0].first_name;
@@ -70,7 +62,6 @@ userController.verifyUser = async (req, res, next) => {
           res.locals.userID = user;
           next();
         } else {
-          //throw error stating that user has given the wrong password
           throw new userControllerError(401, `Incorrect Password: ${password}`);
         }
       }

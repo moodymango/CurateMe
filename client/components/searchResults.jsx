@@ -27,6 +27,7 @@ const SearchResults = forwardRef((props, ref) => {
           image_id={image_id}
           title={title}
           medium={medium_display}
+          artworkId={id}
           ref={ref}
         />
       );
@@ -41,6 +42,7 @@ const SearchResults = forwardRef((props, ref) => {
           image_id={image_id}
           title={title}
           medium={medium_display}
+          artworkId={id}
         />
       );
     }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import axios from "./api/axios";
 import { forwardRef } from "react";
 import favoriteArtwork from "./favoriteArtwork.js";
+
 const {
   IMAGE_URL,
   LARGE_IMAGE_URL,
@@ -18,11 +18,22 @@ const ArtworkCard = forwardRef((props, ref) => {
     medium,
     artworkId,
   } = props;
-
+  //set state for favorited
+  const [isFavorited, setIsFavorited] = useState(false);
+  const { isLoading, errMsg, error } = favoriteArtwork(
+    artworkId,
+    title,
+    artist,
+    medium,
+    date,
+    image_id,
+    isFavorited
+  );
+  console.log("inital favorite state is", isFavorited);
   const handleFavorite = (e) => {
     e.preventDefault();
     e.currentTarget.classList.toggle("liked");
-    favoriteArtwork(artworkId, title, artist, medium, date, image_id);
+    setIsFavorited((prevFavorite) => !prevFavorite);
   };
   return (
     <div className="artwork_card" ref={ref}>

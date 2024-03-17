@@ -13,7 +13,6 @@ class collectionsControllerError extends Error {
 //create favorite collection for individual user
 collectionsController.createFavorites = async (req, res, next) => {
   const { id } = res.locals.userID;
-  console.log("res.locals", id);
 
   const client = await db.pool.connect();
 

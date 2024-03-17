@@ -26,16 +26,17 @@ tokenController.assignToken = async (req, res, next) => {
 
 tokenController.authenticateToken = async (req, res, next) => {
   const token = req.cookies.token;
+
   if (token == null) {
     throw new tokenControllerError(401, "Token is required");
   }
   try {
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    const user = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
     req.user = user;
     next();
   } catch (err) {
     res.clearCookie("token");
-    throw new tokenControllerError(403, "Please make an account first");
+    throw new tokenControllerError(403, "Please login first");
   }
 };
 

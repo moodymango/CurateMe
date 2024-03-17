@@ -4,7 +4,7 @@ import axios from "axios";
 
 import { Link, Redirect } from "react-router-dom";
 
-const SignUp = (props) => {
+const SignUp = () => {
   //set focus on the first input when the component loads
   const userRef = useRef();
   const errRef = useRef();
@@ -13,8 +13,6 @@ const SignUp = (props) => {
   const [pwd, setPwd] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-
-  const [userId, setUserId] = useState(0);
 
   //error msg to communicate issues from backend
   const [errMsg, setErrMsg] = useState("");

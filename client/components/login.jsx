@@ -6,18 +6,10 @@ import axios from "axios";
 const Login = () => {
   const { authUser, isLogged, setAuthenticatedUser } = useAuth();
   const userRef = useRef();
-  //to set focus on the first input when the component loads
   const errRef = useRef();
-  //need to set focus on error if error occurs
-
-  //first 5 pieces state variables refering to user input, the empty string we are passing in is the initial state
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
-
-  //corresponds to an error we may have if for some reason, sign up fails
   const [errMsg, setErrMsg] = useState("");
-  //let's us see a successful sign up for now
-  //but will use reactRouter to a page after we've had a successful login
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
@@ -58,8 +50,6 @@ const Login = () => {
   };
   return (
     <div className="login_page">
-      {/* ternary which checks whether or not user has succesfully made an account */}
-      {/* shows either account has been created OR the form which user submits the information */}
       {success ? (
         <section className="logged-in">
           <Redirect to={`/:${authUser}`} />
@@ -112,8 +102,6 @@ const Login = () => {
                 />
               </div>
             </div>
-            {/* don't need an onlick to the button because it's the only button in the form. will trigger a submit event! */}
-            {/* if we don't have these fields, button will be disabled */}
             <button id="login-btn" disabled={!user || !pwd ? true : false}>
               Sign In
             </button>

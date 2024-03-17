@@ -31,7 +31,7 @@ CREATE TABLE "artworks" (
     "artist_title" VARCHAR(150) NULL,
     "medium" VARCHAR(150) NULL,
     "date_display" VARCHAR(200) NULL,
-    "image_id" INT NULL
+    "image_id" VARCHAR(200) NULL
 );
 INSERT INTO artworks("id", "title") VALUES(1,'sentinel'); 
 
