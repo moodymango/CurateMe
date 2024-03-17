@@ -73,7 +73,7 @@ collectionsController.createFavorites = async (req, res, next) => {
 };
 //read all artworks in user favorite collection
 collectionsController.readFavorites = async (req, res, next) => {
-  const { user } = req.params;
+  const userObj = req.user;
   const client = await db.pool.connect();
   const title = "favorites";
   const retrieveFavorites = `SELECT id FROM collections WHERE user_id=$1 AND title=$2;`;
@@ -96,8 +96,9 @@ collectionsController.readFavorites = async (req, res, next) => {
     const collection_id = collectionObj.id;
 
     //use CTE to create readable join table
-    const userFavoritesTableCTE =
-      "WITH user_favorite_artworks AS (SELECT c.description, a.id, a.title, a.artist_title, a.medium, a.date_display FROM artworks a INNER JOIN collection_order co USING (artwork_id) INNER JOIN collections c USING(collection_id) WHERE c.id=$1) SELECT * FROM user_favorite_artworks ORDER BY co.position ASC;";
+    const innerSelect =
+      "SELECT c.description, a.id, a.title, a.artist_title, a.medium, a.date_display FROM artworks a INNER JOIN collection_order co USING (artwork_id) INNER JOIN collections c USING(collection_id) WHERE c.id=$1";
+    const userFavoritesTableCTE = `WITH user_favorite_artworks AS (${innerSelect}) SELECT * FROM user_favorite_artworks ORDER BY co.position ASC;`;
     const userFavoriteArtworks = await client.query(userFavoritesTableCTE, [
       collection_id,
     ]);

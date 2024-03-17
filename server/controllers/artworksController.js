@@ -2,7 +2,6 @@ const db = require("../db/db.js");
 const artworkController = {};
 // @desc        CRUD functionality with artworks inside a db
 // @route       CREATE /:user/collections/
-
 artworkController.addToFavoritesTransaction = async (req, res, next) => {
   const userObj = req.user;
   const user = userObj.id;
@@ -37,7 +36,12 @@ artworkController.addToFavoritesTransaction = async (req, res, next) => {
     );
     const insertedArtworkID = insertedArtwork.rows[0].id;
     //find user favorites collection by id
-    const foundUser = await client.query("COMMIT");
+    const foundUser = await client.query(
+      findUserFavoritesQuery,
+      findFavortiesParams
+    );
+    const userCollectionId = foundUser.rows[0].id;
+    await client.query("COMMIT");
   } catch (err) {
     console.log("error when creating and inserting artwork is ", err);
     await client.query("ROLLBACK");

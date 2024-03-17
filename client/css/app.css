@@ -6,6 +6,11 @@
   --color-text-on-secondary: black;
   --color-tertiary: #fff;
   --color-text-on-tertiary: black;
+  --card_width: 250px;
+  --row_increment: 10px;
+  --card_small: 26;
+  --card_medium: 33;
+  --card_large: 45;
 
   --font-family: "Inter", sans-serif;
 }
