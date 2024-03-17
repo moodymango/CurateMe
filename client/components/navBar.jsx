@@ -1,8 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "./Contexts/AuthContext.jsx";
 
-function Navbar(props) {
-  const { isLogged, user } = props;
+function Navbar() {
+  const { isLogged, authUser, setAuthenticatedUser } = useAuth();
+
+  // //persist user login
+  // useEffect(() => {
+  //   const user = window.localStorage.getItem["user_name"];
+  //   setAuthenticatedUser(user);
+  // }, []);
+
+  // useEffect(() => {
+  //   window.localStorage.setItem("user_name", authUser);
+  // }, [isLogged]);
+
+  let user;
+
+  if (authUser) {
+    user = authUser[0].toUpperCase() + authUser.slice(1);
+  }
   return (
     <nav>
       <ul className="navbar">
@@ -15,12 +32,9 @@ function Navbar(props) {
           </li>
         </div>
         <div className="right-nav">
-          {isLogged ? (
+          {isLogged && user ? (
             <li>
-              <Link to={`/:${user.id}`}>
-                {" "}
-                {`${user.first_name}'s Homepage`}{" "}
-              </Link>
+              <Link to={`/:${authUser}`}> {`${user}'s Homepage`} </Link>
             </li>
           ) : (
             <div

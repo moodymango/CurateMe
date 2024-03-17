@@ -69,7 +69,6 @@ userController.verifyUser = async (req, res, next) => {
           const user = { id, user_name };
           res.locals.userID = user;
           next();
-          // return res.status(200).json(res.locals.userId);
         } else {
           //throw error stating that user has given the wrong password
           throw new userControllerError(401, `Incorrect Password: ${password}`);
@@ -77,12 +76,11 @@ userController.verifyUser = async (req, res, next) => {
       }
     });
   } catch (err) {
-    console.log("error is ", err);
-    // next({
-    //   log: "Error when retrieving user by username and password",
-    //   status: err.status,
-    //   message: err.message,
-    // });
+    next({
+      log: "Error when retrieving user by username and password",
+      status: err.status,
+      message: err.message,
+    });
   }
 };
 

@@ -9,7 +9,7 @@
  * ************************************
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Homepage from "./components/Homepage.jsx";
@@ -22,21 +22,24 @@ import Login from "./components/login.jsx";
 import { AuthContext } from "./components/Contexts/AuthContext.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 
-const App = (props) => {
+const App = () => {
   //need an is logged state in order to keep track of whether or not user is logged in
-  const [isLogged, setLogged] = useState(false);
-  const [user, setUser] = useState({});
-  const handleLog = () => {
-    //sets isLogged to true
-    setLogged(true);
+  const [authUser, setAuthUser] = useState(null);
+  const [isLogged, setIsLogged] = useState(false);
+
+  const setAuthenticatedUser = (user) => {
+    setAuthUser(user);
+    setIsLogged(!isLogged);
   };
 
   return (
     <main className="app-parent">
-      <AuthContext.Provider value={false}>
+      <AuthContext.Provider
+        value={{ authUser, isLogged, setAuthenticatedUser }}
+      >
         <Router>
           <div className="nav">
-            <Navbar className="nav" isLogged={isLogged} user={user} />
+            <Navbar className="nav" />
           </div>
           <div className="home">
             <Switch>
@@ -44,18 +47,8 @@ const App = (props) => {
               {/* <Route exact path="/" component={UserPage} /> */}
               <Route exact path="/search" component={SearchContainer} />
 
-              <Route
-                path="/signup"
-                render={() => (
-                  <SignUp handleLog={handleLog} setUserApp={setUser} />
-                )}
-              />
-              <Route
-                path="/login"
-                render={() => (
-                  <Login handleLog={handleLog} setUserApp={setUser} />
-                )}
-              />
+              <Route path="/signup" render={() => <SignUp />} />
+              <Route path="/login" render={() => <Login />} />
               <PrivateRoute path="/:user" component={UserPage} />
               <Route exact path="/:user/collections" component={UserPage} />
               <Route exact path="/:user" component={UserPage} />

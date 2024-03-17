@@ -21,7 +21,7 @@ tokenController.assignToken = async (req, res, next) => {
   res
     .status(200)
     .cookie("token", accessToken, { httpOnly: true })
-    .json("Login Sucessfull");
+    .json(user.user_name);
 };
 
 tokenController.authenticateToken = async (req, res, next) => {

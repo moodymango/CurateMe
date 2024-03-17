@@ -4,12 +4,12 @@ import { useAuth } from "./Contexts/AuthContext.jsx";
 import { Redirect } from "react-router-dom";
 
 function PrivateRoute({ component: Component, ...rest }) {
-  const isAuthenticated = useAuth();
+  const { isLogged } = useAuth();
   return (
     <Route
       {...rest}
       render={(props) =>
-        isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />
+        isLogged ? <Component {...props} /> : <Redirect to="/login" />
       }
     />
   );

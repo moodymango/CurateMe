@@ -5,8 +5,6 @@ import axios from "axios";
 import { Link, Redirect } from "react-router-dom";
 
 const SignUp = (props) => {
-  const { handleLog, setUserApp } = props;
-  // const { authUser, setAuthUser, isLogged, setIsLogged } = useAuth();
   //set focus on the first input when the component loads
   const userRef = useRef();
   const errRef = useRef();
@@ -42,12 +40,6 @@ const SignUp = (props) => {
           withCredentials: true,
         }
       );
-      // setIsLogged(true);
-      // setAuthUser(response.data);
-      // console.log("islogged and auth user", authUser, isLogged);
-      setUserApp(response.data);
-      setUserId(response.data.id);
-      handleLog();
       setSuccess(true);
     } catch (err) {
       if (err.response) {
@@ -59,7 +51,7 @@ const SignUp = (props) => {
     <div className="sign_up">
       {success ? (
         <section className="acc-created">
-          <Redirect to={`/:${userId}`} />
+          <Redirect to={"/login"} />
         </section>
       ) : (
         <section className="signup">

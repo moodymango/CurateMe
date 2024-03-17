@@ -1,12 +1,10 @@
-import React, { useRef, useState, useEffect, useContext } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
+import { useAuth } from "./Contexts/AuthContext.jsx";
 import axios from "axios";
 
-// import { useAuth } from "../components/Contexts/AuthContext.jsx";
-
-const Login = (props) => {
-  const { handleLog, setUserApp } = props;
-  // const { authUser, setAuthUser, isLogged, setIsLogged } = useAuth();
+const Login = () => {
+  const { authUser, isLogged, setAuthenticatedUser } = useAuth();
   const userRef = useRef();
   //to set focus on the first input when the component loads
   const errRef = useRef();
@@ -15,7 +13,7 @@ const Login = (props) => {
   //first 5 pieces state variables refering to user input, the empty string we are passing in is the initial state
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
-  const [userId, setUserId] = useState(0);
+
   //corresponds to an error we may have if for some reason, sign up fails
   const [errMsg, setErrMsg] = useState("");
   //let's us see a successful sign up for now
@@ -43,12 +41,13 @@ const Login = (props) => {
           withCredentials: true,
         }
       );
-      // setIsLogged(true);
-      // setAuthUser(response.data);
-      // console.log("islogged and auth user", authUser, isLogged);
-      setUserApp(response.data);
-      setUserId(response.data.id);
-      handleLog();
+      console.log("response data is", response.data);
+      setAuthenticatedUser(response.data);
+      console.log(
+        "islogged and auth user after logging in",
+        authUser,
+        isLogged
+      );
       setSuccess(true);
     } catch (err) {
       if (err.response) {
@@ -63,7 +62,7 @@ const Login = (props) => {
       {/* shows either account has been created OR the form which user submits the information */}
       {success ? (
         <section className="logged-in">
-          <Redirect to={`/:${userId}`} />
+          <Redirect to={`/:${authUser}`} />
         </section>
       ) : (
         //section, using a semantic element
