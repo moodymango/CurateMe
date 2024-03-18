@@ -309,32 +309,19 @@ body {
 /* SEARCH RESULTS */
 .search-results {
   position: sticky;
-  top: 100px;
+  top: 30px;
 }
 
-/* .query-results {
-  margin: 20px 0 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  grid-gap: 0%;
-} */
 .query-results {
-  margin: 0;
-  padding: 0;
-  width: 80vw;
-  /* centers on the x axis */
-  /* position: relative;
-  left: 50%;
-  transform: translateX(-50%); */
-  display: grid;
+  margin: 0px 5px;
+  padding: 5px;
   justify-content: center;
-  /* fill as many min 250px max 1fr in 1 row, then start on new row when there is no space */
-  grid-template-columns: repeat(auto-fit, var(--card_width));
-  grid-auto-rows: 500px;
-  /* add gap between rows and columns */
-  grid-row-gap: 10px;
-  grid-column-gap: 16px;
+  position: relative;
+  height: 8810px;
+  left: 10%;
+  transform: translateX(-3%);
 }
+
 #error-msg {
   position: relative;
   bottom: 450px;
@@ -343,16 +330,9 @@ body {
 /* ARTWORK CARDS */
 .artwork_card {
   position: sticky;
-  /* font-size: 1em; */
-  padding: 0px;
-  margin: 20px 10px;
-  /* add border radius  */
-}
-/* .artwork_card {
-  position: sticky;
   font-size: 1em;
-  margin: 0;
-} */
+  margin: 10px;
+}
 /* .artwork-content {
   width: 100%;
   height: 100%;
@@ -362,13 +342,6 @@ body {
   justify-content: center;
   align-items: center;
 } */
-
-.artwork_card_max_width {
-  max-width: 100%;
-}
-.artwork_card_max_height {
-  max-height: 100%;
-}
 
 /* @source favorite heart styling - https://codepen.io/austin_dudas/pen/XeqJmX */
 .favorite-heart {
@@ -416,14 +389,7 @@ body {
 label {
   font-weight: 600;
 }
-/* .artwork_card_image {
-  width: 100%;
-  height: 100%;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
 .artwork_card_image img {
   border: 4mm ridge #cca189;
 }

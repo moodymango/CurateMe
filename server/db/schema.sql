@@ -47,7 +47,7 @@ CREATE TABLE "impressions" (
 CREATE INDEX impression_user ON impressions USING HASH (user_id);
 CREATE INDEX impression_artwork ON impressions USING HASH (artwork_id);
 
-
+--revisit this approach at a later time! but we learned a lot :)
 CREATE TABLE "collection_order" (
     "artwork_id" INT NULL,
     "collection_id" INT NULL,
