@@ -310,6 +310,7 @@ body {
 .search-results {
   position: sticky;
   top: 30px;
+  width: fit-content;
 }
 
 .query-results {
@@ -318,7 +319,7 @@ body {
   justify-content: center;
   position: relative;
   height: 8810px;
-  left: 10%;
+  left: 6%;
   transform: translateX(-3%);
 }
 
@@ -407,7 +408,8 @@ label {
   align-items: center;
   padding: 20px 30px;
   top: 30%;
-  left: 22%;
+  transform: translateX(-8%);
+  left: 27%;
   border: 4mm ridge #000;
   background: white;
   box-shadow: 10px 5px 5px;

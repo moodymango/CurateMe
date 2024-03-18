@@ -35,11 +35,6 @@ const Login = () => {
       );
       console.log("response data is", response.data);
       setAuthenticatedUser(response.data);
-      console.log(
-        "islogged and auth user after logging in",
-        authUser,
-        isLogged
-      );
       setSuccess(true);
     } catch (err) {
       if (err.response) {

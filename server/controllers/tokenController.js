@@ -18,6 +18,7 @@ tokenController.assignToken = async (req, res, next) => {
   //pull user object from res.locals
   const user = res.locals.userID;
   const accessToken = generateAccessToken(user);
+
   res
     .status(200)
     .cookie("token", accessToken, { httpOnly: true })

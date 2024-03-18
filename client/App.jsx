@@ -9,7 +9,7 @@
  * ************************************
  */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Homepage from "./components/Homepage.jsx";
@@ -28,10 +28,17 @@ const App = () => {
   const [isLogged, setIsLogged] = useState(false);
 
   const setAuthenticatedUser = (user) => {
-    setAuthUser(user);
     setIsLogged(!isLogged);
+    sessionStorage.setItem("user", user);
+    setAuthUser(user);
   };
-
+  useEffect(() => {
+    const user = sessionStorage.getItem("user");
+    if (user) {
+      setAuthUser(user);
+      setIsLogged(true);
+    }
+  }, []);
   return (
     <main className="app-parent">
       <AuthContext.Provider
@@ -44,7 +51,6 @@ const App = () => {
           <div className="home">
             <Switch>
               <Route exact path="/" component={Homepage} />
-              {/* <Route exact path="/" component={UserPage} /> */}
               <Route exact path="/search" component={SearchContainer} />
 
               <Route path="/signup" render={() => <SignUp />} />
