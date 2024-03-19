@@ -71,14 +71,14 @@ collectionsController.readFavorites = async (req, res, next) => {
     const collectionObj = favoritesData.rows[0];
     const collection_id = collectionObj.id;
 
-    //use CTE to create readable join table
-    const innerSelect =
-      "SELECT c.description, a.id, a.title, a.artist_title, a.medium, a.date_display FROM artworks a INNER JOIN favorite_artworks USING (artwork_id) INNER JOIN collections c USING(collection_id) WHERE c.id=$1";
-    const userFavoritesTableCTE = `WITH user_favorite_artworks AS (${innerSelect}) SELECT * FROM user_favorite_artworks;`;
-    const userFavoriteArtworks = await client.query(userFavoritesTableCTE, [
-      collection_id,
-    ]);
-    if (userFavoriteArtworks.rowCount < 0) {
+    //   select * from artworks
+    // inner join favorite_artworks on artworks.id = favorite_artworks.artwork_id
+    // inner join collections on collections.id = favorite_artworks.collection_id
+    // where collections.id=1;
+    const joinQuery =
+      "SELECT a.id, a.title, a.artist_title, a.medium, a.date_display, c.title, c.description FROM artworks a INNER JOIN favorite_artworks ON artworks.id = favorite_artworks.artwork_id INNER JOIN collections c ON collections.id = favorite_artworks.collection_id WHERE collections.id=$1;";
+    const favoritesList = client.query(joinQuery, [collection_id]);
+    if (favoritesList.rowCount < 0) {
       res.status.json("No artworks in user favorite collection yet.");
     }
     await client.query("COMMIT");
