@@ -23,8 +23,8 @@ artworkController.addToFavoritesTransaction = async (req, res, next) => {
   const collection_title = "favorites";
   const findUserFavoritesQuery = `SELECT id FROM collections WHERE user_id=$1 AND title=$2;`;
   const findFavortiesParams = [user, collection_title];
-  //insert artwork and collection id into collection_order table
-  const insertArtworkAndCollectionID = `INSERT INTO collection_order()`;
+  //insert artwork and collection id into "favorites artwork table"
+  const insertArtworkAndCollectionID = `INSERT INTO favorite_artworks(artwork_id, collection_id) VALUES($1, $2);`;
 
   try {
     //use SQL Transaction
@@ -40,11 +40,52 @@ artworkController.addToFavoritesTransaction = async (req, res, next) => {
       findUserFavoritesQuery,
       findFavortiesParams
     );
-    const userCollectionId = foundUser.rows[0].id;
+    const userCollectionID = foundUser.rows[0].id;
+    //insert artworks into the favorites table based on collection_id
+    const insertedIntoFavorites = client.query(insertArtworkAndCollectionID, [
+      insertedArtworkID,
+      userCollectionID,
+    ]);
     await client.query("COMMIT");
+    client.release();
   } catch (err) {
     console.log("error when creating and inserting artwork is ", err);
     await client.query("ROLLBACK");
+    // next({
+    //   log: "Error when retrieving user by username and password",
+    //   status: err.status,
+    //   message: err.message,
+    // });
+  }
+};
+artworkController.removeFromFavoritresTransaction = async (req, res, next) => {
+  const userObj = req.user;
+  const { artworkID } = req.body;
+  const user = userObj.id;
+  //retrieve the user favoritre collection based on the user id
+  const favoriteCollectionQuery =
+    "SELECT id FROM collections WHERE user_id=$1 AND title=$2;";
+  const favoriteCollectionParams = [user, "favorites"];
+  const client = await db.pool.connect();
+  try {
+    await client.query("BEGIN");
+    const foundCollectionID = await client.query(
+      favoriteCollectionQuery,
+      favoriteCollectionParams
+    );
+    const favoritesID = foundCollectionID.rows[0].id;
+    const removeFromFavorites =
+      "DELETE FROM favorite_artworks WHERE collection_id=$1 AND artwork_id=$2;";
+    const removeParams = [favoritesID, artworkID];
+    const removedArtwork = await client.query(
+      removeFromFavorites,
+      removeParams
+    );
+    client.release();
+  } catch (err) {
+    await client.query("ROLLBACK");
+    client.release();
+    console.log("error when removing favorite artwork from user account");
     // next({
     //   log: "Error when retrieving user by username and password",
     //   status: err.status,
