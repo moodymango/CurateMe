@@ -71,10 +71,7 @@ collectionsController.readFavorites = async (req, res, next) => {
     const collectionObj = favoritesData.rows[0];
     const collection_id = collectionObj.id;
 
-    //   select * from artworks
-    // inner join favorite_artworks on artworks.id = favorite_artworks.artwork_id
-    // inner join collections on collections.id = favorite_artworks.collection_id
-    // where collections.id=1;
+    //query time complete from Explain Plan: 00:00:00.149
     const joinQuery =
       "SELECT a.id, a.title, a.artist_title, a.medium, a.date_display, c.title, c.description FROM artworks a INNER JOIN favorite_artworks ON artworks.id = favorite_artworks.artwork_id INNER JOIN collections c ON collections.id = favorite_artworks.collection_id WHERE collections.id=$1;";
     const favoritesList = client.query(joinQuery, [collection_id]);

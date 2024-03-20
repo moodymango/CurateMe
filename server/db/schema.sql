@@ -31,7 +31,7 @@ CREATE TABLE "artworks" (
     "title" VARCHAR(150) NULL,
     "artist_title" VARCHAR(150) NULL,
     "medium" VARCHAR(150) NULL,
-    "date_display" VARCHAR(200) NULL,
+    "date_display" VARCHAR(150) NULL,
     "image_id" VARCHAR(200) NULL
 );
 --sentinel artwork node for the doubly linked list implemenation.
