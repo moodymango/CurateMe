@@ -42,22 +42,27 @@ userController.verifyUser = async (req, res, next) => {
   //case sensitivity
   caseUsername = username.toLowerCase();
   casePassword = password.toLowerCase();
-  const text = `SELECT id, first_name, password FROM users WHERE username=$1`;
+  // const text = `SELECT id, first_name, password FROM users WHERE username=$1`;
+  // const params = [caseUsername];
+
+  const findUserQuery = `SELECT * FROM locate_user_by_username($1)`;
   const params = [caseUsername];
+
   try {
-    await db.query(text, params).then(async (data) => {
-      if (!data.rows.length) {
+    await db.query(findUserQuery, params).then(async (data) => {
+      console.log("data after using a function looks like", data);
+      if (!data.rowCount) {
         throw new userControllerError(
           401,
           `User not found by that username: ${username}`
         );
       } else {
-        const userPass = data.rows[0].password;
+        const userPass = data.rows[0].user_password;
         //authenticate user
         const compared = await bcrypt.compare(casePassword, userPass);
         if (compared) {
-          const id = data.rows[0].id;
-          const user_name = data.rows[0].first_name;
+          const id = data.rows[0].user_id;
+          const user_name = data.rows[0].user_first_name;
           const user = { id, user_name };
           res.locals.userID = user;
           next();
@@ -67,11 +72,12 @@ userController.verifyUser = async (req, res, next) => {
       }
     });
   } catch (err) {
-    next({
-      log: "Error when retrieving user by username and password",
-      status: err.status,
-      message: err.message,
-    });
+    console.log("db error looks like ", err);
+    // next({
+    //   log: "Error when retrieving user by username and password",
+    //   status: err.status,
+    //   message: err.message,
+    // });
   }
 };
 

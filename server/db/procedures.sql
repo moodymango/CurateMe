@@ -1,5 +1,6 @@
 --FUNCTIONS
 --finds the user's favorite collection by id
+DROP FUNCTION IF EXISTS locate_favorites_id;
 CREATE OR REPLACE FUNCTION locate_favorites_id(userID INT)
 RETURNS INT
 AS $$
@@ -17,6 +18,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 --finds the user's favorites by user_id and returns a table of artworks
+DROP FUNCTION IF EXISTS viewFavorites;
 CREATE OR REPLACE FUNCTION viewFavorites(userID IN INT)
 RETURNS TABLE ( 
     artwork_title VARCHAR,
@@ -41,9 +43,9 @@ END;
 $$ LANGUAGE plpgsql;
 
 --finds user by username and returns the id and pass
-CREATE OR REPLACE FUNCTION locate_user(
-    userID IN VARCHAR(100), 
-    password_hash IN VARCHAR(100)
+DROP FUNCTION IF EXISTS locate_user_by_username;
+CREATE OR REPLACE FUNCTION locate_user_by_username(
+    user_name IN VARCHAR(100) 
 )
 RETURNS TABLE (
     user_id INT,
@@ -53,9 +55,9 @@ RETURNS TABLE (
 AS $$
 BEGIN
     RETURN QUERY 
-    SELECT id, first_name, password INTO found_user FROM users WHERE username=userID;
+    SELECT id, first_name, password FROM users WHERE username=user_name;
     --output success message
-    RAISE NOTICE 'Retrieved user by username "%".', username;
+    RAISE NOTICE 'Retrieved user by username "%".', user_name;
 END;
 $$ LANGUAGE plpgsql;
 
