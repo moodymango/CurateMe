@@ -32,12 +32,7 @@ app.get("/login", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../client/users/login.html"));
 });
 
-app.post(
-  "/signup",
-  userController.createUser,
-  collectionsController.createFavorites,
-  tokenController.assignToken
-);
+app.post("/signup", userController.createUser);
 app.post("/login", userController.verifyUser, tokenController.assignToken);
 
 //route for any searches for specific artworks

@@ -19,20 +19,23 @@ userController.createUser = async (req, res, next) => {
   caseLastName = lastName.toLowerCase();
   //encrypt password prior to saving in db
   const hashedPass = await bcrypt.hash(casePassword, saltRounds);
-
-  const text = `INSERT INTO users(first_name, last_name, username, password) VALUES($1, $2, $3, $4) RETURNING id, first_name;`;
-  const params = [caseFirstName, caseLastName, caseUsername, hashedPass];
+  // const text = `INSERT INTO users(first_name, last_name, username, password) VALUES($1, $2, $3, $4) RETURNING id, first_name;`;
+  //call stored procedure to create user and user favorite collection
+  const createUserandFavoritesQuery =
+    "CALL create_user_transaction($1, $2, $3, $4);";
+  const params = [caseUsername, hashedPass, caseFirstName, caseLastName];
+  const client = await db.pool.connect();
   try {
-    await db.query(text, params).then((data) => {
-      res.locals.userID = data.rows[0];
-      next();
+    await client.query(createUserandFavoritesQuery, params).then((data) => {
+      res.status(200).json("User account created!");
     });
   } catch (err) {
-    next({
-      log: "Error when creating new user account",
-      status: err.status,
-      message: err.message,
-    });
+    console.log("db error looks like ", err);
+    // next({
+    //   log: "Error when creating new user account",
+    //   status: err.status,
+    //   message: err.message,
+    // });
   }
 };
 
@@ -42,9 +45,6 @@ userController.verifyUser = async (req, res, next) => {
   //case sensitivity
   caseUsername = username.toLowerCase();
   casePassword = password.toLowerCase();
-  // const text = `SELECT id, first_name, password FROM users WHERE username=$1`;
-  // const params = [caseUsername];
-
   const findUserQuery = `SELECT * FROM locate_user_by_username($1)`;
   const params = [caseUsername];
 
@@ -72,12 +72,11 @@ userController.verifyUser = async (req, res, next) => {
       }
     });
   } catch (err) {
-    console.log("db error looks like ", err);
-    // next({
-    //   log: "Error when retrieving user by username and password",
-    //   status: err.status,
-    //   message: err.message,
-    // });
+    next({
+      log: "Error when retrieving user by username and password",
+      status: err.status,
+      message: err.message,
+    });
   }
 };
 

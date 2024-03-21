@@ -11,7 +11,7 @@ CREATE TABLE "users" (
     "first_name" VARCHAR(100) NULL,
     "last_name" VARCHAR(100) NULL,
     "username" VARCHAR(100) NOT NULL UNIQUE,
-    "password" VARCHAR NOT NULL
+    "pass" VARCHAR NOT NULL
 ); 
 
 CREATE TABLE "collections" (

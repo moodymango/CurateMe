@@ -64,25 +64,28 @@ $$ LANGUAGE plpgsql;
 
 --STORED PROCEDURES
 --creates user and user's favorite collection in db
+DROP PROCEDURE IF EXISTS create_user_transaction;
 CREATE OR REPLACE PROCEDURE create_user_transaction(
-    IN username VARCHAR(100), 
-    IN password_hash VARCHAR(100), 
-    IN first_name VARCHAR(100), 
-    IN last_name VARCHAR(100))
+    IN user_name VARCHAR, 
+    IN password_hash VARCHAR, 
+    IN f_name VARCHAR, 
+    IN l_name VARCHAR)
 AS $$
 DECLARE
     new_user_id INT;
+    collection_id INT;
 BEGIN
     --Start transaction
     BEGIN
     --insert the user into the db
-    INSERT INTO users(first_name, last_name, username, password)
-    VALUES (first_name, last_name, username, password_hash)
+    INSERT INTO users(first_name, last_name, username, pass)
+    VALUES (f_name, l_name, user_name, password_hash)
     RETURNING id INTO new_user_id;
 
     --create favorite collection using user id
     INSERT INTO collections(user_id, title, description) 
-    VALUES(new_user_id, 'favorites', 'Favorite artworks');
+    VALUES(new_user_id, 'favorites', 'Favorite artworks') RETURNING id INTO collection_id;
+
 
     --commit transaction
     COMMIT;
@@ -91,13 +94,13 @@ BEGIN
     EXCEPTION
         -- Rollback the transaction if any error occurs
         WHEN others THEN
-            ROLLBACK;
-            RAISE EXCEPTION 'Error occurred while adding new user and making favorite collection';
+            RAISE EXCEPTION 'Error occurred while adding new user and making favorite collection: new user id: "%"', new_user_id;
     END;
 END;
 $$ LANGUAGE plpgsql;
 
 --upserts artwork into db and inserts artwork into favorite_artworks table
+DROP PROCEDURE IF EXISTS favorite_artworks;
 CREATE OR REPLACE PROCEDURE favorite_artworks(
     userID IN INT, 
     artworkID IN INT, 
@@ -143,6 +146,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 --removes an artwork by artwork id from the user's favorite collection
+DROP PROCEDURE IF EXISTS removeArtworkFromFavorites;
 CREATE OR REPLACE PROCEDURE removeArtworkFromFavorites(
     userID INT, 
     artworkID INT)
