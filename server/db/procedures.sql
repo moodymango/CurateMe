@@ -32,7 +32,7 @@ DECLARE
     user_collection_id INT;
 BEGIN
 
-    SELECT locate_favorites_id(userID) INTO user_collection_id;
+    SELECT user_id FROM locate_favorites_id(userID) INTO user_collection_id;
     --find all artworks within the user collection based on user_collection_id
     RETURN QUERY 
     SELECT a.id, a.title, a.artist_title, a.medium, a.date_display, c.title FROM artworks a 
@@ -75,7 +75,7 @@ DECLARE
     new_user_id INT;
 BEGIN
         -- Insert the user into the db
-        INSERT INTO users(first_name, last_name, username, pass)
+        INSERT INTO users(first_name, last_name, username, password)
         VALUES (f_name, l_name, user_name, password_hash)
         RETURNING id INTO new_user_id;
 

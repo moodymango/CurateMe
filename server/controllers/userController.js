@@ -69,11 +69,12 @@ userController.verifyUser = async (req, res, next) => {
       }
     });
   } catch (err) {
-    next({
-      log: `${err}` || "Error when retrieving user by username and password",
-      status: err.status,
-      message: err.message,
-    });
+    console.log("error in db after login is ", err);
+    // next({
+    //   log: `${err}` || "Error when retrieving user by username and password",
+    //   status: err.status,
+    //   message: err.message,
+    // });
   }
 };
 
