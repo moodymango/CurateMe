@@ -73,29 +73,20 @@ CREATE OR REPLACE PROCEDURE create_user_transaction(
 AS $$
 DECLARE
     new_user_id INT;
-    collection_id INT;
 BEGIN
-    --Start transaction
-    BEGIN
-    --insert the user into the db
-    INSERT INTO users(first_name, last_name, username, pass)
-    VALUES (f_name, l_name, user_name, password_hash)
-    RETURNING id INTO new_user_id;
+        -- Insert the user into the db
+        INSERT INTO users(first_name, last_name, username, pass)
+        VALUES (f_name, l_name, user_name, password_hash)
+        RETURNING id INTO new_user_id;
 
-    --create favorite collection using user id
-    INSERT INTO collections(user_id, title, description) 
-    VALUES(new_user_id, 'favorites', 'Favorite artworks') RETURNING id INTO collection_id;
+        -- Create favorite collection using user id
+        INSERT INTO collections(user_id, title, description) 
+        VALUES(new_user_id, 'favorites', 'Favorite artworks');
+        -- Commit transaction
+        COMMIT;
 
-
-    --commit transaction
-    COMMIT;
-    --output success message
-    RAISE NOTICE 'New user "%" with first name "%" has been added and favorites collection was created', username, first_name;
-    EXCEPTION
-        -- Rollback the transaction if any error occurs
-        WHEN others THEN
-            RAISE EXCEPTION 'Error occurred while adding new user and making favorite collection: new user id: "%"', new_user_id;
-    END;
+        -- Output success message
+        RAISE NOTICE 'New user "%" with first name "%" has been added and favorites collection was created', user_name, f_name;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -114,8 +105,6 @@ DECLARE
     art_id INT;
     favorite_collection_id INT;
 BEGIN
-    --Start transaction
-    BEGIN
      --upsert artwork into the db    
     WITH artworkCTE
     AS(
@@ -126,22 +115,13 @@ BEGIN
     SELECT * FROM artworkCTE UNION SELECT art_id FROM artworks WHERE image_id=imageID;
 
     --find user favorites collection by id
-        SELECT locate_favorites_id(userID) INTO favorite_collection_id;
-    -- fav_collection_id := CALL locate_favorites_id(userID);
-    -- CALL locate_favorites_id(userID) INTO fav_collection_id;
+        SELECT user_id FROM locate_favorites_id(userID) INTO favorite_collection_id;
 
     --insert artwork and collection id into favorite_artworks table
     INSERT INTO favorite_artworks(artwork_id, collection_id) VALUES(art_id, favorite_collection_id);
-    COMMIT;
 
      --output success message
     RAISE NOTICE 'New user "%" with first name "%" has been added.', username, first_name;  
-    EXCEPTION
-        -- Rollback the transaction if any error occurs
-        WHEN others THEN
-            ROLLBACK;
-            RAISE EXCEPTION 'Error occurred while adding artworks to user favorites';
-    END;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -155,7 +135,7 @@ DECLARE
     user_collection_id INT;
 BEGIN
 --locate collection of user favorites by id
-    SELECT locate_favorites_id(userID) INTO user_collection_id;
+    SELECT user_id FROM locate_favorites_id(userID) INTO user_collection_id;
    --delete the artwork from the favorite_artworks table based on collection and artwork id
    DELETE FROM favorite_artworks WHERE collection_id=user_collection_id AND artwork_id=artworkID;
    RAISE NOTICE 'Artwork was removed from the user % favorites collection', username;

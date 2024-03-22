@@ -19,7 +19,6 @@ userController.createUser = async (req, res, next) => {
   caseLastName = lastName.toLowerCase();
   //encrypt password prior to saving in db
   const hashedPass = await bcrypt.hash(casePassword, saltRounds);
-  // const text = `INSERT INTO users(first_name, last_name, username, password) VALUES($1, $2, $3, $4) RETURNING id, first_name;`;
   //call stored procedure to create user and user favorite collection
   const createUserandFavoritesQuery =
     "CALL create_user_transaction($1, $2, $3, $4);";
@@ -31,11 +30,9 @@ userController.createUser = async (req, res, next) => {
     });
   } catch (err) {
     console.log("db error looks like ", err);
-    // next({
-    //   log: "Error when creating new user account",
-    //   status: err.status,
-    //   message: err.message,
-    // });
+    next({
+      log: `${err}`,
+    });
   }
 };
 
@@ -73,7 +70,7 @@ userController.verifyUser = async (req, res, next) => {
     });
   } catch (err) {
     next({
-      log: "Error when retrieving user by username and password",
+      log: `${err}` || "Error when retrieving user by username and password",
       status: err.status,
       message: err.message,
     });
