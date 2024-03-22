@@ -24,7 +24,6 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      //within axios.post, need to define registration url
       const response = await axios.post(
         "/login",
         JSON.stringify({ username: user, password: pwd }),
@@ -50,11 +49,6 @@ const Login = () => {
           <Redirect to={`/:${authUser}`} />
         </section>
       ) : (
-        //section, using a semantic element
-        //at top of section, displays any error message we get, aria-live has screen reader announce the error msg immediately when focus is set on this para
-        //<form>
-        // htmlFor in label and attribute for id MUST match for each input field
-        //value, set that equal to the user state to make it a controlled input - crucial if we are going to clear inputs upon submission
         <section className="login">
           <p
             style={{
@@ -78,7 +72,6 @@ const Login = () => {
                 <input
                   type="text"
                   className="login_input"
-                  //again, allows that immediate focus to be on this field
                   ref={userRef}
                   onChange={(e) => setUser(e.target.value)}
                   value={user}
@@ -87,7 +80,6 @@ const Login = () => {
                 />
                 <br></br>
                 <input
-                  //changing the type to password, changes the input field to dots so we cannot see the pass
                   type="password"
                   className="login_input"
                   onChange={(e) => setPwd(e.target.value)}

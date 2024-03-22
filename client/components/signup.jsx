@@ -78,7 +78,6 @@ const SignUp = () => {
                 <input
                   type="text"
                   className="signup_input"
-                  //again, allows that immediate focus to be on this field
                   ref={userRef}
                   onChange={(e) => setUser(e.target.value)}
                   value={user}
@@ -86,7 +85,6 @@ const SignUp = () => {
                   required
                 />
                 <input
-                  //changing the type to password, changes the input field to dots so we cannot see the pass
                   type="password"
                   className="signup_input"
                   onChange={(e) => setPwd(e.target.value)}
@@ -110,7 +108,6 @@ const SignUp = () => {
                   placeholder="Last name: Renoir"
                   required
                 />
-                {/* don't need an onlick to the button because it's the only button in the form. will trigger a submit event! */}
               </div>
             </div>
             <button

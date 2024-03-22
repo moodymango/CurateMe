@@ -88,8 +88,6 @@ const SearchContainer = () => {
                 placeholder="Search your favorite artist"
               />
             </div>
-
-            {/* <button id="search-btn" type="submit">Search</button> */}
           </div>
         </div>
       </form>

@@ -32,13 +32,13 @@ DECLARE
     user_collection_id INT;
 BEGIN
 
-    SELECT user_id FROM locate_favorites_id(userID) INTO user_collection_id;
+    SELECT locate_favorites_id(userID) INTO user_collection_id;
     --find all artworks within the user collection based on user_collection_id
     RETURN QUERY 
     SELECT a.id, a.title, a.artist_title, a.medium, a.date_display, c.title FROM artworks a 
-    INNER JOIN favorite_artworks ON artworks.id = favorite_artworks.artwork_id 
-    INNER JOIN collections c ON collections.id = favorite_artworks.collection_id 
-    WHERE collections.id=user_collection_id;
+    INNER JOIN favorite_artworks ON a.id = favorite_artworks.artwork_id 
+    INNER JOIN collections c ON c.id = favorite_artworks.collection_id 
+    WHERE c.id=user_collection_id;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -115,13 +115,13 @@ BEGIN
     SELECT * FROM artworkCTE UNION SELECT art_id FROM artworks WHERE image_id=imageID;
 
     --find user favorites collection by id
-        SELECT user_id FROM locate_favorites_id(userID) INTO favorite_collection_id;
+        SELECT locate_favorites_id(userID) INTO favorite_collection_id;
 
     --insert artwork and collection id into favorite_artworks table
     INSERT INTO favorite_artworks(artwork_id, collection_id) VALUES(art_id, favorite_collection_id);
 
      --output success message
-    RAISE NOTICE 'New user "%" with first name "%" has been added.', username, first_name;  
+    RAISE NOTICE 'Artwork has been added to new user collection';  
 END;
 $$ LANGUAGE plpgsql;
 
@@ -135,7 +135,7 @@ DECLARE
     user_collection_id INT;
 BEGIN
 --locate collection of user favorites by id
-    SELECT user_id FROM locate_favorites_id(userID) INTO user_collection_id;
+    SELECT locate_favorites_id(userID) INTO user_collection_id;
    --delete the artwork from the favorite_artworks table based on collection and artwork id
    DELETE FROM favorite_artworks WHERE collection_id=user_collection_id AND artwork_id=artworkID;
    RAISE NOTICE 'Artwork was removed from the user % favorites collection', username;

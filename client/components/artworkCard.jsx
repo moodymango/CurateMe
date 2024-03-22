@@ -38,7 +38,6 @@ const ArtworkCard = forwardRef((props, ref) => {
     <div className="artwork_card" ref={ref}>
       <div className="artwork-content">
         <div id="artwork-card-buttons">
-          {/* add onClick function that will save artwork to individual collection */}
           <button
             className="favorite-heart"
             type="button"

@@ -48,7 +48,7 @@ export default function useArtworkSearch(
             if (pageNum !== res.data.pagination.total_pages) {
               //assign totalPage count to finalpage state
               setFinalPage(res.data.pagination.total_pages);
-              //reassign setHasMore to true for observer callbac func
+              //reassign setHasMore to true for observer callback func
               setHasMore(true);
             }
           })
@@ -62,8 +62,6 @@ export default function useArtworkSearch(
       userDidSubmit.current = false;
     }
     hasPageBeenRendered.current = true;
-    //call useEffect for every change in didSubmit and pageNum state
   }, [didSubmit, pageNum]);
-  //return all the state from our hook
   return { isLoading, error, searchResults, hasMore, errMsg, finalPage };
 }

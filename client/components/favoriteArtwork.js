@@ -48,30 +48,25 @@ export default function favoriteArtwork(
       } else {
         console.log("UNFAVORITED");
         //else remove from user favorite collection
-        // axios.delete(
-        //   "/:user/collections",
-        //   JSON.stringify({
-        //     id,
-        //     title,
-        //     artist_title,
-        //     medium,
-        //     date_display,
-        //     image_id,
-        //   }),
-        //   {
-        //     headers: { "Content-Type": "application/json" },
-        //     withCredentials: true,
-        //   }
-        //     .then((res) => {
-        //       console.log("Artwork was removed from the user favorites", res.data);
-        //     })
-        //     .catch((err) => {
-        //       if (err.response) {
-        //         setErrMsg(`${err.response.data}`);
-        //         setError(true);
-        //       }
-        //     })
-        // );
+        axios.delete(
+          "/:user/collections",
+          JSON.stringify({
+            artworkId,
+          }),
+          {
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true,
+          }
+            .then((res) => {
+              console.log("Artwork was removed from the user favorites");
+            })
+            .catch((err) => {
+              if (err.response) {
+                setErrMsg(`${err.response.data}`);
+                setError(true);
+              }
+            })
+        );
       }
     }
     initialRender.current = false;

@@ -28,7 +28,9 @@ userController.createUser = async (req, res, next) => {
     await client.query(createUserandFavoritesQuery, params).then((data) => {
       res.status(200).json("User account created!");
     });
+    client.release();
   } catch (err) {
+    client.release();
     console.log("db error looks like ", err);
     next({
       log: `${err}`,
@@ -47,7 +49,6 @@ userController.verifyUser = async (req, res, next) => {
 
   try {
     await db.query(findUserQuery, params).then(async (data) => {
-      console.log("data after using a function looks like", data);
       if (!data.rowCount) {
         throw new userControllerError(
           401,
@@ -69,12 +70,11 @@ userController.verifyUser = async (req, res, next) => {
       }
     });
   } catch (err) {
-    console.log("error in db after login is ", err);
-    // next({
-    //   log: `${err}` || "Error when retrieving user by username and password",
-    //   status: err.status,
-    //   message: err.message,
-    // });
+    next({
+      log: `${err}` || "Error when retrieving user by username and password",
+      status: err.status,
+      message: err.message,
+    });
   }
 };
 

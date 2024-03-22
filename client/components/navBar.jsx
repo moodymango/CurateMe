@@ -3,17 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "./Contexts/AuthContext.jsx";
 
 function Navbar() {
-  const { isLogged, authUser, setAuthenticatedUser } = useAuth();
-
-  // //persist user login
-  // useEffect(() => {
-  //   const user = window.localStorage.getItem["user_name"];
-  //   setAuthenticatedUser(user);
-  // }, []);
-
-  // useEffect(() => {
-  //   window.localStorage.setItem("user_name", authUser);
-  // }, [isLogged]);
+  const { isLogged, authUser } = useAuth();
 
   let user;
 
