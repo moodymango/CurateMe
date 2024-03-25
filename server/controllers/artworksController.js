@@ -29,7 +29,6 @@ artworkController.addToFavoritesTransaction = async (req, res, next) => {
     await client.query("COMMIT");
     client.release();
   } catch (err) {
-    console.log("db error is ", err);
     await client.query("ROLLBACK");
     client.release();
     next({

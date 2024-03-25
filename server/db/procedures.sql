@@ -82,7 +82,7 @@ BEGIN
         -- Create favorite collection using user id
         INSERT INTO collections(user_id, title, description) 
         VALUES(new_user_id, 'favorites', 'Favorite artworks');
-        -- Commit transaction
+        -- Commit transaction   
         COMMIT;
         
       
