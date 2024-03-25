@@ -84,6 +84,9 @@ BEGIN
         VALUES(new_user_id, 'favorites', 'Favorite artworks');
         -- Commit transaction
         COMMIT;
+        
+      
+        
 
         -- Output success message
         RAISE NOTICE 'New user "%" with first name "%" has been added and favorites collection was created', user_name, f_name;

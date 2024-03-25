@@ -1,4 +1,4 @@
-![CurateMe Homepage](./client/CurateMe%20Homepage.png)
+![CurateMe Homepage](./client/static/HomePage.png)
 
 <p> CurateMe empowers the everyday art enthusiast to make and share their own virtual exhibitions with artworks supplied by the Art Institute of Chicago's API.<p>
 
@@ -41,19 +41,17 @@
 
 - Infinite scroll to handle pagination of search results
 
-![CurateMe Search Page](./client/CurateMe%20Search.png)
+![CurateMe Search Page](./client/static/SeachPage.png)
 
 - User Registration and Login
 
-![CurateMe Registration](./client/CurateMe%20Register.png)
+![CurateMe Registration](./client/static/UserRegistration.png)
 
 ## To Do Features
 
 - Create/View user collection
 
 - Drag and Drop functionality to order user collections
-
-- Integrate oAuth for user registration
 
 ## In Progress Features
 
