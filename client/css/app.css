@@ -400,7 +400,8 @@ label {
   height: 100%;
   width: 100%;
 }
-.user_no_collection {
+.user_no_collection,
+.user_logout {
   position: absolute;
   display: flex;
   flex-direction: column;

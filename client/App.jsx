@@ -21,6 +21,7 @@ import Footer from "./components/footer.jsx";
 import Login from "./components/login.jsx";
 import { AuthContext } from "./components/Contexts/AuthContext.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
+import Logout from "./components/Logout.jsx";
 
 const App = () => {
   //need an is logged state in order to keep track of whether or not user is logged in
@@ -56,8 +57,7 @@ const App = () => {
               <Route path="/signup" render={() => <SignUp />} />
               <Route path="/login" render={() => <Login />} />
               <PrivateRoute path="/:user" component={UserPage} />
-              <Route exact path="/:user/collections" component={UserPage} />
-              <Route exact path="/:user" component={UserPage} />
+              <Route exact path="/logout" component={Logout} />
             </Switch>
           </div>
           <div className="foot">

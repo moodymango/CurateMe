@@ -27,6 +27,7 @@ tokenController.assignToken = async (req, res, next) => {
 
 tokenController.authenticateToken = async (req, res, next) => {
   const token = req.cookies.token;
+  console.log("token is ", token);
 
   if (token == null) {
     throw new tokenControllerError(401, "Token is required");
@@ -39,6 +40,14 @@ tokenController.authenticateToken = async (req, res, next) => {
     res.clearCookie("token");
     throw new tokenControllerError(403, "Please login first");
   }
+};
+
+tokenController.clearCookie = async (req, res, next) => {
+  console.log("is user even hittin this clear cookie function?");
+  //clesr cookie and redirect to proper logout page
+  res.clearCookie("token");
+  next();
+  // res.clearCookie("token").redirect("http://localhost:5050/logout");
 };
 
 module.exports = tokenController;

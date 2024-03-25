@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import CollectionsCard from "./collections.jsx";
-import axios from "./api/axios.js";
+import axios from "axios";
 
 const UserPage = (props) => {
   const { user } = useParams();
@@ -10,43 +10,56 @@ const UserPage = (props) => {
   const prevCollection = useRef([]);
   const [userHasCollections, setBoolean] = useState(false);
 
-  const getCollections = async () => {
-    try {
-      const collections = await axios({
-        method: "GET",
-        url: `http://localhost:5050/${noColon}/collections`,
-      });
-      if (collections.data) {
-        userHasCollections(true);
-      }
-      collections.data.forEach((el) => {
-        setCollections(...userCollections, el);
-        prevCollection.current.push(el);
-        console.log("updated state array is=>", prevCollection.current);
-      });
-    } catch (err) {
-      console.log("error in getting user collection");
-    }
-  };
-
-  useEffect(() => {
-    getCollections();
-  }, []);
+  // const getCollections = async () => {
+  //   try {
+  //     console.log("sending request to backend to pull up user favorites");
+  //     const collections = await axios({
+  //       method: "GET",
+  //       url: `/:user/collections`,
+  //     });
+  //     if (collections.data) {
+  //       userHasCollections(true);
+  //     }
+  //     collections.data.forEach((el) => {
+  //       setCollections(...userCollections, el);
+  //       prevCollection.current.push(el);
+  //       console.log("updated state array is=>", prevCollection.current);
+  //     });
+  //   } catch (err) {
+  //     console.log("error in getting user collection");
+  //   }
+  // };
+  // useEffect(() => {
+  //   getCollections();
+  // }, []);
 
   // useEffect(() => {
   //   const collectionDisplay = [];
-  //   prevCollection.forEach((elObj) => {
-  //     collectionDisplay.push(
-  //       <CollectionsCard title={elObj.title} description={eleObj.description} />
-  //     );
-  //   });
+  //   if (prevCollection) {
+  //     // prevCollection.forEach((elObj) => {
+  //     //   collectionDisplay.push(
+  //     //     <CollectionsCard
+  //     //       title={elObj.title}
+  //     //       description={eleObj.description}
+  //     //     />
+  //     //   );
+  //     // });
+  //   }
   // }, [prevCollection.current]);
-  // const collectionDisplay = [];
-  // prevCollection.current.forEach((elObj) => {
-  //   collectionDisplay.push(
-  //     <CollectionsCard title={elObj.title} description={elObj.description} />
-  //   );
-  // });
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    //remove all key value pairs in sessionStorage
+    sessionStorage.clear();
+    try {
+      await axios.get("http://localhost:5050/logout", {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+    } catch (err) {
+      console.log("error for logout is ", err);
+    }
+  };
+
   return (
     <>
       <div className="user-page">
@@ -77,6 +90,7 @@ const UserPage = (props) => {
                 {" "}
                 Visit Artwork Search{" "}
               </Link>
+              <button onClick={handleLogout}>Logout</button>
             </section>
           )}
         </section>
