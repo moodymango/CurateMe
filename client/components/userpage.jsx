@@ -14,25 +14,32 @@ const UserPage = (props) => {
   const [errMsg, setErrMsg] = useState("");
   const { removeAuthenticatedUser } = useAuth();
 
-  // const getCollections = async () => {
-  //   try {
-  //     console.log("sending request to backend to pull up user favorites");
-  //     const collections = await axios({
-  //       method: "GET",
-  //       url: `/:user/collections`,
-  //     });
-  //     if (collections.data) {
-  //       userHasCollections(true);
-  //     }
-  //     collections.data.forEach((el) => {
-  //       setCollections(...userCollections, el);
-  //       prevCollection.current.push(el);
-  //       console.log("updated state array is=>", prevCollection.current);
-  //     });
-  //   } catch (err) {
-  //     console.log("error in getting user collection");
-  //   }
-  // };
+  const getCollections = async () => {
+    axios.post(
+      "/search",
+      JSON.stringify({ searchReq, categoryField, pageNum }),
+      {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      }
+    );
+    try {
+      const collections = await axios.get("/:user/collections", {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+      if (collections.data) {
+        userHasCollections(true);
+      }
+      collections.data.forEach((el) => {
+        setCollections(...userCollections, el);
+        prevCollection.current.push(el);
+        console.log("updated state array is=>", prevCollection.current);
+      });
+    } catch (err) {
+      console.log("error in getting user collection");
+    }
+  };
   // useEffect(() => {
   //   getCollections();
   // }, []);
