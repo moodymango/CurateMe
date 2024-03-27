@@ -397,21 +397,27 @@ label {
 /* USER HOMEPAGE TO CURATE COLLECTION */
 .user-page {
   background: var(--color-primary);
+  position: relative;
+  display: flex;
+  flex-direction: column;
   height: 100%;
   width: 100%;
 }
-.user_no_collection,
-.user_logout {
+.user_no_collection {
   position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px 30px;
-  top: 30%;
+  padding: 20px 60px;
+  top: 15%;
   transform: translateX(-8%);
   left: 27%;
+  bottom: 10%;
   border: 4mm ridge #000;
   background: white;
   box-shadow: 10px 5px 5px;
+}
+.no_collection_content {
+  overflow-y: auto;
 }

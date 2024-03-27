@@ -43,7 +43,6 @@ tokenController.authenticateToken = async (req, res, next) => {
 };
 
 tokenController.clearCookie = async (req, res, next) => {
-  console.log("clear cookie and send confirmation");
   //clear cookie and send confirmation of logout
   res.clearCookie("token").json("User has been logged out.");
 };

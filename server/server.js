@@ -36,9 +36,7 @@ app.post("/signup", userController.createUser);
 app.post("/login", userController.verifyUser, tokenController.assignToken);
 
 //route to logout user
-app.use("/logout", tokenController.clearCookie, (req, res) => {
-  res.status(200).json("User has been logged out!");
-});
+app.use("/logout", tokenController.clearCookie);
 
 //route for any searches for specific artworks
 app.use("/search", artRouter);

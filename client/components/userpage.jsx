@@ -76,26 +76,28 @@ const UserPage = (props) => {
             <section>{collectionDisplay}</section>
           ) : (
             <section className="user_no_collection">
-              <h1>Lets get started.</h1>
-              <div className="user_instructions">
-                <p>
-                  Search for artworks and add them to your favorites by clicking
-                  the heart in the top left corner.
-                </p>
-                <p>Then come back and exhibit them to the public! </p>
+              <div className="no_collection_content">
+                <h1>Lets get started.</h1>
+                <div className="user_instructions">
+                  <p>
+                    Search for artworks and add them to your favorites by
+                    clicking the heart in the top left corner.
+                  </p>
+                  <p>Then come back and exhibit them to the public! </p>
+                </div>
+                <Link
+                  style={{
+                    textDecoration: "none",
+                    fontWeight: "800",
+                    color: "var(--color-primary)",
+                  }}
+                  to="/search"
+                >
+                  {" "}
+                  Visit Artwork Search{" "}
+                </Link>
+                <button onClick={handleLogout}>Logout</button>
               </div>
-              <Link
-                style={{
-                  textDecoration: "none",
-                  fontWeight: "800",
-                  color: "var(--color-primary)",
-                }}
-                to="/search"
-              >
-                {" "}
-                Visit Artwork Search{" "}
-              </Link>
-              <button onClick={handleLogout}>Logout</button>
             </section>
           )}
         </section>
