@@ -12,6 +12,7 @@
 import React, { useState, useEffect, useRef } from "react";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { createBrowserHistory } from "history";
 import Homepage from "./components/Homepage.jsx";
 import UserPage from "./components/userpage.jsx";
 import SearchContainer from "./containers/searchContainer.jsx";
@@ -21,7 +22,8 @@ import Footer from "./components/footer.jsx";
 import Login from "./components/login.jsx";
 import { AuthContext } from "./components/Contexts/AuthContext.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
-import Logout from "./components/Logout.jsx";
+
+const history = createBrowserHistory();
 
 const App = () => {
   //need an is logged state in order to keep track of whether or not user is logged in
@@ -33,6 +35,10 @@ const App = () => {
     sessionStorage.setItem("user", user);
     setAuthUser(user);
   };
+  const removeAuthenticatedUser = () => {
+    sessionStorage.clear();
+    setAuthUser(null);
+  };
   useEffect(() => {
     const user = sessionStorage.getItem("user");
     if (user) {
@@ -43,9 +49,14 @@ const App = () => {
   return (
     <main className="app-parent">
       <AuthContext.Provider
-        value={{ authUser, isLogged, setAuthenticatedUser }}
+        value={{
+          authUser,
+          isLogged,
+          setAuthenticatedUser,
+          removeAuthenticatedUser,
+        }}
       >
-        <Router>
+        <Router history={history}>
           <div className="nav">
             <Navbar className="nav" />
           </div>
@@ -57,7 +68,6 @@ const App = () => {
               <Route path="/signup" render={() => <SignUp />} />
               <Route path="/login" render={() => <Login />} />
               <PrivateRoute path="/:user" component={UserPage} />
-              <Route exact path="/logout" component={Logout} />
             </Switch>
           </div>
           <div className="foot">

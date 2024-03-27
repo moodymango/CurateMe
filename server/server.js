@@ -43,6 +43,19 @@ app.use("/logout", tokenController.clearCookie, (req, res) => {
 //route for any searches for specific artworks
 app.use("/search", artRouter);
 
+app.get("*", function (req, res) {
+  console.error(" 404 page - ", req.url, req.method, req.body);
+  res.send(
+    JSON.stringify({
+      status: 0,
+      message: "Invalid link",
+      url: req.url,
+      method: req.method,
+      requestBody: req.body,
+    })
+  );
+});
+
 //ROUTE TO SERVE HOMEPAGE
 app.use("/dist", express.static(path.join(__dirname, "../dist")));
 // serve index.html on the route '/'

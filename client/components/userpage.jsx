@@ -1,14 +1,18 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useState, useRef } from "react";
+import { Link, useParams, withRouter } from "react-router-dom";
 import CollectionsCard from "./collections.jsx";
+import { useAuth } from "./Contexts/AuthContext.jsx";
 import axios from "axios";
 
 const UserPage = (props) => {
+  const { history } = props;
   const { user } = useParams();
   const noColon = user.substring(1);
   const [userCollections, setCollections] = useState([]);
   const prevCollection = useRef([]);
-  const [userHasCollections, setBoolean] = useState(false);
+  const [error, setError] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
+  const { removeAuthenticatedUser } = useAuth();
 
   // const getCollections = async () => {
   //   try {
@@ -47,16 +51,20 @@ const UserPage = (props) => {
   //   }
   // }, [prevCollection.current]);
   const handleLogout = async (e) => {
+    console.log("logout button pressed");
     e.preventDefault();
-    //remove all key value pairs in sessionStorage
-    sessionStorage.clear();
     try {
-      await axios.get("http://localhost:5050/logout", {
+      await axios.get("/logout", {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
+      //call remove authenticated user
+      removeAuthenticatedUser();
+      //redirect to user logout page
+      history.push("/login");
     } catch (err) {
-      console.log("error for logout is ", err);
+      setError(true);
+      // setErrMsg(`${err.response.data}`);
     }
   };
 
@@ -74,10 +82,7 @@ const UserPage = (props) => {
                   Search for artworks and add them to your favorites by clicking
                   the heart in the top left corner.
                 </p>
-                <p>
-                  Then come back, re-order your artworks to until and exhibit
-                  them to the public!{" "}
-                </p>
+                <p>Then come back and exhibit them to the public! </p>
               </div>
               <Link
                 style={{
@@ -99,4 +104,4 @@ const UserPage = (props) => {
   );
 };
 
-export default UserPage;
+export default withRouter(UserPage);

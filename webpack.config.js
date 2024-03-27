@@ -81,6 +81,7 @@ module.exports = {
       //must proxy ANY route in which we are making an api call
       "/signup": "http://127.0.0.1:5050/",
       "/login": "http://127.0.0.1:5050/",
+      "/logout": "http://127.0.0.1:5050/",
       "/search": "http://127.0.0.1:5050/",
       "/:user": "http://127.0.0.1:5050/",
       "/:user/collections": "http://127.0.0.1:5050/",
