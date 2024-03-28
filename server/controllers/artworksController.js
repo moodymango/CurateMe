@@ -29,13 +29,14 @@ artworkController.addToFavoritesTransaction = async (req, res, next) => {
     await client.query("COMMIT");
     client.release();
   } catch (err) {
+    console.log("error is transaction for favorites", err);
     await client.query("ROLLBACK");
     client.release();
-    next({
-      log: `${err}` || "Error when retrieving user by username and password",
-      status: err.status,
-      message: `${err}` || err.message,
-    });
+    // next({
+    //   log: `${err}` || "Error when retrieving user by username and password",
+    //   status: 500,
+    //   message: `${err}` || err.message,
+    // });
   }
 };
 artworkController.removeFromFavoritresTransaction = async (req, res, next) => {

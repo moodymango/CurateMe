@@ -9,12 +9,13 @@ BEGIN
     --find user favorite collection by userID and favorite's title
     SELECT id INTO favorites_id FROM collections WHERE user_id=userID AND title='favorites';
 
+    RETURN favorites_id;
+
       -- catch exception --
     EXCEPTION 
         WHEN sqlstate 'P0002' THEN
             RAISE EXCEPTION 'Favorites collection with userID % not found', userID;
 
-    RETURN favorites_id;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -22,11 +23,12 @@ $$ LANGUAGE plpgsql;
 DROP FUNCTION IF EXISTS viewFavorites;
 CREATE OR REPLACE FUNCTION viewFavorites(userID IN INT)
 RETURNS TABLE ( 
-    artwork_title VARCHAR,
-    artwork_artist_title VARCHAR,
-    artwork_medium VARCHAR,
-    artwork_date VARCHAR,
-    collection_title VARCHAR
+    id INT, 
+    title VARCHAR,
+    artist_title VARCHAR,
+    medium VARCHAR,
+    date_display VARCHAR,
+    image_id VARCHAR
 )
 AS $$
 DECLARE
@@ -36,7 +38,7 @@ BEGIN
     SELECT locate_favorites_id(userID) INTO user_collection_id;
     --find all artworks within the user collection based on user_collection_id
     RETURN QUERY 
-    SELECT a.id, a.title, a.artist_title, a.medium, a.date_display, c.title FROM artworks a 
+    SELECT a.id, a.title, a.artist_title, a.medium, a.date_display, a.image_id FROM artworks a 
     INNER JOIN favorite_artworks ON a.id = favorite_artworks.artwork_id 
     INNER JOIN collections c ON c.id = favorite_artworks.collection_id 
     WHERE c.id=user_collection_id;

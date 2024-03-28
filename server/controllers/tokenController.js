@@ -27,8 +27,6 @@ tokenController.assignToken = async (req, res, next) => {
 
 tokenController.authenticateToken = async (req, res, next) => {
   const token = req.cookies.token;
-  console.log("token is ", token);
-
   if (token == null) {
     throw new tokenControllerError(401, "Token is required");
   }

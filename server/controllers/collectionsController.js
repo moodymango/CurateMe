@@ -16,17 +16,15 @@ collectionsController.readFavorites = async (req, res, next) => {
   const client = await db.pool.connect();
   const retrieveFavorites = `SELECT * FROM viewFavorites($1)`;
   const favoritesParams = [userObj.id];
-
   try {
-    //use SQL transaction
-    await client.query("BEGIN");
-    const favorites = client.query(retrieveFavorites, favoritesParams);
-    console.log("favorites data is ", favorites.data);
-    await client.query("COMMIT");
-    client.release();
-    return res.status(200).json(favorites.data);
+    const favorites = await client.query(retrieveFavorites, favoritesParams);
+    if (!favorites.rowCount) {
+      throw new collectionsControllerError(404, "No favorites found yet");
+    } else {
+      client.release();
+      return res.status(200).json(favorites.rows);
+    }
   } catch (err) {
-    await client.query("ROLLBACK");
     client.release();
     console.log("error when reading user favorites", err);
     next({
