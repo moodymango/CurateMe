@@ -17,19 +17,43 @@ userController.createUser = async (req, res, next) => {
   casePassword = password.toLowerCase();
   caseFirstName = firstName.toLowerCase();
   caseLastName = lastName.toLowerCase();
+
+  //establish client connection for db call.
+  const client = await db.pool.connect();
   //encrypt password prior to saving in db
   const hashedPass = await bcrypt.hash(casePassword, saltRounds);
+  //first check if user does not already exist in the db
+  const findUserQuery = "SELECT * from users WHERE username=$1";
+  const findUserParams = [caseUsername];
+  try {
+    await client.query(findUserQuery, findUserParams).then((user) => {
+      console.log("user information is");
+      //if we have rows in our result set, user already exists with this username
+      if (user.rowCount > 0) {
+        throw new userControllerError(
+          409,
+          "Sorry, that username is already taken!"
+        );
+      }
+    });
+  } catch (err) {
+    next({
+      log: "Error when creating new user account",
+      status: err.status,
+      message: err.message,
+    });
+  }
   //call stored procedure to create user and user favorite collection
   const createUserandFavoritesQuery =
     "CALL create_user_transaction($1, $2, $3, $4);";
   const params = [caseUsername, hashedPass, caseFirstName, caseLastName];
-  const client = await db.pool.connect();
   try {
     await client.query(createUserandFavoritesQuery, params).then((data) => {
       res.status(200).json("User account created!");
     });
     client.release();
   } catch (err) {
+    await client.query("ROLLBACK");
     client.release();
     console.log("db error looks like ", err);
     next({

@@ -13,7 +13,6 @@ class collectionsControllerError extends Error {
 //read all artworks in user favorite collection
 collectionsController.readFavorites = async (req, res, next) => {
   const userObj = req.user;
-  const user = userObj.id;
   const client = await db.pool.connect();
   const retrieveFavorites = `SELECT * FROM viewFavorites($1)`;
   const favoritesParams = [userObj.id];
