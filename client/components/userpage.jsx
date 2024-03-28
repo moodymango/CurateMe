@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, withRouter } from "react-router-dom";
+import Masonry from "react-masonry-component";
 import { useAuth } from "./Contexts/AuthContext.jsx";
 import axios from "axios";
+import ArtworkCard from "./artworkCard.jsx";
 
 const UserPage = (props) => {
   const { history } = props;
-  const { user } = useParams();
-  const noColon = user.substring(1);
   const [userFavorites, setUserFavorites] = useState([]);
   const [error, setError] = useState(false);
   const [errMsg, setErrMsg] = useState("");
@@ -20,7 +20,7 @@ const UserPage = (props) => {
         withCredentials: true,
       });
       console.log("favorites is ", favorites);
-      // setUserFavorites([...favorites.data])
+      setUserFavorites([...favorites.data]);
     } catch (err) {
       console.log("error in getting user collection");
     }
@@ -29,19 +29,6 @@ const UserPage = (props) => {
     getCollections();
   }, []);
 
-  // useEffect(() => {
-  //   const collectionDisplay = [];
-  //   if (prevCollection) {
-  //     // prevCollection.forEach((elObj) => {
-  //     //   collectionDisplay.push(
-  //     //     <CollectionsCard
-  //     //       title={elObj.title}
-  //     //       description={eleObj.description}
-  //     //     />
-  //     //   );
-  //     // });
-  //   }
-  // }, [prevCollection.current]);
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
@@ -57,13 +44,33 @@ const UserPage = (props) => {
       setError(true);
     }
   };
+  const artworksArr = userFavorites.map((result) => {
+    const { id, title, artist_title, medium, date_display, image_id } = result;
+    return (
+      <ArtworkCard
+        artworkId={id}
+        artist={artist_title}
+        artwork_type={medium}
+        date={date_display}
+        title={title}
+        image_id={image_id}
+      />
+    );
+  });
 
   return (
     <>
       <div className="user-page">
         <section className="user_collections">
           {userFavorites.length ? (
-            <section>{collectionDisplay}</section>
+            <Masonry
+              className="user-favorites"
+              disableImagesLoaded={false}
+              columnWidth={250}
+              gutter={10}
+            >
+              {artworksArr}
+            </Masonry>
           ) : (
             <section className="user_no_collection">
               <div className="no_collection_content">
