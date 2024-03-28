@@ -24,16 +24,16 @@ collectionsController.readFavorites = async (req, res, next) => {
     console.log("favorites data is ", favorites.data);
     await client.query("COMMIT");
     client.release();
-    return res.status(200).json(res.locals.userID);
+    return res.status(200).json(favorites.data);
   } catch (err) {
     await client.query("ROLLBACK");
     client.release();
     console.log("error when reading user favorites", err);
-    // next({
-    //   log: "Error when creating favorite's collection for individual user",
-    //   status: err.status,
-    //   message: err.message,
-    // });
+    next({
+      log: "Error when creating favorite's collection for individual user",
+      status: err.status,
+      message: `${err}` || err.message,
+    });
   }
 };
 

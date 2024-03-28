@@ -1,6 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useParams, withRouter } from "react-router-dom";
-import CollectionsCard from "./collections.jsx";
 import { useAuth } from "./Contexts/AuthContext.jsx";
 import axios from "axios";
 
@@ -8,41 +7,27 @@ const UserPage = (props) => {
   const { history } = props;
   const { user } = useParams();
   const noColon = user.substring(1);
-  const [userCollections, setCollections] = useState([]);
-  const prevCollection = useRef([]);
+  const [userFavorites, setUserFavorites] = useState([]);
   const [error, setError] = useState(false);
   const [errMsg, setErrMsg] = useState("");
+
   const { removeAuthenticatedUser } = useAuth();
 
   const getCollections = async () => {
-    axios.post(
-      "/search",
-      JSON.stringify({ searchReq, categoryField, pageNum }),
-      {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      }
-    );
     try {
-      const collections = await axios.get("/:user/collections", {
+      const favorites = await axios.get("/:user/collections", {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
-      if (collections.data) {
-        userHasCollections(true);
-      }
-      collections.data.forEach((el) => {
-        setCollections(...userCollections, el);
-        prevCollection.current.push(el);
-        console.log("updated state array is=>", prevCollection.current);
-      });
+      console.log("favorites is ", favorites);
+      // setUserFavorites([...favorites.data])
     } catch (err) {
       console.log("error in getting user collection");
     }
   };
-  // useEffect(() => {
-  //   getCollections();
-  // }, []);
+  useEffect(() => {
+    getCollections();
+  }, []);
 
   // useEffect(() => {
   //   const collectionDisplay = [];
@@ -58,7 +43,6 @@ const UserPage = (props) => {
   //   }
   // }, [prevCollection.current]);
   const handleLogout = async (e) => {
-    console.log("logout button pressed");
     e.preventDefault();
     try {
       await axios.get("/logout", {
@@ -71,7 +55,6 @@ const UserPage = (props) => {
       history.push("/login");
     } catch (err) {
       setError(true);
-      // setErrMsg(`${err.response.data}`);
     }
   };
 
@@ -79,7 +62,7 @@ const UserPage = (props) => {
     <>
       <div className="user-page">
         <section className="user_collections">
-          {prevCollection.current.length ? (
+          {userFavorites.length ? (
             <section>{collectionDisplay}</section>
           ) : (
             <section className="user_no_collection">

@@ -9,9 +9,10 @@ BEGIN
     --find user favorite collection by userID and favorite's title
     SELECT id INTO favorites_id FROM collections WHERE user_id=userID AND title='favorites';
 
-    IF NOT found THEN
-     RAISE 'Favorites collection with userID % not found', userID;
-    END IF;
+      -- catch exception --
+    EXCEPTION 
+        WHEN sqlstate 'P0002' THEN
+            RAISE EXCEPTION 'Favorites collection with userID % not found', userID;
 
     RETURN favorites_id;
 END;
@@ -56,6 +57,11 @@ AS $$
 BEGIN
     RETURN QUERY 
     SELECT id, first_name, password FROM users WHERE username=user_name;
+
+    -- catch exception --
+    EXCEPTION 
+        WHEN sqlstate 'P0002' THEN
+            RAISE EXCEPTION 'User % not found', user_name;
     --output success message
     RAISE NOTICE 'Retrieved user by username "%".', user_name;
 END;
@@ -82,12 +88,6 @@ BEGIN
         -- Create favorite collection using user id
         INSERT INTO collections(user_id, title, description) 
         VALUES(new_user_id, 'favorites', 'Favorite artworks');
-        -- Commit transaction   
-        COMMIT;
-        
-      
-        
-
         -- Output success message
         RAISE NOTICE 'New user "%" with first name "%" has been added and favorites collection was created', user_name, f_name;
 END;

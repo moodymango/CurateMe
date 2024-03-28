@@ -34,7 +34,7 @@ artworkController.addToFavoritesTransaction = async (req, res, next) => {
     next({
       log: `${err}` || "Error when retrieving user by username and password",
       status: err.status,
-      message: err.message,
+      message: `${err}` || err.message,
     });
   }
 };
@@ -56,14 +56,14 @@ artworkController.removeFromFavoritresTransaction = async (req, res, next) => {
     );
     client.release();
   } catch (err) {
+    console.log("db error is => ", err);
     await client.query("ROLLBACK");
     client.release();
-    console.log("error when removing favorite artwork from user account");
-    // next({
-    //   log: "Error when retrieving user by username and password",
-    //   status: err.status,
-    //   message: err.message,
-    // });
+    next({
+      log: "Error when removing an artwork from user favorites",
+      status: err.status,
+      message: `${err}` || err.message,
+    });
   }
 };
 module.exports = artworkController;

@@ -9,6 +9,7 @@ class userControllerError extends Error {
     this.name = "userControllerError";
   }
 }
+
 //middleware to create user
 userController.createUser = async (req, res, next) => {
   const saltRounds = 10;
@@ -55,9 +56,8 @@ userController.createUser = async (req, res, next) => {
   } catch (err) {
     await client.query("ROLLBACK");
     client.release();
-    console.log("db error looks like ", err);
     next({
-      log: `${err}`,
+      message: `${err}`,
     });
   }
 };
@@ -97,7 +97,7 @@ userController.verifyUser = async (req, res, next) => {
     next({
       log: `${err}` || "Error when retrieving user by username and password",
       status: err.status,
-      message: err.message,
+      message: `${err}` || err.message,
     });
   }
 };
