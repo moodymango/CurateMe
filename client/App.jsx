@@ -38,6 +38,7 @@ const App = () => {
   const removeAuthenticatedUser = () => {
     sessionStorage.clear();
     setAuthUser(null);
+    setIsLogged(false);
   };
   useEffect(() => {
     const user = sessionStorage.getItem("user");

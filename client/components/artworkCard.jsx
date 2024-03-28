@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { forwardRef } from "react";
 import favoriteArtwork from "./favoriteArtwork.js";
+import { useAuth } from "./Contexts/AuthContext.jsx";
 
 const {
   IMAGE_URL,
@@ -8,6 +9,7 @@ const {
   SMALL_IMAGE_URL,
 } = require("../../server/models/config.js");
 const ArtworkCard = forwardRef((props, ref) => {
+  const { isLogged } = useAuth();
   const {
     artist,
     artwork_type,
@@ -20,6 +22,7 @@ const ArtworkCard = forwardRef((props, ref) => {
   } = props;
   //set state for favorited
   const [isFavorited, setIsFavorited] = useState(false);
+  //get user from the auth state
   const { isLoading, errMsg, error } = favoriteArtwork(
     artworkId,
     title,
@@ -37,13 +40,15 @@ const ArtworkCard = forwardRef((props, ref) => {
   return (
     <div className="artwork_card" ref={ref}>
       <div className="artwork-content">
-        <div id="artwork-card-buttons">
-          <button
-            className="favorite-heart"
-            type="button"
-            onClick={handleFavorite}
-          ></button>
-        </div>
+        {isLogged && (
+          <div id="artwork-card-buttons">
+            <button
+              className="favorite-heart"
+              type="button"
+              onClick={handleFavorite}
+            ></button>
+          </div>
+        )}
         <div className="artwork_card_image">
           <img src={IMAGE_URL + image_id + SMALL_IMAGE_URL} alt={title} />
         </div>
